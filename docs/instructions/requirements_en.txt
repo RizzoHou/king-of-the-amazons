@@ -1,0 +1,65 @@
+Hello everyone, I will be conducting the evaluation for your Introduction to Computing course project. This group is used to track evaluation progress and release notifications. Please pay attention to the following:
+
+1. The total score for this assignment is 10 points, with evaluation accounting for 8.5 points and Botzone competition accounting for 1.5 points.
+
+2. Below is the scoring criteria for the evaluation part (may differ from other teaching assistants):
+
+2.1 Basic Functions - 6 points:
+    - (10 points) Menu (selection, new game, save game, load game, exit)
+    - (10 points) Board and pieces (can be implemented with characters or using a graphical board)
+    - (25 points) Gameplay (able to implement a complete game from start to finish, with the ability to stop midway)
+    - (15 points) Save board and load game functionality (having this functionality is sufficient, trigger timing and method can be customized)
+    Final score = total of the above 4 parts / 10.
+
+2.2 AI Capability - 1 point:
+    - In your report, explain the implementation algorithm of your game AI. The teaching assistant will ask questions during evaluation by reading the report, and give a comprehensive score.
+    - Note: The teaching assistant is not concerned with the actual capability of your AI (this will be tested by the Botzone competition; I'm more concerned with what efforts you've made and what implementation ideas you have)
+    - The score range for this part is [0.5, 1], rounded to 1 decimal place.
+
+2.3 Special Features - 1.5 points:
+    - I will focus on the following aspects of your project:
+        (1) User-friendliness: Whether it's easy for humans to use.
+        (2) Interface aesthetics.
+        (3) Function completeness: Whether basic functions are well integrated (e.g., the completeness of save/load functionality)
+        (4) Other special features:
+            - For example, can meet some other user needs.
+            - If any, explain in the report.
+        Note: Graphical interface is not required, but if implemented, there will be some bonus points.
+    - The score range for this part is [0.8, 1.5], rounded to 1 decimal place.
+
+2.4 If the basic function score does not reach 3.5 points, the scores for the latter two parts will be 0.
+
+3. Each student has 3 evaluation opportunities. Please attend evaluations during the corresponding time periods:
+
+    3.1 First evaluation period: From today until (December 30, 23:59)
+        This evaluation will include preliminary scoring. Students who complete early can participate.
+        The teaching assistant will read your reports and code. Running issues and modification suggestions will be provided within 48 hours.
+
+    3.2 Second evaluation period: From today until (January 9, 23:59)
+        This evaluation will include systematic scoring, and the score can be used as your final score.
+        Please send your report and code to the teaching assistant 1 day before evaluation and confirm the evaluation time.
+        If unsatisfied with this score, you can proceed to the next evaluation based on the teaching assistant's feedback.
+
+    3.3 Third evaluation period: From today until (January 10, 23:59)
+        Submit final report and code on-site, directly enter Q&A and scoring session.
+        The teaching assistant will give your final score.
+        Students who have already been evaluated before can choose to use their previous evaluation score as the final score.
+
+4. About the report:
+    To help the teaching assistant better understand your project, please submit a report during evaluation. It doesn't have to be the final version but must include the following:
+    - How to run your program? (Requirement: The teaching assistant should be able to start the program for testing by reading the report)
+    - How you implemented your AI.
+    - What you consider special features in your project.
+
+5. About evaluation:
+    First evaluation has no Q&A session, only communication via WeChat.
+    Second and third evaluations: Conducted online via Tencent Meeting, evaluation time not exceeding 15 minutes.
+    Evaluation process: 1. Demonstrate program usage, complete a game/save/load; 2. Free Q&A (mainly based on running conditions, and testing your understanding of your implemented AI algorithms)
+
+6. Also, please note the Botzone test/formal competition submission deadlines:
+    First test competition: December 20, 2025 (Saturday) 23:59
+    Second test competition: December 27, 2025 (Saturday) 23:59
+    Third test competition: January 3, 2026 (Saturday) 23:59
+    Formal competition: January 10, 2026 (Saturday) 23:59
+
+7. Evaluation list (students not in the group, please help invite them)

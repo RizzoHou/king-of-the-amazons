@@ -176,7 +176,7 @@ Comprehensive planning documents in `docs/implementation/`:
 
 ### Project Documentation
 - **Memory Bank**: Complete project documentation in `memorybank/` (6 core files)
-- **Requirements**: Detailed requirements in `docs/requirements_cn.txt` (Chinese) with English terminology updates
+- **Requirements**: Detailed requirements available in both Chinese (`docs/instructions/requirements_cn.txt`) and English (`docs/instructions/requirements_en.txt`)
 - **API Documentation**: To be generated with Doxygen during implementation
 
 ### Success Criteria
