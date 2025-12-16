@@ -28,7 +28,7 @@ king-of-the-amazons/
 │   │   └── 06_success_criteria.md
 │   ├── instructions/              # Course instructions
 │   │   ├── requirements_cn.txt    # Original Chinese requirements
-│   │   └── requirements_en.txt    # English translation (to be created)
+│   │   └── requirements_en.txt    # English translation
 │   ├── api/                       # API documentation (generated)
 │   └── reports/                   # Project reports
 ├── memorybank/                    # Project memory bank
@@ -55,7 +55,7 @@ king-of-the-amazons/
 │   ├── ui/                        # User interface
 │   │   ├── Display.cpp/.hpp
 │   │   ├── TextDisplay.cpp/.hpp
-│   │   ├── GraphicalDisplay.cpp/.hpp (optional)
+│   │   ├── GraphicalDisplay.cpp/.hpp (optional enhancement)
 │   │   ├── MenuController.cpp/.hpp
 │   │   └── InputHandler.cpp/.hpp
 │   ├── utils/                     # Utilities
@@ -63,15 +63,18 @@ king-of-the-amazons/
 │   │   ├── Logger.cpp/.hpp
 │   │   ├── Config.cpp/.hpp
 │   │   └── Timer.cpp/.hpp
-│   ├── botzone/                   # Botzone integration
-│   │   ├── BotzoneInterface.cpp/.hpp
-│   │   └── CompetitionBot.cpp/.hpp
+│   ├── features/                  # Enhanced features (undo/redo, analysis, etc.)
+│   │   ├── UndoManager.cpp/.hpp
+│   │   ├── GameAnalyzer.cpp/.hpp
+│   │   ├── ReplaySystem.cpp/.hpp
+│   │   └── Statistics.cpp/.hpp
 │   └── main.cpp                   # Entry point
 ├── include/                       # Public headers
 │   ├── core/
 │   ├── ai/
 │   ├── ui/
-│   └── utils/
+│   ├── utils/
+│   └── features/
 ├── tests/                         # Test suite
 │   ├── unit/                      # Unit tests
 │   │   ├── BoardTest.cpp
@@ -126,7 +129,7 @@ king-of-the-amazons/
 - **ai/**: Artificial intelligence implementations and algorithms
 - **ui/**: User interface components and display systems
 - **utils/**: Utility functions and helper classes
-- **botzone/**: Botzone platform integration
+- **features/**: Enhanced features (undo/redo, game analysis, replay system, statistics)
 - **main.cpp**: Application entry point
 
 ### Public Headers (`include/`)
@@ -209,12 +212,11 @@ CMakeLists.txt (root)
 1. **Operating Systems**: Linux, macOS, Windows
 2. **Compilers**: GCC, Clang, MSVC
 3. **Dependencies**: Minimal external dependencies
-4. **Botzone Requirements**: Standard I/O interface, time constraints
 
 ## Maintenance and Evolution
 
 ### Future Extensions
-1. **Graphical Interface**: SDL2 or SFML integration
+1. **Graphical Interface**: SDL2 or SFML integration (enhancement)
 2. **Network Play**: Multiplayer over network
 3. **Advanced AI**: Machine learning approaches
 4. **Mobile Port**: iOS/Android versions

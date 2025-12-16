@@ -45,7 +45,8 @@ king-of-the-amazons/
 │   ├── core/              # Core game logic
 │   ├── ai/                # AI implementations
 │   ├── ui/                # User interface
-│   └── utils/             # Utility functions
+│   ├── utils/             # Utility functions
+│   └── features/          # Enhanced features (undo/redo, analysis, statistics, replay)
 ├── include/               # Header files
 ├── tests/                 # Test files
 ├── docs/                  # Documentation
@@ -123,16 +124,17 @@ make clean        # Clean build artifacts
 - **macOS**: 10.15+ (Catalina and later)
 - **Windows**: 10+ with Visual Studio or MinGW
 
-### Botzone Platform Requirements
-- **Input/Output**: Standard console I/O (stdin/stdout)
-- **Time Limits**: Move decisions within specified time constraints
-- **Memory Limits**: Adherence to platform memory restrictions
+### Enhanced Features Requirements
+- **Undo/Redo System**: Efficient state management for history tracking
+- **Game Analysis**: Position evaluation and territory calculation
+- **Statistics Tracking**: Game history and performance metrics
+- **Replay System**: Game state capture and navigation
 
 ## Performance Constraints
 
 ### Computational Limits
 - **Move Generation**: Must generate legal moves efficiently for 10x10 board
-- **AI Search**: Must complete within Botzone time limits (typically 1-2 seconds per move)
+- **AI Search**: Must complete within reasonable time limits (≤2 seconds per move)
 - **Memory Usage**: Efficient board representation to support deep search trees
 
 ### Optimization Strategies

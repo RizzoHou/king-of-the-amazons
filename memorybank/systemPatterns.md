@@ -170,8 +170,61 @@ Display ──────────┬─── TextDisplay
 - **Controller ↔ View**: Observer pattern for display updates
 - **AI ↔ Game Logic**: Strategy pattern for interchangeable algorithms
 
+## Enhanced Features Architecture
+
+### 1. Undo/Redo System
+**Pattern**: Command Pattern with History Stack
+```cpp
+class UndoManager {
+    std::stack<GameState> undoStack;
+    std::stack<GameState> redoStack;
+    
+    void recordState(const GameState& state);
+    GameState undo(const GameState& current);
+    GameState redo(const GameState& current);
+};
+```
+
+### 2. Game Analysis System
+**Pattern**: Strategy Pattern for Analysis Algorithms
+```cpp
+class GameAnalyzer {
+public:
+    virtual AnalysisResult analyzePosition(const GameState& state) = 0;
+};
+
+class TerritoryAnalyzer : public GameAnalyzer { /* Territory calculation */ };
+class ThreatAnalyzer : public GameAnalyzer { /* Threat detection */ };
+```
+
+### 3. Statistics Tracking
+**Pattern**: Observer Pattern for Game Events
+```cpp
+class StatisticsTracker : public GameStateObserver {
+    GameStatistics stats;
+    
+    void onStateChanged(const GameState& newState) override;
+    void onGameEnd(const GameState& finalState) override;
+};
+```
+
+### 4. Replay System
+**Pattern**: Memento Pattern for Game State Capture
+```cpp
+class ReplaySystem {
+    std::vector<GameState> gameStates;
+    size_t currentPosition;
+    
+    void recordState(const GameState& state);
+    GameState previous();
+    GameState next();
+    GameState jumpTo(size_t position);
+};
+```
+
 ## Performance Considerations
 1. **Move Generation**: Pre-compute legal moves where possible
 2. **State Evaluation**: Cache evaluation results for common positions
 3. **AI Search**: Implement pruning and move ordering optimizations
 4. **Memory Usage**: Use efficient data structures for board representation
+5. **Enhanced Features Memory**: Manage undo history and replay storage efficiently

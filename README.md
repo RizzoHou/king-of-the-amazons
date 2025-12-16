@@ -34,15 +34,11 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 - [ ] Implementation of computer opponent using game AI algorithms
 - [ ] Documentation of AI approach and algorithms
 
-### Special Features (1.5 points)
+### Enhanced Features (2.5 points)
 - [ ] User-friendly interface and ease of use
 - [ ] Aesthetic presentation and interface design
 - [ ] Feature completeness and integration
-- [ ] Additional innovative features
-
-### Botzone Competition (1.5 points)
-- [ ] Participation in online bot tournaments
-- [ ] Three test matches and one formal competition
+- [ ] Additional innovative features (undo/redo, game analysis, statistics, replay system)
 
 ## Project Structure
 
@@ -61,7 +57,7 @@ king-of-the-amazons/
 │   ├── api/                       # API documentation (generated)
 │   └── reports/                   # Project reports
 ├── memorybank/                    # Project memory bank (6 core files)
-├── src/                           # Source code (core/, ai/, ui/, utils/, botzone/)
+├── src/                           # Source code (core/, ai/, ui/, utils/, features/)
 ├── include/                       # Public headers
 ├── tests/                         # Test suite (unit/, integration/, system/)
 ├── data/                          # Game data (saves/, config/, logs/)
@@ -117,11 +113,11 @@ make clean        # Clean build artifacts
 
 ## Key Deadlines
 
-### Botzone Competitions
-- **First Test Match**: Dec 20, 2025
-- **Second Test Match**: Dec 27, 2025  
-- **Third Test Match**: Jan 3, 2026
-- **Formal Competition**: Jan 10, 2026
+### Enhanced Features Development
+- **Undo/Redo System**: Week 3 (Dec 31 - Jan 6)
+- **Game Analysis Features**: Week 3-4 (Dec 31 - Jan 10)
+- **Statistics Tracking**: Week 4 (Jan 7-10)
+- **Replay System**: Week 4 (Jan 7-10)
 
 ### Review Sessions
 - **First Review Session** (pre-grading): Dec 30, 2025
@@ -132,28 +128,30 @@ make clean        # Clean build artifacts
 
 Detailed timeline and milestones are documented in `docs/implementation/02_implementation_phases.md`:
 
-### Phase 1: Core Infrastructure (Week 1: Dec 17-23, 2025)
+### Phase 1: Core Foundation (Week 1: Dec 17-23, 2025)
 - Project setup and CMake configuration
 - Basic game components implementation
 - Text interface foundation
+- **Critical Goal**: Playable human vs human prototype
 
-### Phase 2: Game Flow (Week 2: Dec 24-30, 2025)
+### Phase 2: Complete Game (Week 2: Dec 24-30, 2025)
 - Complete game loop implementation
 - Save/load system development
-- Enhanced user interface
+- Basic AI opponent (greedy algorithm)
 - **Critical Deadline**: First Review Session (Dec 30, 2025)
 
-### Phase 3: AI Development (Week 3: Dec 31, 2025 - Jan 6, 2026)
-- AI framework and move generation
-- Minimax algorithm implementation
-- Botzone integration
-- **Critical Deadline**: Third Botzone test match (Jan 3, 2026)
+### Phase 3: Advanced AI and Features (Week 3: Dec 31, 2025 - Jan 6, 2026)
+- Advanced AI algorithms (minimax with alpha-beta pruning)
+- Enhanced features implementation (undo/redo, game analysis)
+- Performance optimization
+- **Critical Goal**: Enhanced features foundation complete
 
-### Phase 4: Polish and Integration (Week 4: Jan 7-10, 2026)
+### Phase 4: Polish and Finalization (Week 4: Jan 7-10, 2026)
 - Comprehensive testing and quality assurance
 - Documentation completion
-- Competition preparation
-- **Critical Deadlines**: Second Review Session (Jan 9, 2026), Final Review Session and Botzone formal competition (Jan 10, 2026)
+- Enhanced features polish (statistics, replay system)
+- User interface refinement
+- **Critical Deadlines**: Second Review Session (Jan 9, 2026), Final Review Session and project submission (Jan 10, 2026)
 
 ## Technology Stack
 

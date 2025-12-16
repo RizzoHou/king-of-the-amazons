@@ -1,7 +1,7 @@
 # Success Criteria: King of the Amazons
 
 ## Overview
-This document defines the success criteria for the "King of the Amazons" project, including academic grading requirements, technical specifications, quality standards, and competition performance targets.
+This document defines the success criteria for the "King of the Amazons" project, including academic grading requirements, technical specifications, quality standards, and enhanced feature targets.
 
 ## Academic Success Criteria
 
@@ -41,7 +41,7 @@ This document defines the success criteria for the "King of the Amazons" project
 - [ ] **Algorithm Implementation (0.5-1 point)**
   - Computer opponent makes legal moves
   - AI uses game theory algorithms (minimax, alpha-beta pruning, etc.)
-  - Moves are made within reasonable time limits
+  - Moves are made within reasonable time limits (≤2 seconds)
   - Algorithm is documented in project report
 
 - [ ] **Algorithm Explanation (Graded by TA)**
@@ -50,44 +50,32 @@ This document defines the success criteria for the "King of the Amazons" project
   - Rationale for algorithm selection explained
   - Performance characteristics documented
 
-#### 3. Special Features (1.5 points)
+#### 3. Special Features (2.5 points) - Enhanced from 1.5 points
 **Success Criteria**:
-- [ ] **User Friendliness (Weighted consideration)**
+- [ ] **User Friendliness (0.5 points)**
   - Intuitive interface and controls
   - Clear instructions and feedback
   - Error messages helpful and informative
   - Overall ease of use
 
-- [ ] **Interface Aesthetics (Weighted consideration)**
+- [ ] **Interface Aesthetics (0.5 points)**
   - Visually appealing display
   - Consistent visual design
   - Appropriate use of colors/symbols
   - Professional presentation
 
-- [ ] **Feature Integration (Weighted consideration)**
+- [ ] **Feature Integration (0.5 points)**
   - All features work together seamlessly
   - Save/load integrates with game flow
   - Menu system connects to all functionality
   - Consistent user experience across features
 
-- [ ] **Additional Innovations (Bonus consideration)**
-  - Extra features beyond requirements
-  - Creative solutions to problems
-  - Enhanced user experience elements
-  - Technical innovations
-
-#### 4. Botzone Competition (1.5 points)
-**Success Criteria**:
-- [ ] **Participation (Base requirement)**
-  - Bot submitted for all required competitions
-  - Bot makes legal moves in all matches
-  - Basic functionality working in competition environment
-
-- [ ] **Performance (Graded by results)**
-  - Competitive performance in test matches
-  - Formal competition results
-  - Relative ranking against other bots
-  - Consistency across matches
+- [ ] **Enhanced Features (1.0 point)**
+  - Undo/redo functionality working reliably
+  - Game analysis and position evaluation
+  - Statistics tracking and reporting
+  - Replay system for completed games
+  - Additional innovative features beyond requirements
 
 ## Technical Success Criteria
 
@@ -129,12 +117,30 @@ This document defines the success criteria for the "King of the Amazons" project
   - Menu navigation intuitive
   - Game status always visible
 
-#### Optional Graphical Interface (Bonus)
-- [ ] **Visual Quality**
-  - Attractive graphical representation
-  - Smooth animations for moves
-  - Professional visual design
-  - Consistent theme and styling
+#### Enhanced Interface Features
+- [ ] **Undo/Redo System**
+  - Multiple levels of undo/redo
+  - Clear indication of undo/redo availability
+  - Consistent state restoration
+  - Integration with game flow
+
+- [ ] **Game Analysis**
+  - Position evaluation and scoring
+  - Territory calculation display
+  - Move suggestions and analysis
+  - Strategic insights
+
+- [ ] **Statistics Tracking**
+  - Game history recording
+  - Win/loss statistics
+  - Performance metrics
+  - Exportable statistics
+
+- [ ] **Replay System**
+  - Complete game recording
+  - Step-by-step replay
+  - Navigation controls
+  - Export/import functionality
 
 ### Save/Load System
 
@@ -161,10 +167,10 @@ This document defines the success criteria for the "King of the Amazons" project
   - Consistent behavior
 
 - [ ] **Performance**
-  - Moves made within Botzone time limits (≤2 seconds)
+  - Moves made within time limits (≤2 seconds)
   - Efficient use of system resources
   - Scalable to different search depths
-  - Competitive against other bots
+  - Competitive against human players
 
 #### Code Quality
 - [ ] **Modularity**
@@ -242,7 +248,7 @@ This document defines the success criteria for the "King of the Amazons" project
   - Optimized data structures for board representation
 
 - [ ] **AI Decision Making**
-  - Move selection within Botzone limit (≤2 seconds)
+  - Move selection within time limit (≤2 seconds)
   - Search depth appropriate for time constraints
   - Efficient pruning algorithms (alpha-beta)
   - Heuristic evaluation optimized
@@ -253,6 +259,7 @@ This document defines the success criteria for the "King of the Amazons" project
   - AI search tree ≤100MB at maximum depth
   - Save files ≤10KB for typical games
   - No memory leaks in extended play
+  - Enhanced features memory usage ≤50MB additional
 
 ### User Experience Performance
 
@@ -262,6 +269,7 @@ This document defines the success criteria for the "King of the Amazons" project
   - Board updates immediate
   - Move validation feedback within 100ms
   - Save/load operations ≤1 second
+  - Undo/redo operations ≤50ms
 
 #### Reliability
 - [ ] **Stability**
@@ -269,36 +277,7 @@ This document defines the success criteria for the "King of the Amazons" project
   - Graceful handling of invalid input
   - Recovery from file system errors
   - Consistent behavior across sessions
-
-## Competition Success Criteria
-
-### Botzone Requirements
-
-#### Protocol Compliance
-- [ ] **Input/Output Format**
-  - Correct parsing of Botzone input format
-  - Proper formatting of move output
-  - Handling of all required command formats
-  - Compliance with competition specifications
-
-- [ ] **Time Management**
-  - Moves submitted within time limits
-  - Graceful timeout handling
-  - Efficient use of available time
-  - No premature submissions
-
-#### Competition Performance
-- [ ] **Test Matches (3 matches)**
-  - Participation in all required test matches
-  - Legal moves in all games
-  - Competitive performance relative to peers
-  - Learning from match results
-
-- [ ] **Formal Competition**
-  - Submission before deadline
-  - Stable performance throughout competition
-  - Handling of various opponent strategies
-  - Final ranking acceptable for grading
+  - Enhanced features stable during extended use
 
 ## Review Session Success Criteria
 
@@ -326,6 +305,12 @@ This document defines the success criteria for the "King of the Amazons" project
   - Save/load system reliable
   - User interface polished
 
+- [ ] **Enhanced Features**
+  - Undo/redo functionality demonstrated
+  - Game analysis features shown
+  - Statistics tracking operational
+  - Replay system working
+
 - [ ] **Technical Understanding**
   - Algorithm explanation
   - Architecture decisions justified
@@ -339,7 +324,7 @@ This document defines the success criteria for the "King of the Amazons" project
   - All requirements implemented
   - Code quality acceptable
   - Documentation complete
-  - Competition results available
+  - Enhanced features fully operational
 
 - [ ] **Overall Evaluation**
   - Meeting of academic standards
@@ -355,20 +340,22 @@ Metric                          | Target      | Measurement Method
 --------------------------------|-------------|-------------------
 Basic Functionality Score       | ≥3.5/6      | TA grading
 AI Algorithm Score              | ≥0.5/1      | TA assessment
-Special Features Score          | ≥0.8/1.5    | TA assessment
-Botzone Competition Score       | ≥0.5/1.5    | Competition results
+Special Features Score          | ≥1.5/2.5    | TA assessment
 Code Test Coverage              | ≥80%        | gcov/lcov
 AI Move Time                    | ≤2 seconds  | Performance testing
 Memory Usage (peak)             | ≤100 MB     | Memory profiling
 Save/Load Time                  | ≤1 second   | Performance testing
+Undo/Redo Time                  | ≤50ms       | Performance testing
 Bug Count (critical)            | 0           | Testing and usage
+Enhanced Features Coverage      | ≥75%        | Feature testing
 ```
 
 ### Qualitative Metrics
-- **User Experience**: Intuitive, enjoyable gameplay
+- **User Experience**: Intuitive, enjoyable gameplay with enhanced features
 - **Code Quality**: Clean, maintainable, well-documented
 - **Project Management**: On schedule, risk-managed
-- **Learning Outcomes**: C++ skills, AI knowledge, software engineering
+- **Learning Outcomes**: C++ skills, AI knowledge, software engineering, enhanced feature implementation
+- **Enhanced Features Integration**: Seamless integration of undo/redo, analysis, statistics, replay
 
 ## Acceptance Criteria
 
@@ -391,19 +378,26 @@ Bug Count (critical)            | 0           | Testing and usage
 
 ### Enhanced Product Goals
 1. **Advanced AI**
-   - Competitive Botzone performance
-   - Sophisticated algorithms
+   - Competitive performance against human players
+   - Sophisticated algorithms (minimax with alpha-beta)
    - Optimized performance
 
 2. **Polished Interface**
    - Professional presentation
    - Enhanced user experience
-   - Additional features
+   - Additional features beyond requirements
 
-3. **Comprehensive Quality**
+3. **Comprehensive Enhanced Features**
+   - Robust undo/redo system
+   - Detailed game analysis
+   - Comprehensive statistics
+   - Functional replay system
+
+4. **Comprehensive Quality**
    - Thorough testing
    - Excellent documentation
    - Robust error handling
+   - Professional code quality
 
 ## Success Verification Process
 
@@ -420,20 +414,21 @@ Bug Count (critical)            | 0           | Testing and usage
 
 3. **Week 3 Verification**
    - AI implementation complete
-   - Botzone integration
+   - Enhanced features foundation
    - Performance optimization
 
 4. **Week 4 Verification**
    - Final testing completed
    - Documentation finished
-   - Competition readiness
+   - Enhanced features polished
+   - Project readiness
 
 ### Final Success Determination
 The project will be considered successful if:
 1. All academic requirements are met (≥8.5/10 grade target)
 2. Technical implementation is robust and reliable
-3. Botzone competition participation is successful
+3. Enhanced features are functional and well-integrated
 4. Learning objectives are achieved
 5. Project serves as valuable portfolio piece
 
-This success criteria document provides clear targets for all aspects of the project, from academic grading to technical implementation, ensuring focused effort toward achieving project goals.
+This success criteria document provides clear targets for all aspects of the project, from academic grading to technical implementation, ensuring focused effort toward achieving project goals with enhanced features for improved user experience and academic performance.

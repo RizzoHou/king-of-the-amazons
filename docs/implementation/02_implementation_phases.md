@@ -1,14 +1,15 @@
 # Implementation Phases: King of the Amazons
 
 ## Overview
-This document outlines the phased implementation approach for the "King of the Amazons" project. The development is organized into four phases aligned with academic deadlines and Botzone competition requirements.
+This document outlines the phased implementation approach for the "King of the Amazons" project. The development is organized into four phases aligned with academic deadlines, with a realistic timeline based on practical assessment.
 
-## Phase 1: Core Infrastructure (Week 1: Dec 17-23, 2025)
+## Phase 1: Core Foundation (Week 1: Dec 17-23, 2025)
 
 ### Objectives
 - Establish project structure and build system
 - Implement basic game components
-- Create foundation for all subsequent development
+- Create playable human vs human prototype
+- Set foundation for all subsequent development
 
 ### Key Deliverables
 1. **Project Setup** (100%)
@@ -25,145 +26,162 @@ This document outlines the phased implementation approach for the "King of the A
 3. **Text Interface Foundation** (100%)
    - Console display implementation
    - Basic input handling
-   - Simple menu system
+   - Simple menu system (New Game, Exit)
+
+### Revised Week 1 Schedule (Realistic)
+```
+Day 1-2: CMake setup + Board/GameState classes
+Day 3-4: Basic move validation + text display
+Day 5-6: Simple game loop (human vs human)
+Day 7: Buffer/cleanup and integration testing
+```
 
 ### Success Criteria
 - Project compiles without errors
 - Board displays correctly in console
 - Basic move validation works
+- Human vs human gameplay functional
 - No memory leaks (valgrind clean)
 
-## Phase 2: Game Flow (Week 2: Dec 24-30, 2025)
+## Phase 2: Complete Game (Week 2: Dec 24-30, 2025)
 
 ### Objectives
-- Implement complete game flow
+- Implement complete game flow with all features
 - Add save/load functionality
+- Develop basic AI opponent
 - Prepare for first review session
 
 ### Key Deliverables
-1. **Complete Game Loop** (100%)
-   - Turn management system
-   - Win condition detection
-   - Game state transitions
+1. **Complete Game System** (100%)
+   - Enhanced menu system (New Game, Load Game, Save Game, Exit)
+   - Turn management and win condition detection
+   - Game state transitions and validation
 
 2. **Save/Load System** (100%)
-   - Game state serialization
-   - JSON-based save file format
-   - File I/O operations
+   - Game state serialization (JSON format)
+   - File I/O operations with error handling
+   - Save file management and validation
 
-3. **Enhanced User Interface** (100%)
-   - Improved menu navigation
-   - Game status display
-   - Error handling and user feedback
+3. **Basic AI Implementation** (100%)
+   - Greedy AI opponent (simple heuristic)
+   - AI strategy interface
+   - Move generation and evaluation
 
 ### Critical Deadline: First Review Session (Dec 30, 2025)
-- Basic functionality must be working
+- All basic functionality must be working
 - Save/load feature operational
 - Menu system complete
+- AI opponent functional (basic level)
 
 ### Success Criteria
 - Complete game from start to finish
-- Save and load functionality works
-- User-friendly interface
+- Save and load functionality works reliably
+- AI makes legal moves within reasonable time
+- User-friendly interface with helpful feedback
 - Passes first review session requirements
 
-## Phase 3: AI Development (Week 3: Dec 31, 2025 - Jan 6, 2026)
+## Phase 3: Advanced AI and Features (Week 3: Dec 31, 2025 - Jan 6, 2026)
 
 ### Objectives
-- Implement computer opponent
-- Develop AI algorithms
-- Optimize for Botzone competition
+- Implement advanced AI algorithms
+- Add enhanced features (undo/redo, game analysis)
+- Optimize performance and user experience
+- Prepare for second review session
 
 ### Key Deliverables
-1. **AI Framework** (100%)
-   - AI strategy interface
-   - Move generation algorithms
-   - Heuristic evaluation functions
-
-2. **Minimax Implementation** (100%)
+1. **Advanced AI Development** (100%)
    - Minimax with alpha-beta pruning
-   - Depth-limited search
-   - Move ordering optimizations
+   - Improved heuristic evaluation functions
+   - Depth-limited search with move ordering
+   - Performance optimization
 
-3. **Botzone Integration** (100%)
-   - Standard I/O interface
-   - Time management system
-   - Competition bot preparation
+2. **Enhanced Features** (100%)
+   - Undo/redo functionality
+   - Game analysis and statistics
+   - Improved user interface
+   - Additional game modes or configurations
 
-### Critical Deadlines
-- **Jan 3, 2026**: Third Botzone test match
-- AI must be functional for competition
+3. **Performance Optimization** (100%)
+   - Move generation efficiency improvements
+   - Memory usage optimization
+   - Code refactoring and quality improvements
 
 ### Success Criteria
-- AI makes legal moves
-- Competes in Botzone test matches
-- Algorithm documentation complete
-- Performance within time constraints
+- AI makes competent strategic moves
+- Enhanced features improve user experience
+- Performance meets targets (moves within 2 seconds)
+- Code quality and test coverage improved
+- Ready for comprehensive review
 
-## Phase 4: Polish and Integration (Week 4: Jan 7-10, 2026)
+## Phase 4: Polish and Finalization (Week 4: Jan 7-10, 2026)
 
 ### Objectives
-- Final testing and optimization
-- Prepare for final review sessions
-- Competition readiness
+- Final testing and quality assurance
+- Documentation completion
+- User interface polish
+- Prepare for final submission
 
 ### Key Deliverables
 1. **Testing and Quality Assurance** (100%)
-   - Comprehensive test suite
-   - Performance optimization
-   - Memory and resource management
+   - Comprehensive test suite execution
+   - Performance benchmarking
+   - Memory and resource management verification
+   - Cross-platform compatibility testing
 
 2. **Documentation Completion** (100%)
    - Project report finalization
    - API documentation generation
    - User manual creation
+   - Code documentation review
 
-3. **Competition Preparation** (100%)
-   - Botzone competition submission
-   - Performance tuning
-   - Final testing and validation
+3. **User Interface Polish** (100%)
+   - Interface refinement and bug fixes
+   - Enhanced user experience
+   - Final visual improvements
+   - Error handling and recovery
 
 ### Critical Deadlines
 - **Jan 9, 2026**: Second review session
-- **Jan 10, 2026**: Final review session and Botzone formal competition
+- **Jan 10, 2026**: Final review session and project submission
 
 ### Success Criteria
-- All tests pass
-- Documentation complete
-- Successful Botzone competition participation
-- Passing final review session
+- All tests pass with ≥80% coverage
+- Documentation complete and professional
+- User interface polished and intuitive
+- Project ready for final assessment
+- All academic requirements met
 
 ## Weekly Development Schedule
 
-### Week 1: Core Infrastructure
+### Week 1: Core Foundation (Realistic Scope)
 ```
 Day 1-2: Project setup and CMake configuration
-Day 3-4: Board and GameState implementation
-Day 5-6: Move validation and basic UI
+Day 3-4: Board and GameState implementation with basic tests
+Day 5-6: Move validation and text-based UI
 Day 7: Integration testing and refinement
 ```
 
-### Week 2: Game Flow
+### Week 2: Complete Game
 ```
-Day 1-2: Complete game loop implementation
+Day 1-2: Enhanced menu system and game flow
 Day 3-4: Save/load system development
-Day 5-6: UI enhancements and menu system
+Day 5-6: Greedy AI implementation
 Day 7: Testing and preparation for first review
 ```
 
-### Week 3: AI Development
+### Week 3: Advanced AI and Features
 ```
-Day 1-2: AI framework and move generation
-Day 3-4: Minimax algorithm implementation
-Day 5-6: Botzone integration and testing
-Day 7: Algorithm optimization and documentation
+Day 1-2: Minimax algorithm implementation
+Day 3-4: Alpha-beta pruning and optimization
+Day 5-6: Enhanced features (undo/redo, analysis)
+Day 7: Performance tuning and documentation
 ```
 
-### Week 4: Polish and Integration
+### Week 4: Polish and Finalization
 ```
 Day 1-2: Comprehensive testing and bug fixes
-Day 3-4: Performance optimization
-Day 5-6: Documentation completion
+Day 3-4: Documentation completion
+Day 5-6: User interface polish
 Day 7: Final preparation and submission
 ```
 
@@ -174,26 +192,30 @@ Day 7: Final preparation and submission
    - ✓ Project compiles successfully
    - ✓ Basic game components functional
    - ✓ Text interface operational
+   - ✓ Human vs human gameplay working
 
 2. **Phase 2 Complete**:
    - ✓ Complete game flow working
    - ✓ Save/load functionality operational
+   - ✓ Basic AI opponent functional
    - ✓ Ready for first review session
 
 3. **Phase 3 Complete**:
-   - ✓ AI makes competent moves
-   - ✓ Botzone integration working
-   - ✓ Algorithm documentation complete
+   - ✓ Advanced AI makes competent moves
+   - ✓ Enhanced features implemented
+   - ✓ Performance optimized
+   - ✓ Ready for comprehensive review
 
 4. **Phase 4 Complete**:
    - ✓ All tests passing
    - ✓ Documentation finalized
-   - ✓ Competition ready
+   - ✓ User interface polished
+   - ✓ Ready for final submission
 
 ### Progress Metrics
 - **Code Coverage**: ≥ 80% test coverage
-- **Performance**: AI moves within 2 seconds
-- **Quality**: Zero critical bugs
+- **Performance**: AI moves within 2 seconds for depth 3 search
+- **Quality**: Zero critical bugs, valgrind clean
 - **Documentation**: Complete and up-to-date
 
 ## Risk Management Timeline
@@ -201,71 +223,67 @@ Day 7: Final preparation and submission
 ### Week 1 Risks
 - **Build system issues**: Mitigated by early CMake testing
 - **Basic component complexity**: Mitigated by incremental implementation
+- **Time constraints**: Mitigated by realistic daily goals
 
 ### Week 2 Risks  
 - **Game flow bugs**: Mitigated by comprehensive testing
 - **Save/load reliability**: Mitigated by robust error handling
+- **AI basic functionality**: Mitigated by starting with simple greedy algorithm
 
 ### Week 3 Risks
 - **AI performance issues**: Mitigated by algorithm optimization
-- **Botzone compatibility**: Mitigated by early integration testing
+- **Feature complexity**: Mitigated by prioritizing core enhancements
+- **Time management**: Mitigated by strict schedule adherence
 
 ### Week 4 Risks
-- **Time constraints**: Mitigated by strict schedule adherence
-- **Competition performance**: Mitigated by thorough testing
+- **Testing completeness**: Mitigated by early test development
+- **Documentation time**: Mitigated by documenting throughout development
+- **Polish time consumption**: Mitigated by focusing on high-impact improvements
 
 ## Contingency Planning
 
 ### Schedule Slip Scenarios
-1. **1-2 day delay**: Compress testing phase
-2. **3-4 day delay**: Reduce non-essential features
-3. **5+ day delay**: Focus on core requirements only
+1. **1-2 day delay**: Compress testing phase, maintain core features
+2. **3-4 day delay**: Reduce non-essential features, focus on requirements
+3. **5+ day delay**: Implement minimum viable product, focus on core grading criteria
 
 ### Technical Challenge Scenarios
-1. **AI too slow**: Implement simpler algorithms
-2. **Memory issues**: Optimize data structures
-3. **Platform compatibility**: Focus on primary platform
+1. **AI too slow**: Implement simpler algorithms, reduce search depth
+2. **Memory issues**: Optimize data structures, implement memory limits
+3. **Platform compatibility**: Test early on target platforms, use standard C++
 
 ## Review Session Preparation
 
 ### First Review Session (Dec 30)
-- Demonstrate basic functionality
+- Demonstrate basic functionality (menu, board display, game flow)
 - Show save/load feature
-- Present project structure
+- Present basic AI opponent
+- Explain project structure and progress
 
 ### Second Review Session (Jan 9)
-- Demonstrate complete game with AI
-- Show Botzone integration
-- Present algorithm documentation
+- Demonstrate complete game with advanced AI
+- Show enhanced features (undo/redo, analysis)
+- Present performance characteristics
+- Explain algorithm implementation
 
 ### Final Review Session (Jan 10)
-- Final demonstration
-- Competition results presentation
-- Complete project handover
-
-## Botzone Competition Timeline
-
-### Test Matches
-1. **Dec 20**: First test match (basic AI expected)
-2. **Dec 27**: Second test match (improved AI)
-3. **Jan 3**: Third test match (competition-ready AI)
-
-### Formal Competition
-- **Jan 10**: Final competition submission
-- Performance evaluation against other bots
-- Final scoring and ranking
+- Final comprehensive demonstration
+- Show polished user interface
+- Present complete documentation
+- Demonstrate project readiness for grading
 
 ## Success Verification
 
 ### Weekly Checkpoints
-1. **Week 1**: Project compiles, basic components work
-2. **Week 2**: Complete game flow, save/load functional
-3. **Week 3**: AI operational, Botzone integration working
-4. **Week 4**: All requirements met, ready for submission
+1. **Week 1**: Project compiles, basic components work, human vs human playable
+2. **Week 2**: Complete game flow, save/load functional, basic AI working
+3. **Week 3**: Advanced AI operational, enhanced features implemented
+4. **Week 4**: All requirements met, polished interface, ready for submission
 
 ### Quality Gates
 - Code review before each phase completion
-- Performance testing before Botzone submissions
+- Performance testing before major milestones
 - Documentation review before review sessions
+- User testing for interface improvements
 
-This phased implementation approach ensures systematic development while meeting all academic and competition deadlines. Each phase builds upon the previous one, with clear success criteria and risk mitigation strategies.
+This phased implementation approach ensures systematic development while meeting all academic deadlines. Each phase builds upon the previous one, with clear success criteria and risk mitigation strategies, focusing on delivering a high-quality game implementation for academic assessment.

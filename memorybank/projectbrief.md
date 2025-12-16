@@ -20,21 +20,23 @@ This project is a C++ implementation of the "Game of the Amazons" (also known as
    - Feature completeness and integration
    - Additional innovative features
 
-4. **Botzone Competition** (1.5 points)
-   - Participation in online bot tournaments through Botzone platform
-   - Three test matches and one formal competition
+4. **Enhanced Features** (2.5 points)
+   - User-friendly interface and ease of use
+   - Aesthetic presentation and interface design
+   - Feature completeness and integration
+   - Additional innovative features (undo/redo, game analysis, statistics, replay system)
 
 ## Project Goals
 - Learn and apply C++ programming concepts
 - Implement game logic and state management
 - Develop AI algorithms for game playing
 - Create user-friendly interface (CLI or GUI)
-- Participate in competitive programming through Botzone
+- Implement enhanced features for improved user experience
 
 ## Success Criteria
 - Meet all basic functionality requirements
 - Implement working AI opponent
-- Score well in Botzone competitions
+- Implement all enhanced features successfully
 - Create comprehensive project documentation
 - Pass multiple review sessions with teaching assistants
 
@@ -42,10 +44,10 @@ This project is a C++ implementation of the "Game of the Amazons" (also known as
 - Language: C++
 - Platform: Cross-platform (Windows/Linux/macOS)
 - Timeline: Multiple review session deadlines (Dec 30, Jan 9, Jan 10)
-- Botzone competition deadlines (Dec 20, Dec 27, Jan 3, Jan 10)
+- Enhanced features development timeline (Week 3-4: Dec 31 - Jan 10)
 
 ## Key Deliverables
 1. Complete C++ game implementation
 2. Project report/documentation
-3. Botzone competition submissions
+3. Enhanced features implementation (undo/redo, analysis, statistics, replay)
 4. Code repository with version control
