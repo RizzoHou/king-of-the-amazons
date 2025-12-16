@@ -1,0 +1,303 @@
+# King of the Amazons - Git Ignore Rules
+# ===========================================
+# This file specifies intentionally untracked files to ignore
+# See: https://git-scm.com/docs/gitignore
+
+# -----------------------------------------------------------------------------
+# Build Directories and Artifacts
+# -----------------------------------------------------------------------------
+
+# CMake build directories
+build/
+cmake-build-*/
+out/
+bin/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+compile_commands.json
+
+# Compiled object files
+*.o
+*.obj
+*.ko
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+amazons  # Project executable name
+
+# -----------------------------------------------------------------------------
+# IDE and Editor Files
+# -----------------------------------------------------------------------------
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# CLion
+.idea/
+*.iml
+
+# Visual Studio
+.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.suo
+*.opensdf
+*.sdf
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+
+# Vim/Neovim
+*.swp
+*.swo
+*~
+*.un~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# -----------------------------------------------------------------------------
+# Operating System Files
+# -----------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# -----------------------------------------------------------------------------
+# Dependency Management
+# -----------------------------------------------------------------------------
+
+# Third-party dependencies (if using submodules, keep .gitmodules but ignore content)
+third_party/*
+!third_party/.gitkeep
+!third_party/.gitmodules
+
+# Conan
+.conan/
+
+# vcpkg
+vcpkg_installed/
+
+# -----------------------------------------------------------------------------
+# Documentation and Generated Files
+# -----------------------------------------------------------------------------
+
+# Doxygen generated API documentation
+docs/api/
+
+# Generated documentation
+*.pdf
+*.doc
+*.docx
+
+# -----------------------------------------------------------------------------
+# Testing and Coverage
+# -----------------------------------------------------------------------------
+
+# Google Test build artifacts
+googletest-build/
+
+# Coverage reports
+coverage/
+*.gcda
+*.gcno
+*.gcov
+
+# Test output
+test-results/
+*.xml
+*.trx
+
+# -----------------------------------------------------------------------------
+# Game Data and Runtime Files
+# -----------------------------------------------------------------------------
+
+# Save files (preserve directory structure with .gitkeep)
+data/saves/*
+!data/saves/.gitkeep
+
+# Log files (preserve directory structure with .gitkeep)
+data/logs/*
+!data/logs/.gitkeep
+
+# Configuration files (user-specific)
+data/config/*.user
+!data/config/.gitkeep
+
+# Temporary game files
+*.save
+*.bak
+*.tmp
+
+# -----------------------------------------------------------------------------
+# Package and Distribution Files
+# -----------------------------------------------------------------------------
+
+# Package managers
+node_modules/
+bower_components/
+*.gem
+*.egg
+*.egg-info/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# -----------------------------------------------------------------------------
+# Development Environment
+# -----------------------------------------------------------------------------
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug files
+*.pdb
+*.idb
+*.ilk
+
+# Profiling data
+*.profraw
+*.profdata
+
+# -----------------------------------------------------------------------------
+# Miscellaneous
+# -----------------------------------------------------------------------------
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+*.tmp
+*.temp
+
+# System files
+.directory
+.trash-*
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.tar.gz
+*.zip
+
+# -----------------------------------------------------------------------------
+# Project-Specific Notes
+# -----------------------------------------------------------------------------
+# The following directories are preserved with .gitkeep files:
+# - data/saves/     (for game save files)
+# - data/logs/      (for application logs)
+# - data/config/    (for configuration files)
+# - third_party/    (for external dependencies via git submodules)
+
+# To preserve an empty directory, create a .gitkeep file:
+# touch data/saves/.gitkeep
+# git add data/saves/.gitkeep
+
+# -----------------------------------------------------------------------------
+# End of .gitignore
