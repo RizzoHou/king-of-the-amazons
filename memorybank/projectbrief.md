@@ -36,12 +36,12 @@ This project is a C++ implementation of the "Game of the Amazons" (also known as
 - Implement working AI opponent
 - Score well in Botzone competitions
 - Create comprehensive project documentation
-- Pass multiple验收 (review) sessions with teaching assistants
+- Pass multiple review sessions with teaching assistants
 
 ## Constraints
 - Language: C++
 - Platform: Cross-platform (Windows/Linux/macOS)
-- Timeline: Multiple验收 deadlines (Dec 30, Jan 9, Jan 10)
+- Timeline: Multiple review session deadlines (Dec 30, Jan 9, Jan 10)
 - Botzone competition deadlines (Dec 20, Dec 27, Jan 3, Jan 10)
 
 ## Key Deliverables

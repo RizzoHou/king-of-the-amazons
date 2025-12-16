@@ -4,20 +4,23 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 
 ## Project Status
 
-**Current Phase**: Project Initialization Complete  
-**Overall Completion**: 5% (Documentation complete, implementation not started)
+**Current Phase**: Implementation Planning Complete  
+**Overall Completion**: 10% (Documentation and implementation plan complete, ready for development)
 
 ### What Works
 - Comprehensive memory bank documentation
+- Detailed implementation plan in `docs/implementation/`
 - Project architecture planning (MVC pattern)
 - Technical requirements analysis
 - Development workflow establishment
+- Documentation standardization (English terminology)
 
 ### What's Next
-- Create project structure (CMakeLists.txt, directories)
-- Implement core game components (Board, GameState, Player classes)
-- Develop basic text-based user interface
-- Implement game logic and move validation
+- Create project structure following `01_project_structure.md`
+- Implement core game components as specified in `03_technical_specifications.md`
+- Develop basic text-based user interface following UI specifications
+- Implement game logic and move validation with comprehensive testing
+- Set up testing framework as outlined in `04_testing_strategy.md`
 
 ## Requirements
 
@@ -43,20 +46,30 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 
 ## Project Structure
 
+Complete file hierarchy and organization guidelines are documented in `docs/implementation/01_project_structure.md`. The structure follows software engineering best practices with clear separation of concerns:
+
 ```
 king-of-the-amazons/
-├── src/                    # Source code
-│   ├── core/              # Core game logic
-│   ├── ai/                # AI implementations
-│   ├── ui/                # User interface
-│   └── utils/             # Utility functions
-├── include/               # Header files
-├── tests/                 # Test files
-├── docs/                  # Documentation
-├── memorybank/            # Project memory bank
-├── CMakeLists.txt         # CMake configuration
-└── README.md              # This file
+├── CMakeLists.txt                 # Main CMake configuration
+├── Makefile                       # Alternative build system
+├── README.md                      # Project overview and setup instructions
+├── .gitignore                     # Git ignore rules
+├── .clinerules/                   # Cline operation rules
+├── docs/                          # Documentation
+│   ├── implementation/            # Implementation plan (6 detailed documents)
+│   ├── instructions/              # Course requirements
+│   ├── api/                       # API documentation (generated)
+│   └── reports/                   # Project reports
+├── memorybank/                    # Project memory bank (6 core files)
+├── src/                           # Source code (core/, ai/, ui/, utils/, botzone/)
+├── include/                       # Public headers
+├── tests/                         # Test suite (unit/, integration/, system/)
+├── data/                          # Game data (saves/, config/, logs/)
+├── scripts/                       # Build and utility scripts
+└── third_party/                   # External dependencies
 ```
+
+For detailed directory descriptions and development guidelines, refer to the implementation plan documents.
 
 ## Development Setup
 
@@ -110,17 +123,37 @@ make clean        # Clean build artifacts
 - **Third Test Match**: Jan 3, 2026
 - **Formal Competition**: Jan 10, 2026
 
-### 验收 (Review) Sessions
-- **First验收** (pre-grading): Dec 30, 2025
-- **Second验收** (system grading): Jan 9, 2026
-- **Third验收** (final grading): Jan 10, 2026
+### Review Sessions
+- **First Review Session** (pre-grading): Dec 30, 2025
+- **Second Review Session** (system grading): Jan 9, 2026
+- **Third Review Session** (final grading): Jan 10, 2026
 
 ## Development Timeline
 
-- **Week 1**: Project initialization and planning
-- **Week 2**: Core game implementation
-- **Week 3**: AI development and advanced features
-- **Week 4**: Testing, optimization, and competition preparation
+Detailed timeline and milestones are documented in `docs/implementation/02_implementation_phases.md`:
+
+### Phase 1: Core Infrastructure (Week 1: Dec 17-23, 2025)
+- Project setup and CMake configuration
+- Basic game components implementation
+- Text interface foundation
+
+### Phase 2: Game Flow (Week 2: Dec 24-30, 2025)
+- Complete game loop implementation
+- Save/load system development
+- Enhanced user interface
+- **Critical Deadline**: First Review Session (Dec 30, 2025)
+
+### Phase 3: AI Development (Week 3: Dec 31, 2025 - Jan 6, 2026)
+- AI framework and move generation
+- Minimax algorithm implementation
+- Botzone integration
+- **Critical Deadline**: Third Botzone test match (Jan 3, 2026)
+
+### Phase 4: Polish and Integration (Week 4: Jan 7-10, 2026)
+- Comprehensive testing and quality assurance
+- Documentation completion
+- Competition preparation
+- **Critical Deadlines**: Second Review Session (Jan 9, 2026), Final Review Session and Botzone formal competition (Jan 10, 2026)
 
 ## Technology Stack
 
@@ -132,9 +165,22 @@ make clean        # Clean build artifacts
 
 ## Documentation
 
-- **Memory Bank**: Complete project documentation in `memorybank/`
-- **Requirements**: Detailed requirements in `docs/requirements_cn.txt`
-- **API Documentation**: To be generated with Doxygen
+### Implementation Plan
+Comprehensive planning documents in `docs/implementation/`:
+- `01_project_structure.md`: File hierarchy and organization
+- `02_implementation_phases.md`: Timeline and milestones
+- `03_technical_specifications.md`: Technical details and APIs
+- `04_testing_strategy.md`: Testing approach and quality assurance
+- `05_risk_management.md`: Risk assessment and mitigation
+- `06_success_criteria.md`: Success metrics and grading requirements
+
+### Project Documentation
+- **Memory Bank**: Complete project documentation in `memorybank/` (6 core files)
+- **Requirements**: Detailed requirements in `docs/requirements_cn.txt` (Chinese) with English terminology updates
+- **API Documentation**: To be generated with Doxygen during implementation
+
+### Success Criteria
+Detailed success metrics and grading requirements documented in `docs/implementation/06_success_criteria.md`
 
 ## Contributing
 

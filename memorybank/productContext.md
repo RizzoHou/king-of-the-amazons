@@ -17,7 +17,7 @@ Students need to demonstrate mastery of C++ programming by implementing a comple
 5. **Competitive Integration**: Botzone platform compatibility for tournament participation
 
 ## Target Users
-1. **Primary**: Course teaching assistants (for grading and验收)
+1. **Primary**: Course teaching assistants (for grading and review)
 2. **Secondary**: Fellow students (for demonstration and learning)
 3. **Tertiary**: Botzone platform (for automated tournament play)
 
@@ -41,7 +41,7 @@ Students need to demonstrate mastery of C++ programming by implementing a comple
 - Competitive performance against other bots
 
 ## Success Metrics
-1. **Academic**: Score ≥ 8.5/10 on验收 grading
+1. **Academic**: Score ≥ 8.5/10 on review grading
 2. **Technical**: All basic functionality working without crashes
 3. **Competitive**: Bot performs competitively in Botzone tournaments
 4. **Educational**: Code serves as learning example for C++ and game development
@@ -50,7 +50,7 @@ Students need to demonstrate mastery of C++ programming by implementing a comple
 ### Academic Constraints
 - Must adhere to course requirements and deadlines
 - Must include comprehensive project report
-- Must pass multiple验收 sessions with teaching assistants
+- Must pass multiple review sessions with teaching assistants
 
 ### Technical Constraints
 - Must be implemented in C++
