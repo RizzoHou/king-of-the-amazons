@@ -96,6 +96,8 @@ Expected output: "nothing to commit, working tree clean"
 
 ## Commit Message Guidelines
 
+Follow the **50/72 rule**: Subject line ≤50 characters, body lines ≤72 characters. Use **imperative mood** ("Add", "Fix", "Update") and focus on explaining *why* the change was made.
+
 ### Structure
 
 ```
@@ -107,7 +109,7 @@ Optional detailed explanation if needed:
 - Any important context
 ```
 
-### Types
+### Types (Conventional Commits)
 
 - **feat**: New feature or functionality
 - **fix**: Bug fix
@@ -116,6 +118,11 @@ Optional detailed explanation if needed:
 - **test**: Adding or updating tests
 - **chore**: Maintenance tasks, dependency updates
 - **style**: Code formatting, whitespace changes
+- **build**: Build system or external dependency changes
+- **ci**: Continuous integration configuration
+- **perf**: Performance improvements
+
+**Reference**: See `.clinerules/version_control.md` for full guidelines and `docs/guidance/git-commit-message-best-practices.md` for comprehensive documentation.
 
 ### Good Examples
 

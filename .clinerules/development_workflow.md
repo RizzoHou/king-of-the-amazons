@@ -11,3 +11,5 @@ Rules for development process and workflow best practices.
 - **File Organization**: Maintain a clean and organized file hierarchy. Place files in appropriate directories according to their purpose and function within the project.
 
 - **Resource Management**: Consider system resource constraints when running multiple processes. Run resource-intensive operations sequentially rather than in parallel if system memory or CPU limitations are a concern.
+
+- **Git Integration**: Follow git best practices from `.clinerules/version_control.md`. Commit frequently with clear messages, maintain clean working directory using `git_status_clear.md` workflow, and ensure logical commit grouping.

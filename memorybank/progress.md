@@ -30,6 +30,10 @@
 5. **Architecture Planning**: MVC design with clear component separation
 6. **Documentation Standardization**: Updated all occurrences of "验收" to English terms ("review session", "assessment", "review")
 7. **Task Completion**: Requirements translation task fully completed
+8. **Git Workflow Enhancement**: Updated git commit message guidance across project files:
+   - Enhanced `.clinerules/version_control.md` with comprehensive commit message best practices
+   - Updated `.clinerules/workflows/git_status_clear.md` with 50/72 rule and Conventional Commits references
+   - Added git integration guidance to `.clinerules/development_workflow.md`
 
 ### What's In Progress
 1. **Project Structure Implementation**: Ready to begin creating CMakeLists.txt and source directories

@@ -9,7 +9,24 @@
 - Ready to begin actual C++ game development
 
 ## Recent Changes
-### Requirements Translation Task (Completed)
+### Git Commit Message Guidance Update (Completed)
+1. **Updated version_control.md**: Added comprehensive "Git Commit Message Best Practices" section covering:
+   - 50/72 rule and imperative mood guidelines
+   - Conventional Commits format with common types (feat, fix, docs, etc.)
+   - Good vs. bad examples and breaking changes notation
+   - Reference to detailed guidance in `docs/guidance/git-commit-message-best-practices.md`
+
+2. **Enhanced git_status_clear.md**: Updated "Commit Message Guidelines" section to:
+   - Explicitly mention 50/72 rule and Conventional Commits
+   - Add missing commit types (build, ci, perf)
+   - Include cross-references to version_control.md and comprehensive guidance
+
+3. **Updated development_workflow.md**: Added "Git Integration" best practice that:
+   - References version_control.md for git best practices
+   - Points to git_status_clear.md workflow
+   - Emphasizes logical commit grouping
+
+### Requirements Translation Task (Previously Completed)
 1. **Created English requirements translation**: Translated the original Chinese requirements (`requirements_cn.txt`) to English (`requirements_en.txt`):
    - Comprehensive translation of all sections including scoring criteria, evaluation periods, report requirements, and Botzone deadlines
    - Corrected apparent date typo (changed "December 27, 2026" to "December 27, 2025") for logical consistency with weekly test schedule

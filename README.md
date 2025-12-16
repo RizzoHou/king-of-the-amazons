@@ -12,7 +12,7 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 - Detailed implementation plan in `docs/implementation/`
 - Project architecture planning (MVC pattern)
 - Technical requirements analysis
-- Development workflow establishment
+- Development workflow establishment (including git commit message best practices)
 - Documentation standardization (English terminology)
 
 ### What's Next
