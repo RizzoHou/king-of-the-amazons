@@ -2,7 +2,6 @@
 
 #include "core/GameState.hpp"
 #include "ui/TextDisplay.hpp"
-#include "ui/InputHandler.hpp"
 #include <memory>
 
 namespace amazons {
@@ -16,7 +15,6 @@ public:
 private:
     std::unique_ptr<GameState> gameState;
     TextDisplay display;
-    InputHandler inputHandler;
     
     // Main menu
     void mainMenu();
@@ -34,8 +32,13 @@ private:
     void showGameStatus() const;
     bool confirmAction(const std::string& message) const;
     
-    // For Phase 1, we'll implement basic functionality
+    // Game modes
     void simpleGameLoop(); // Simple human vs human game
+    void humanVsAIGameLoop(); // Human vs AI game
+    void aiVsAiGameLoop(); // AI vs AI game
+    
+    // AI helper methods
+    void makeAIMove(); // Make a move using AI
 };
 
 } // namespace amazons

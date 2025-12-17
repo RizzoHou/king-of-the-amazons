@@ -17,6 +17,7 @@ add_library(game_components
   ui/InputHandler.cpp
   ui/MenuController.cpp
   utils/Serializer.cpp
+  ai/BasicAI.cpp
 )
 
 # Link libraries

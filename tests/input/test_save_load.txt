@@ -1,0 +1,9 @@
+1
+1
+exit
+y
+3
+test_game
+y
+4
+y
