@@ -11,6 +11,7 @@ namespace amazons {
 class GameState {
 public:
     GameState();
+    GameState(const Board& board, Player currentPlayer, int turnNumber);
     
     void initializeStandardGame();
     

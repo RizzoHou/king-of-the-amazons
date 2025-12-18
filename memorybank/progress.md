@@ -19,39 +19,47 @@
    - **Complete Game Flow**: Human vs Human, Human vs AI, and AI vs AI gameplay modes
    - **Integration**: All Phase 2 features working together seamlessly
 
-3. **Core Game Features**:
+3. **Save Functionality Fix (Dec 18, 2025)**:
+   - **Save during gameplay**: Users can now type "save" or "s" during gameplay to save current game
+   - **Exit behavior**: "exit" command returns to main menu instead of terminating program
+   - **Serializer fixes**: Proper board serialization (100-character string) and deserialization
+   - **GameState constructor**: Added `GameState(const Board& board, Player currentPlayer, int turnNumber)` for restoring saved games
+   - **Game loop updates**: All game loops updated to handle save/exit properly
+   - **Documentation**: Updated game manual with new commands and FAQ
+
+4. **Core Game Features**:
    - **Board**: 10x10 grid with correct standard starting position (Black top, White bottom)
    - **Move Validation**: Queen movement in 8 directions with path checking
    - **Game Flow**: Turn-based gameplay with White moving first, undo functionality
    - **User Interface**: Console display with coordinates, help command, input validation
    - **Error Handling**: Robust validation and exception handling
-   - **Save/Load**: Game state persistence with JSON files
+   - **Save/Load**: Game state persistence with JSON files (now working correctly)
    - **AI Opponent**: Basic greedy AI for single-player gameplay
 
-4. **Memory Bank Documentation**: Complete and up-to-date
+5. **Memory Bank Documentation**: Complete and up-to-date
    - All 6 core files maintained with current project status
    - Implementation insights and learnings documented
    - Phase 3 planning integrated
 
-5. **User Documentation**: Comprehensive game manual and documentation created
+6. **User Documentation**: Comprehensive game manual and documentation created
    - **Game Manual**: Complete user guide (`docs/manuals/game_manual.md`)
    - **Update Workflow**: Automated documentation update process (`.clinerules/workflows/manual_update.md`)
    - **Project Structure Documentation**: Updated `docs/implementation/01_project_structure.md` to reflect actual implementation
    - **Coverage**: Rules, interface, modes, troubleshooting, development info
    - **Maintenance**: Workflow ensures documentation stays synchronized with project
 
-6. **Implementation Plan**: Comprehensive and validated
+7. **Implementation Plan**: Comprehensive and validated
    - Phase 1 and Phase 2 objectives fully achieved per `02_implementation_phases.md`
    - Technical specifications implemented per `03_technical_specifications.md`
    - Testing strategy validated per `04_testing_strategy.md`
 
-7. **Project Infrastructure**:
+8. **Project Infrastructure**:
    - Build system: `cmake --build . --target amazons` works flawlessly
    - Test execution: `./bin/unit_tests` runs all 30 tests successfully
    - Game execution: `./bin/amazons` provides complete game system with all modes
    - Git workflow: Comprehensive .gitignore, Conventional Commits guidance
 
-8. **Code Quality**:
+9. **Code Quality**:
    - Clean C++17 implementation following best practices
    - Modular architecture with clear separation of concerns (MVC pattern)
    - Comprehensive documentation and comments

@@ -11,6 +11,37 @@
 - Ready for Phase 3 development (advanced AI algorithms and enhanced features)
 
 ## Recent Changes
+### Save Functionality Fix (Dec 18, 2025)
+**Problem**: Users couldn't save during gameplay and had to exit to main menu first, which terminated the program. Additionally, saved games didn't restore the board state correctly.
+
+**Solutions Implemented**:
+
+1. **Fixed "save" command during gameplay**:
+   - Added "save" command to the gameplay interface (users can type "save" or "s")
+   - Game prompts for filename and saves using the Serializer
+   - Game continues after saving, allowing users to resume play
+
+2. **Fixed "exit" command behavior**:
+   - Modified "exit" command to return to main menu instead of terminating program
+   - Added confirmation prompt: "Are you sure you want to exit to main menu? (y/n):"
+   - Game state is preserved when returning to main menu
+
+3. **Fixed Serializer to properly save and load game state**:
+   - Updated `Serializer::serializeGameState()` to properly serialize the board as a 100-character string
+   - Updated `Serializer::deserializeGameState()` to parse JSON and restore board, current player, and turn number
+   - Added new constructor to `GameState` class: `GameState(const Board& board, Player currentPlayer, int turnNumber)`
+   - Serializer now creates proper JSON with actual board state instead of "TODO" placeholder
+
+4. **Updated all game loops**:
+   - Modified `gameLoop()`, `humanVsAIGameLoop()`, and `simpleGameLoop()` to handle exit properly
+   - Updated `makePlayerMove()` to return boolean indicating whether to continue or exit
+   - Updated `playerTurn()` to propagate the exit signal
+
+5. **Updated documentation**:
+   - Updated game manual (`docs/manuals/game_manual.md`) to include "save" command
+   - Added FAQ about exit behavior
+   - Updated input format description to include new commands
+
 ### Phase 2: Complete Game System Implementation (COMPLETED) + Input Format Change
 1. **Enhanced Menu System Implementation**:
    - Updated input format from "()->()->()" to 6 numbers (row col row col row col)

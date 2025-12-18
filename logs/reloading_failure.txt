@@ -1,0 +1,425 @@
+Last login: Wed Dec 17 19:05:50 on ttys006
+rizzohou@bogon ~ % cd projects/king-of-the-amazons 
+rizzohou@bogon king-of-the-amazons % ls
+CMakeLists.txt	data		memorybank	tests
+README.md	docs		scripts		third_party
+build		include		src
+rizzohou@bogon king-of-the-amazons % ./build/bin/amazons 
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 2
+
+=== Load Game ===
+Saved games:
+  1. aitest
+  2. test
+  0. Back to Main Menu
+
+Select a game to load (0-2): 0
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 1
+
+=== New Game ===
+1. Human vs Human
+2. Human vs AI
+3. AI vs AI
+4. Back to Main Menu
+
+Select game mode (1-4): 1
+New Human vs Human game started. White goes first.
+=== King of the Amazons ===
+Turn: 1
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  W  .  .  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move in format (r1,c1)->(r2,c2)->(r3,c3)
+Or enter 'help' to see legal moves, or 'undo' to undo last move: q   
+Are you sure you want to exit the game? (y/n): y
+Exiting game...
+rizzohou@bogon king-of-the-amazons % ./build/bin/amazons
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 1
+
+=== New Game ===
+1. Human vs Human
+2. Human vs AI
+3. AI vs AI
+4. Back to Main Menu
+
+Select game mode (1-4): 1
+New Human vs Human game started. White goes first.
+=== King of the Amazons ===
+Turn: 1
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  W  .  .  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, or 'undo' to undo last move: 9 6 8 5 7 4
+Move made: 9 6 8 5 7 4
+=== King of the Amazons ===
+Turn: 1
+Current player: Black
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  X  .  .  .  .  .  7
+8  .  .  .  .  .  W  .  .  .  .  8
+9  .  .  .  W  .  .  .  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+Black's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, or 'undo' to undo last move: 3 0 4 1 5 2
+Move made: 3 0 4 1 5 2
+=== King of the Amazons ===
+Turn: 2
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  .  .  .  .  .  .  .  .  .  B  3
+4  .  B  .  .  .  .  .  .  .  .  4
+5  .  .  X  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  X  .  .  .  .  .  7
+8  .  .  .  .  .  W  .  .  .  .  8
+9  .  .  .  W  .  .  .  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, or 'undo' to undo last move: exit
+Are you sure you want to exit the game? (y/n): y
+Exiting game...
+rizzohou@bogon king-of-the-amazons % ./build/bin/amazons
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 1
+
+=== New Game ===
+1. Human vs Human
+2. Human vs AI
+3. AI vs AI
+4. Back to Main Menu
+
+Select game mode (1-4): 1
+New Human vs Human game started. White goes first.
+=== King of the Amazons ===
+Turn: 1
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  W  .  .  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: 9 3 9 4 9 5
+Move made: 9 3 9 4 9 5
+=== King of the Amazons ===
+Turn: 1
+Current player: Black
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  .  W  X  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+Black's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: save
+
+=== Save Current Game ===
+Existing saved games:
+  aitest
+  test
+  test_save
+
+Enter a name for your save (or press Enter to cancel): test02
+Game saved to: data/saves/test02.json
+Game saved successfully as 'test02'.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: exit
+Are you sure you want to exit to main menu? (y/n): y
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 2
+
+=== Load Game ===
+Saved games:
+  1. aitest
+  2. test
+  3. test02
+  4. test_save
+  0. Back to Main Menu
+
+Select a game to load (0-4): 3
+Game loaded from: data/saves/test02.json
+Game loaded successfully.
+=== King of the Amazons ===
+Turn: 1
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  W  .  .  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: exit
+Are you sure you want to exit to main menu? (y/n): y
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 2
+
+=== Load Game ===
+Saved games:
+  1. aitest
+  2. test
+  3. test02
+  4. test_final
+  5. test_save
+  0. Back to Main Menu
+
+Select a game to load (0-5): 3
+Game loaded from: data/saves/test02.json
+Game loaded successfully.
+=== King of the Amazons ===
+Turn: 1
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  W  .  .  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: 9 3 9 4 9 5
+Move made: 9 3 9 4 9 5
+=== King of the Amazons ===
+Turn: 1
+Current player: Black
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  .  W  X  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+Black's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: 0 3 0 4 0 5
+Move made: 0 3 0 4 0 5
+=== King of the Amazons ===
+Turn: 2
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  .  B  X  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  .  W  X  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: save
+
+=== Save Current Game ===
+Existing saved games:
+  aitest
+  test
+  test02
+  test_final
+  test_save
+
+Enter a name for your save (or press Enter to cancel): save03
+Game saved to: data/saves/save03.json
+Game saved successfully as 'save03'.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: exit
+Are you sure you want to exit to main menu? (y/n): y
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 2
+
+=== Load Game ===
+Saved games:
+  1. aitest
+  2. save03
+  3. test
+  4. test02
+  5. test_final
+  6. test_save
+  0. Back to Main Menu
+
+Select a game to load (0-6): 2
+Game loaded from: data/saves/save03.json
+Game loaded successfully.
+=== King of the Amazons ===
+Turn: 1
+Current player: White
+
+   0  1  2  3  4  5  6  7  8  9 
+0  .  .  .  B  .  .  B  .  .  .  0
+1  .  .  .  .  .  .  .  .  .  .  1
+2  .  .  .  .  .  .  .  .  .  .  2
+3  B  .  .  .  .  .  .  .  .  B  3
+4  .  .  .  .  .  .  .  .  .  .  4
+5  .  .  .  .  .  .  .  .  .  .  5
+6  W  .  .  .  .  .  .  .  .  W  6
+7  .  .  .  .  .  .  .  .  .  .  7
+8  .  .  .  .  .  .  .  .  .  .  8
+9  .  .  .  W  .  .  W  .  .  .  9
+   0  1  2  3  4  5  6  7  8  9 
+
+White's turn.
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: exit
+Are you sure you want to exit to main menu? (y/n): y
+
+=== King of the Amazons ===
+Phase 2: Complete Game System
+=============================
+1. New Game
+2. Load Game
+3. Save Game
+4. Exit
+
+Select an option (1-4): 4   
+Are you sure you want to exit? (y/n): y
+Exiting game...
+rizzohou@bogon king-of-the-amazons % 

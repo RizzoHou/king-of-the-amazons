@@ -25,12 +25,13 @@ private:
     
     // Game loop
     void gameLoop();
-    void playerTurn();
-    void makePlayerMove();
+    bool playerTurn(); // Returns true if game should continue, false if user wants to exit
+    bool makePlayerMove(); // Returns true if move was made, false if user wants to exit
     
     // Helper methods
     void showGameStatus() const;
     bool confirmAction(const std::string& message) const;
+    void saveCurrentGame();
     
     // Game modes
     void simpleGameLoop(); // Simple human vs human game

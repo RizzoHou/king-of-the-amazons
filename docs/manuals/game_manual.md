@@ -175,7 +175,7 @@ When it's your turn, you'll be prompted:
 ```
 White's turn.
 Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
-Or enter 'help' to see legal moves, or 'undo' to undo last move:
+Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu:
 ```
 
 **Move Format**: `from_row from_col to_row to_col arrow_row arrow_col`
@@ -194,6 +194,7 @@ During gameplay, you can use these commands:
 |---------|---------|-------------|
 | `help` | `h` | Show all legal moves for current position |
 | `undo` | `u` | Undo the last move (if available) |
+| `save` | `s` | Save the current game during gameplay |
 | `exit` | `quit`, `q` | Exit the current game and return to main menu |
 
 ## Game Modes Detailed
@@ -449,6 +450,9 @@ The project maintains comprehensive documentation in `memorybank/`:
 
 ### Q: Can I undo multiple moves?
 **A**: Currently, only the last move can be undone.
+
+### Q: What happens when I type 'exit' during gameplay?
+**A**: The game will ask for confirmation and then return to the main menu. Your game progress is preserved and you can save it from the main menu or continue playing later.
 
 ## Version History
 

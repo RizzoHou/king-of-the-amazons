@@ -25,7 +25,10 @@ void MenuController::simpleGameLoop() {
     // Main game loop
     while (!gameState->isGameOver()) {
         showGameStatus();
-        playerTurn();
+        if (!playerTurn()) {
+            // User wants to exit to main menu
+            return;
+        }
     }
     
     // Game over
@@ -49,22 +52,22 @@ void MenuController::showGameStatus() const {
     display.displayGameState(*gameState);
 }
 
-void MenuController::playerTurn() {
-    if (!gameState || gameState->isGameOver()) return;
+bool MenuController::playerTurn() {
+    if (!gameState || gameState->isGameOver()) return true;
     
     Player current = gameState->getCurrentPlayer();
     std::cout << display.playerToString(current) << "'s turn.\n";
     
-    makePlayerMove();
+    return makePlayerMove();
 }
 
-void MenuController::makePlayerMove() {
-    if (!gameState) return;
+bool MenuController::makePlayerMove() {
+    if (!gameState) return true;
     
     while (true) {
         try {
             std::cout << "Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col\n";
-            std::cout << "Or enter 'help' to see legal moves, or 'undo' to undo last move: ";
+            std::cout << "Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu: ";
             
             std::string input;
             std::getline(std::cin, input);
@@ -103,10 +106,14 @@ void MenuController::makePlayerMove() {
                 continue;
             }
             
+            if (input == "save" || input == "s") {
+                saveCurrentGame();
+                continue;
+            }
+            
             if (input == "exit" || input == "quit" || input == "q") {
-                if (confirmAction("Are you sure you want to exit the game? (y/n): ")) {
-                    exitGame();
-                    return;
+                if (confirmAction("Are you sure you want to exit to main menu? (y/n): ")) {
+                    return false; // Signal to exit game
                 }
                 continue;
             }
@@ -117,7 +124,7 @@ void MenuController::makePlayerMove() {
                 if (gameState->isValidMove(move)) {
                     gameState->makeMove(move);
                     std::cout << "Move made: " << move.toString() << "\n";
-                    break; // Success
+                    return true; // Move successful
                 } else {
                     std::cout << "Invalid move: Move is not legal in current position.\n";
                 }
@@ -324,13 +331,60 @@ void MenuController::saveGame() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+void MenuController::saveCurrentGame() {
+    std::cout << "\n=== Save Current Game ===\n";
+    if (!gameState) {
+        std::cout << "No game in progress to save.\n";
+        return;
+    }
+    
+    Serializer serializer;
+    
+    // Show existing saves
+    auto savedGames = serializer.getSavedGames();
+    if (!savedGames.empty()) {
+        std::cout << "Existing saved games:\n";
+        for (const auto& game : savedGames) {
+            std::cout << "  " << game << "\n";
+        }
+        std::cout << "\n";
+    }
+    
+    std::cout << "Enter a name for your save (or press Enter to cancel): ";
+    std::string input;
+    std::getline(std::cin, input);
+    
+    if (input.empty()) {
+        std::cout << "Save cancelled.\n";
+        return;
+    }
+    
+    // Check if save already exists
+    if (serializer.saveExists(input)) {
+        std::cout << "A save with name '" << input << "' already exists.\n";
+        if (!confirmAction("Overwrite? (y/n): ")) {
+            std::cout << "Save cancelled.\n";
+            return;
+        }
+    }
+    
+    if (serializer.saveGame(*gameState, input)) {
+        std::cout << "Game saved successfully as '" << input << "'.\n";
+    } else {
+        std::cout << "Failed to save game.\n";
+    }
+}
+
 void MenuController::gameLoop() {
     if (!gameState) return;
     
     // Main game loop
     while (!gameState->isGameOver()) {
         showGameStatus();
-        playerTurn();
+        if (!playerTurn()) {
+            // User wants to exit to main menu
+            return;
+        }
     }
     
     // Game over
@@ -362,7 +416,10 @@ void MenuController::humanVsAIGameLoop() {
         
         if (current == Player::WHITE) {
             // Human turn (White)
-            makePlayerMove();
+            if (!makePlayerMove()) {
+                // User wants to exit to main menu
+                return;
+            }
         } else {
             // AI turn (Black)
             std::cout << "AI is thinking...\n";

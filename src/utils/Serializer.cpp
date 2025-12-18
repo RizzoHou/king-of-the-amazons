@@ -135,31 +135,127 @@ bool Serializer::deleteSave(const std::string& filename) const {
 }
 
 std::string Serializer::serializeGameState(const GameState& gameState) const {
-    // For now, implement a simple text-based serialization
-    // In a real implementation, we would use a JSON library like nlohmann/json
     std::stringstream ss;
     
     ss << "{\n";
-    ss << "  \"" << FIELD_BOARD << "\": \"TODO\",\n";
+    
+    // Serialize board
+    ss << "  \"" << FIELD_BOARD << "\": \"";
+    const Board& board = gameState.getBoard();
+    for (int row = 0; row < Board::SIZE; ++row) {
+        for (int col = 0; col < Board::SIZE; ++col) {
+            Board::Cell cell = board.getCell(row, col);
+            char cellChar = '.';
+            switch (cell) {
+                case Board::Cell::EMPTY: cellChar = '.'; break;
+                case Board::Cell::ARROW: cellChar = 'X'; break;
+                case Board::Cell::WHITE_AMAZON: cellChar = 'W'; break;
+                case Board::Cell::BLACK_AMAZON: cellChar = 'B'; break;
+            }
+            ss << cellChar;
+        }
+    }
+    ss << "\",\n";
+    
+    // Serialize current player
     ss << "  \"" << FIELD_CURRENT_PLAYER << "\": \"" 
        << (gameState.getCurrentPlayer() == Player::WHITE ? "white" : "black") << "\",\n";
+    
+    // Serialize turn number
     ss << "  \"" << FIELD_TURN_NUMBER << "\": " << gameState.getTurnNumber() << "\n";
+    
     ss << "}\n";
     
     return ss.str();
 }
 
 std::unique_ptr<GameState> Serializer::deserializeGameState(const std::string& json) const {
-    // For now, create a new game state
-    // In a real implementation, we would parse the JSON
-    (void)json; // Mark parameter as used to avoid warning
+    // Simple JSON parsing for our specific format
+    // We expect format: {"board": "..........BB......BB..........WW......WW..........", "current_player": "white", "turn_number": 1}
     
-    auto gameState = std::make_unique<GameState>();
-    gameState->initializeStandardGame();
-    
-    // TODO: Parse JSON and restore actual game state
-    
-    return gameState;
+    try {
+        // Extract board string
+        size_t boardStart = json.find(FIELD_BOARD);
+        if (boardStart == std::string::npos) {
+            throw std::runtime_error("Board field not found in JSON");
+        }
+        
+        boardStart = json.find('"', boardStart + strlen(FIELD_BOARD) + 3); // Skip "board": "
+        if (boardStart == std::string::npos) {
+            throw std::runtime_error("Invalid board field format");
+        }
+        
+        size_t boardEnd = json.find('"', boardStart + 1);
+        if (boardEnd == std::string::npos) {
+            throw std::runtime_error("Invalid board field format");
+        }
+        
+        std::string boardStr = json.substr(boardStart + 1, boardEnd - boardStart - 1);
+        if (boardStr.length() != Board::SIZE * Board::SIZE) {
+            throw std::runtime_error("Invalid board string length");
+        }
+        
+        // Extract current player
+        size_t playerStart = json.find(FIELD_CURRENT_PLAYER);
+        if (playerStart == std::string::npos) {
+            throw std::runtime_error("Current player field not found in JSON");
+        }
+        
+        playerStart = json.find('"', playerStart + strlen(FIELD_CURRENT_PLAYER) + 3);
+        if (playerStart == std::string::npos) {
+            throw std::runtime_error("Invalid current player field format");
+        }
+        
+        size_t playerEnd = json.find('"', playerStart + 1);
+        if (playerEnd == std::string::npos) {
+            throw std::runtime_error("Invalid current player field format");
+        }
+        
+        std::string playerStr = json.substr(playerStart + 1, playerEnd - playerStart - 1);
+        Player currentPlayer = (playerStr == "white") ? Player::WHITE : Player::BLACK;
+        
+        // Extract turn number
+        size_t turnStart = json.find(FIELD_TURN_NUMBER);
+        if (turnStart == std::string::npos) {
+            throw std::runtime_error("Turn number field not found in JSON");
+        }
+        
+        turnStart = json.find(':', turnStart) + 1;
+        size_t turnEnd = json.find_first_of(",\n}", turnStart);
+        if (turnEnd == std::string::npos) {
+            throw std::runtime_error("Invalid turn number field format");
+        }
+        
+        std::string turnStr = json.substr(turnStart, turnEnd - turnStart);
+        int turnNumber = std::stoi(turnStr);
+        
+        // Create board from string
+        Board board;
+        for (int row = 0; row < Board::SIZE; ++row) {
+            for (int col = 0; col < Board::SIZE; ++col) {
+                char cellChar = boardStr[row * Board::SIZE + col];
+                Board::Cell cell = Board::Cell::EMPTY;
+                switch (cellChar) {
+                    case '.': cell = Board::Cell::EMPTY; break;
+                    case 'X': cell = Board::Cell::ARROW; break;
+                    case 'W': cell = Board::Cell::WHITE_AMAZON; break;
+                    case 'B': cell = Board::Cell::BLACK_AMAZON; break;
+                    default: throw std::runtime_error("Invalid cell character in board string");
+                }
+                board.setCell(row, col, cell);
+            }
+        }
+        
+        // Create game state with restored board, player, and turn number
+        auto gameState = std::make_unique<GameState>(board, currentPlayer, turnNumber);
+        
+        return gameState;
+        
+    } catch (const std::exception& e) {
+        std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+        std::cerr << "JSON: " << json << std::endl;
+        return nullptr;
+    }
 }
 
 std::string Serializer::getSaveDirectory() const {

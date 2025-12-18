@@ -28,13 +28,21 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Complete Game Flow**: Human vs Human, Human vs AI, and AI vs AI gameplay modes
   - **Integration**: All Phase 2 features working together seamlessly
 
+- **Save Functionality Fix (Dec 18, 2025)**:
+  - **Save during gameplay**: Users can type "save" or "s" during gameplay to save current game
+  - **Exit behavior**: "exit" command returns to main menu instead of terminating program
+  - **Serializer fixes**: Proper board serialization (100-character string) and deserialization
+  - **GameState constructor**: Added for restoring saved games
+  - **Game loop updates**: All game loops handle save/exit properly
+  - **Documentation**: Updated game manual with new commands and FAQ
+
 - **Core Game Features**:
   - 10x10 board with standard starting position (Black top, White bottom)
   - Queen movement validation in 8 directions with path checking
   - Turn-based gameplay with White moving first, undo functionality
   - Console display with coordinates, help command, input validation
   - Error handling and robust validation
-- **Save/Load**: Game state persistence with JSON files
+- **Save/Load**: Game state persistence with JSON files (now working correctly)
 - **AI Opponent**: Basic greedy AI for single-player gameplay
 - **Input Format**: Simplified from "()->()->()" to 6 numbers (row col row col row col)
 

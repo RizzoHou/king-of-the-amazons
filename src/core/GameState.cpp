@@ -8,6 +8,12 @@ GameState::GameState() : currentPlayer(Player::WHITE), turnNumber(1) {
     board.initializeStandardPosition();
 }
 
+GameState::GameState(const Board& board, Player currentPlayer, int turnNumber) 
+    : board(board), currentPlayer(currentPlayer), turnNumber(turnNumber) {
+    // Move history is not restored - this is a limitation
+    // In a full implementation, we would also save/restore move history
+}
+
 void GameState::initializeStandardGame() {
     board.initializeStandardPosition();
     currentPlayer = Player::WHITE;
