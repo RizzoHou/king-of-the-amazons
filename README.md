@@ -202,9 +202,11 @@ Comprehensive planning documents in `docs/implementation/`:
 
 ### Project Documentation
 - **Memory Bank**: Complete project documentation in `memorybank/` (6 core files, regularly updated)
+- **Game Manual**: Comprehensive user guide (`docs/manuals/game_manual.md`) covering rules, interface, modes, troubleshooting
 - **Requirements**: Detailed requirements available in both Chinese (`docs/instructions/requirements_cn.txt`) and English (`docs/instructions/requirements_en.txt`)
 - **Code Documentation**: Comprehensive comments and clear APIs throughout implementation
 - **Progress Tracking**: Regular updates in `memorybank/progress.md` and `memorybank/activeContext.md`
+- **Documentation Workflow**: Automated update process (`.clinerules/workflows/manual_update.md`) ensures documentation stays synchronized
 
 ### Success Criteria
 Detailed success metrics and grading requirements documented in `docs/implementation/06_success_criteria.md`. Phase 1 success criteria fully met.
