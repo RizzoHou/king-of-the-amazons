@@ -174,16 +174,16 @@ When it's your turn, you'll be prompted:
 
 ```
 White's turn.
-Enter your move in format (r1,c1)->(r2,c2)->(r3,c3)
+Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
 Or enter 'help' to see legal moves, or 'undo' to undo last move:
 ```
 
-**Move Format**: `(r1,c1)->(r2,c2)->(r3,c3)`
-- `(r1,c1)`: Starting position of your Amazon
-- `(r2,c2)`: Destination for the Amazon move
-- `(r3,c3)`: Destination for the arrow shot
+**Move Format**: `from_row from_col to_row to_col arrow_row arrow_col`
+- `from_row from_col`: Starting position of your Amazon (row col)
+- `to_row to_col`: Destination for the Amazon move (row col)
+- `arrow_row arrow_col`: Destination for the arrow shot (row col)
 
-**Example**: `(9,6)->(8,5)->(7,4)`
+**Example**: `9 6 8 5 7 4`
 - Move Amazon from (9,6) to (8,5)
 - Shoot arrow from (8,5) to (7,4)
 
@@ -210,12 +210,12 @@ During gameplay, you can use these commands:
 **Example Gameplay**:
 ```
 White's turn.
-Enter your move: (9,6)->(8,5)->(7,4)
-Move made: (9,6)->(8,5)->(7,4)
+Enter your move: 9 6 8 5 7 4
+Move made: 9 6 8 5 7 4
 
 Black's turn.
-Enter your move: (0,3)->(1,4)->(2,5)
-Move made: (0,3)->(1,4)->(2,5)
+Enter your move: 0 3 1 4 2 5
+Move made: 0 3 1 4 2 5
 ```
 
 ### Human vs AI
@@ -233,12 +233,12 @@ Move made: (0,3)->(1,4)->(2,5)
 **Example Gameplay**:
 ```
 White's turn (Human).
-Enter your move: (9,6)->(8,5)->(7,4)
-Move made: (9,6)->(8,5)->(7,4)
+Enter your move: 9 6 8 5 7 4
+Move made: 9 6 8 5 7 4
 
 Black's turn (AI).
 AI is thinking...
-AI made move: (0,3)->(1,4)->(2,5)
+AI made move: 0 3 1 4 2 5
 ```
 
 ### AI vs AI
@@ -253,11 +253,11 @@ AI made move: (0,3)->(1,4)->(2,5)
 ```
 White AI's turn.
 AI is thinking...
-AI made move: (9,6)->(8,5)->(7,4)
+AI made move: 9 6 8 5 7 4
 
 Black AI's turn.
 AI is thinking...
-AI made move: (0,3)->(1,4)->(2,5)
+AI made move: 0 3 1 4 2 5
 ```
 
 ## Save/Load System
@@ -319,7 +319,7 @@ Games are saved in JSON format for readability:
 ### Help System
 - **Command**: `help` or `h`
 - **Output**: Lists all legal moves for current position
-- **Format**: Shows moves in standard `(r1,c1)->(r2,c2)->(r3,c3)` format
+- **Format**: Shows moves in standard `from_row from_col to_row to_col arrow_row arrow_col` format
 - **Empty List**: Shows "No legal moves available" if game is over
 
 ### Error Handling
@@ -327,7 +327,7 @@ The game provides helpful error messages:
 
 | Error Type | Example Message | Solution |
 |------------|-----------------|----------|
-| Invalid Format | `Invalid move format: Invalid move string format: missing first '->'` | Use correct format: `(r1,c1)->(r2,c2)->(r3,c3)` |
+| Invalid Format | `Invalid move format: expected 6 numbers` | Use correct format: `from_row from_col to_row to_col arrow_row arrow_col` (6 numbers) |
 | Illegal Move | `Invalid move: Move is not legal in current position.` | Check if path is clear and positions are valid |
 | Save Error | `Failed to save game.` | Check write permissions in `data/saves/` directory |
 | Load Error | `Failed to load game.` | Save file may be corrupted or missing |
@@ -353,7 +353,7 @@ The game provides helpful error messages:
 #### 3. Input Issues
 **Problem**: Moves not accepted
 **Solutions**:
-- Use exact format: `(r1,c1)->(r2,c2)->(r3,c3)`
+- Use exact format: `from_row from_col to_row to_col arrow_row arrow_col` (6 numbers)
 - Ensure coordinates are within 0-9 range
 - Check that path is not blocked by arrows or other Amazons
 

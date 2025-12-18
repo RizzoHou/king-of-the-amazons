@@ -56,19 +56,18 @@ TEST(PositionTest, IsValid) {
 TEST(PositionTest, ToString) {
     Position pos(3, 5);
     std::string str = pos.toString();
-    // Expect format like "(3,5)" or similar
-    EXPECT_FALSE(str.empty());
-    EXPECT_NE(str.find('3'), std::string::npos);
-    EXPECT_NE(str.find('5'), std::string::npos);
+    // New format: "3 5"
+    EXPECT_EQ(str, "3 5");
 }
 
 TEST(PositionTest, FromString) {
-    Position pos = Position::fromString("(3,5)");
+    Position pos = Position::fromString("3 5");
     EXPECT_EQ(pos.row, 3);
     EXPECT_EQ(pos.col, 5);
     
     // Test invalid format
     EXPECT_THROW(Position::fromString("invalid"), std::invalid_argument);
-    EXPECT_THROW(Position::fromString("(3,5"), std::invalid_argument);
-    EXPECT_THROW(Position::fromString("3,5)"), std::invalid_argument);
+    EXPECT_THROW(Position::fromString("3"), std::invalid_argument);
+    EXPECT_THROW(Position::fromString("3 5 7"), std::invalid_argument);
+    EXPECT_THROW(Position::fromString("a b"), std::invalid_argument);
 }

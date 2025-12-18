@@ -6,39 +6,33 @@ namespace amazons {
 
 std::string Move::toString() const {
     std::ostringstream oss;
-    oss << from.toString() << "->" << to.toString() << "->" << arrow.toString();
+    oss << from.toString() << " " << to.toString() << " " << arrow.toString();
     return oss.str();
 }
 
 Move Move::fromString(const std::string& str) {
-    // Format: "(r1,c1)->(r2,c2)->(r3,c3)"
-    size_t arrow1 = str.find("->");
-    if (arrow1 == std::string::npos) {
-        throw std::invalid_argument("Invalid move string format: missing first '->'");
+    // Format: "from_row from_col to_row to_col arrow_row arrow_col"
+    std::istringstream iss(str);
+    int from_row, from_col, to_row, to_col, arrow_row, arrow_col;
+    
+    if (!(iss >> from_row >> from_col >> to_row >> to_col >> arrow_row >> arrow_col)) {
+        throw std::invalid_argument("Invalid move string format: expected 6 numbers");
     }
     
-    size_t arrow2 = str.find("->", arrow1 + 2);
-    if (arrow2 == std::string::npos) {
-        throw std::invalid_argument("Invalid move string format: missing second '->'");
-    }
-    
-    std::string fromStr = str.substr(0, arrow1);
-    std::string toStr = str.substr(arrow1 + 2, arrow2 - arrow1 - 2);
-    std::string arrowStr = str.substr(arrow2 + 2);
-    
-    // Check for empty strings
-    if (fromStr.empty() || toStr.empty() || arrowStr.empty()) {
-        throw std::invalid_argument("Invalid move string format: empty position");
+    // Check for extra characters
+    char remaining;
+    if (iss >> remaining) {
+        throw std::invalid_argument("Invalid move string format - extra characters");
     }
     
     try {
-        Position from = Position::fromString(fromStr);
-        Position to = Position::fromString(toStr);
-        Position arrowPos = Position::fromString(arrowStr);
+        Position from(static_cast<int8_t>(from_row), static_cast<int8_t>(from_col));
+        Position to(static_cast<int8_t>(to_row), static_cast<int8_t>(to_col));
+        Position arrowPos(static_cast<int8_t>(arrow_row), static_cast<int8_t>(arrow_col));
         
         return Move(from, to, arrowPos);
     } catch (const std::exception& e) {
-        throw std::invalid_argument(std::string("Invalid position in move string: ") + e.what());
+        throw std::invalid_argument(std::string("Invalid position values: ") + e.what());
     }
 }
 

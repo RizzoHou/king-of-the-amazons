@@ -56,14 +56,12 @@ TEST(MoveTest, ToString) {
     Move move(Position(1, 2), Position(3, 4), Position(5, 6));
     std::string str = move.toString();
     
-    EXPECT_NE(str.find("(1,2)"), std::string::npos);
-    EXPECT_NE(str.find("(3,4)"), std::string::npos);
-    EXPECT_NE(str.find("(5,6)"), std::string::npos);
-    EXPECT_NE(str.find("->"), std::string::npos);
+    // New format: "1 2 3 4 5 6"
+    EXPECT_EQ(str, "1 2 3 4 5 6");
 }
 
 TEST(MoveTest, FromString) {
-    std::string str = "(1,2)->(3,4)->(5,6)";
+    std::string str = "1 2 3 4 5 6";
     Move move = Move::fromString(str);
     
     EXPECT_TRUE(move.from == Position(1, 2));
@@ -72,7 +70,7 @@ TEST(MoveTest, FromString) {
     
     // Test invalid strings
     EXPECT_THROW(Move::fromString("invalid"), std::invalid_argument);
-    EXPECT_THROW(Move::fromString("(1,2)->(3,4)"), std::invalid_argument); // Missing arrow
-    EXPECT_THROW(Move::fromString("(1,2)->(3,4)->"), std::invalid_argument); // Empty arrow
-    EXPECT_THROW(Move::fromString("(1,2)->->(5,6)"), std::invalid_argument); // Empty to
+    EXPECT_THROW(Move::fromString("1 2 3 4 5"), std::invalid_argument); // Missing value
+    EXPECT_THROW(Move::fromString("1 2 3 4 5 6 7"), std::invalid_argument); // Extra value
+    EXPECT_THROW(Move::fromString("1 2 3 a 5 6"), std::invalid_argument); // Non-numeric
 }

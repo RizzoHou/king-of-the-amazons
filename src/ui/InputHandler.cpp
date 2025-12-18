@@ -38,7 +38,7 @@ Position InputHandler::getPosition(const std::string& prompt) const {
             return *pos;
         }
         
-        std::cout << "Invalid position. Please enter in format (row,col) where row and col are 0-9.\n";
+        std::cout << "Invalid position. Please enter in format: row col (e.g., 3 5).\n";
     }
 }
 
@@ -51,7 +51,7 @@ Move InputHandler::getMove(const std::string& prompt) const {
             return *move;
         }
         
-        std::cout << "Invalid move. Please enter in format (r1,c1)->(r2,c2)->(r3,c3).\n";
+        std::cout << "Invalid move. Please enter 6 numbers: from_row from_col to_row to_col arrow_row arrow_col\n";
     }
 }
 
@@ -85,21 +85,41 @@ bool InputHandler::getYesNo(const std::string& prompt) const {
 }
 
 bool InputHandler::isValidPositionString(const std::string& str) {
-    // Basic check: should contain parentheses and comma
-    return str.find('(') != std::string::npos && 
-           str.find(',') != std::string::npos && 
-           str.find(')') != std::string::npos;
-}
-
-bool InputHandler::isValidMoveString(const std::string& str) {
-    // Basic check: should contain two "->" separators
-    size_t firstArrow = str.find("->");
-    if (firstArrow == std::string::npos) {
+    // Check for format: "row col" - two numbers separated by space
+    std::istringstream iss(str);
+    int row, col;
+    
+    if (!(iss >> row >> col)) {
         return false;
     }
     
-    size_t secondArrow = str.find("->", firstArrow + 2);
-    return secondArrow != std::string::npos;
+    // Check for extra characters
+    char remaining;
+    if (iss >> remaining) {
+        return false;
+    }
+    
+    return true;
+}
+
+bool InputHandler::isValidMoveString(const std::string& str) {
+    // Check for format: "from_row from_col to_row to_col arrow_row arrow_col" - 6 numbers
+    std::istringstream iss(str);
+    int values[6];
+    
+    for (int i = 0; i < 6; ++i) {
+        if (!(iss >> values[i])) {
+            return false;
+        }
+    }
+    
+    // Check for extra characters
+    char remaining;
+    if (iss >> remaining) {
+        return false;
+    }
+    
+    return true;
 }
 
 std::string InputHandler::getLine(const std::string& prompt) const {

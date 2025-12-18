@@ -63,7 +63,7 @@ void MenuController::makePlayerMove() {
     
     while (true) {
         try {
-            std::cout << "Enter your move in format (r1,c1)->(r2,c2)->(r3,c3)\n";
+            std::cout << "Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col\n";
             std::cout << "Or enter 'help' to see legal moves, or 'undo' to undo last move: ";
             
             std::string input;
@@ -123,7 +123,7 @@ void MenuController::makePlayerMove() {
                 }
             } catch (const std::exception& e) {
                 std::cout << "Invalid move format: " << e.what() << "\n";
-                std::cout << "Please use format (r1,c1)->(r2,c2)->(r3,c3).\n";
+                std::cout << "Please use format: from_row from_col to_row to_col arrow_row arrow_col (6 numbers).\n";
             }
             
         } catch (const std::exception& e) {

@@ -4,8 +4,14 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 
 ## Project Status
 
-**Current Phase**: Phase 2 Complete - Complete Game System Implemented  
+**Current Phase**: Task Completion Workflow Execution  
 **Overall Completion**: 50% (Phase 1 and Phase 2 fully implemented and tested, ready for Phase 3)
+
+### Current Workflow Status
+1. **✅ Step 1: Memory Bank Review** - COMPLETED (all 6 core files read)
+2. **✅ Step 2: Memory Bank Updates** - COMPLETED (activeContext.md and progress.md updated)
+3. **✅ Step 3: README.md Update** - COMPLETED
+4. **🟡 Step 4: Git Status Clear** - IN PROGRESS
 
 ### What Works
 - **Phase 1: Core Foundation COMPLETE** (100%)
@@ -28,8 +34,9 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - Turn-based gameplay with White moving first, undo functionality
   - Console display with coordinates, help command, input validation
   - Error handling and robust validation
-  - **Save/Load**: Game state persistence with JSON files
-  - **AI Opponent**: Basic greedy AI for single-player gameplay
+- **Save/Load**: Game state persistence with JSON files
+- **AI Opponent**: Basic greedy AI for single-player gameplay
+- **Input Format**: Simplified from "()->()->()" to 6 numbers (row col row col row col)
 
 - **Project Infrastructure**:
   - Build system: `cmake --build . --target amazons` works flawlessly

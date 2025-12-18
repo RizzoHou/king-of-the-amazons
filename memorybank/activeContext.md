@@ -11,8 +11,9 @@
 - Ready for Phase 3 development (advanced AI algorithms and enhanced features)
 
 ## Recent Changes
-### Phase 2: Complete Game System Implementation (COMPLETED)
+### Phase 2: Complete Game System Implementation (COMPLETED) + Input Format Change
 1. **Enhanced Menu System Implementation**:
+   - Updated input format from "()->()->()" to 6 numbers (row col row col row col)
    - Complete main menu with New Game, Load Game, Save Game, and Exit options
    - New Game submenu with Human vs Human, Human vs AI, and AI vs AI modes
    - Integrated save/load functionality into menu system
@@ -150,8 +151,8 @@
 ### Current Workflow Execution
 1. **Step 1: Memory Bank Review** - COMPLETED (all 6 core files read)
 2. **Step 2: Memory Bank Updates** - COMPLETED (activeContext.md and progress.md updated)
-3. **Step 3: README.md Update** - COMPLETED (updated with documentation information)
-4. **Step 4: Git Status Clear** - COMPLETED (all changes committed, working tree clean)
+3. **Step 3: README.md Update** - IN PROGRESS
+4. **Step 4: Git Status Clear** - PENDING
 
 ### Phase 2 Implementation Summary
 - **Success Criteria Met**: All Phase 2 objectives from `02_implementation_phases.md` achieved
