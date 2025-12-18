@@ -137,6 +137,16 @@
    - Verification checklist for ensuring documentation accuracy
    - Special cases for phase completion and feature updates
 
+### Project Structure Documentation Update
+1. **Updated Implementation Documentation** (`docs/implementation/01_project_structure.md`):
+   - Updated file hierarchy to reflect actual project structure
+   - Added `.clinerules/workflows/manual_update.md` to Cline rules section
+   - Added `docs/manuals/game_manual.md` to documentation section
+   - Updated `src/core/` to include `Position.cpp/.hpp` (actual implementation)
+   - Updated `src/ai/` to reflect `BasicAI.cpp/.hpp` (Phase 2) and planned Phase 3 files
+   - Added `tests/input/` directory with 5 test input files
+   - Updated directory descriptions to reflect current project state
+
 ### Current Workflow Execution
 1. **Step 1: Memory Bank Review** - COMPLETED (all 6 core files read)
 2. **Step 2: Memory Bank Updates** - COMPLETED (activeContext.md and progress.md updated)
