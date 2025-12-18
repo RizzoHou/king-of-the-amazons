@@ -17,7 +17,9 @@ king-of-the-amazons/
 │   ├── documentation.md
 │   ├── memorybank.md
 │   ├── project_setup.md
-│   └── version_control.md
+│   ├── version_control.md
+│   └── workflows/
+│       └── manual_update.md      # Game manual update workflow
 ├── docs/                          # Documentation
 │   ├── implementation/            # Implementation plan (this directory)
 │   │   ├── 01_project_structure.md
@@ -29,6 +31,8 @@ king-of-the-amazons/
 │   ├── instructions/              # Course instructions
 │   │   ├── requirements_cn.txt    # Original Chinese requirements
 │   │   └── requirements_en.txt    # English translation
+│   ├── manuals/                   # User documentation
+│   │   └── game_manual.md         # Comprehensive game manual
 │   ├── api/                       # API documentation (generated)
 │   └── reports/                   # Project reports
 ├── memorybank/                    # Project memory bank
@@ -44,14 +48,14 @@ king-of-the-amazons/
 │   │   ├── GameState.cpp/.hpp
 │   │   ├── Player.cpp/.hpp
 │   │   ├── Move.cpp/.hpp
-│   │   ├── RulesEngine.cpp/.hpp
+│   │   ├── Position.cpp/.hpp      # Coordinate and position handling
 │   │   └── GameController.cpp/.hpp
 │   ├── ai/                        # AI implementations
-│   │   ├── AIStrategy.cpp/.hpp
-│   │   ├── MinimaxAI.cpp/.hpp
-│   │   ├── MonteCarloAI.cpp/.hpp
-│   │   ├── Heuristics.cpp/.hpp
-│   │   └── MoveGenerator.cpp/.hpp
+│   │   ├── BasicAI.cpp/.hpp       # Greedy algorithm implementation (Phase 2)
+│   │   ├── AIStrategy.cpp/.hpp    # Interface for future AI algorithms
+│   │   ├── MinimaxAI.cpp/.hpp     # Planned for Phase 3
+│   │   ├── Heuristics.cpp/.hpp    # Planned for Phase 3
+│   │   └── MoveGenerator.cpp/.hpp # Planned for Phase 3
 │   ├── ui/                        # User interface
 │   │   ├── Display.cpp/.hpp
 │   │   ├── TextDisplay.cpp/.hpp
@@ -80,12 +84,20 @@ king-of-the-amazons/
 │   │   ├── BoardTest.cpp
 │   │   ├── GameStateTest.cpp
 │   │   ├── MoveTest.cpp
-│   │   └── AITest.cpp
-│   ├── integration/               # Integration tests
+│   │   ├── PlayerTest.cpp
+│   │   ├── PositionTest.cpp
+│   │   └── TextDisplayTest.cpp
+│   ├── integration/               # Integration tests (planned)
 │   │   ├── GameFlowTest.cpp
 │   │   └── SaveLoadTest.cpp
-│   ├── system/                    # System tests
+│   ├── system/                    # System tests (planned)
 │   │   └── EndToEndTest.cpp
+│   ├── input/                     # Test input files
+│   │   ├── test_board_display.txt
+│   │   ├── test_gameplay.txt
+│   │   ├── test_menu_system.txt
+│   │   ├── test_phase2_complete.txt
+│   │   └── test_save_load.txt
 │   └── CMakeLists.txt             # Test configuration
 ├── data/                          # Game data
 │   ├── saves/                     # Save files
@@ -113,6 +125,7 @@ king-of-the-amazons/
 ### Documentation (`docs/`)
 - **implementation/**: Comprehensive implementation plan documents
 - **instructions/**: Course requirements and specifications
+- **manuals/**: User documentation including game manual
 - **api/**: Generated API documentation (Doxygen output)
 - **reports/**: Project reports and documentation
 
@@ -137,9 +150,10 @@ king-of-the-amazons/
 - Separation of interface and implementation
 
 ### Testing (`tests/`)
-- **unit/**: Unit tests for individual components
-- **integration/**: Tests for component interactions
-- **system/**: End-to-end system tests
+- **unit/**: Unit tests for individual components (30 tests implemented)
+- **integration/**: Tests for component interactions (planned for Phase 3)
+- **system/**: End-to-end system tests (planned for Phase 4)
+- **input/**: Test input files for automated testing
 - **CMakeLists.txt**: Test configuration and setup
 
 ### Data (`data/`)
