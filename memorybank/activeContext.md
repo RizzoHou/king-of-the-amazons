@@ -11,6 +11,35 @@
 - Ready for Phase 3 development (advanced AI algorithms and enhanced features)
 
 ## Recent Changes
+### Game Mode Save/Load Feature Implementation (Dec 18, 2025)
+**Feature**: Enable the "save function" to save the corresponding game mode (like human vs AI) and enable the save to be reloaded in correspondent mode.
+
+**Implementation Details**:
+
+1. **Added GameMode enum** to `include/core/Player.hpp`:
+   - Three game modes: `HUMAN_VS_HUMAN`, `HUMAN_VS_AI`, `AI_VS_AI`
+   - Added `gameModeToString()` helper function for display
+
+2. **Updated Serializer class** to handle game modes:
+   - Modified `saveGame()` to accept `GameMode` parameter
+   - Added `loadGameWithMode()` method to load both game state and game mode
+   - Updated JSON serialization to include `"game_mode"` field
+   - Maintained backward compatibility: old save files without game_mode field default to `HUMAN_VS_HUMAN`
+   - Added `deserializeGameStateWithMode()` for parsing game mode from JSON
+
+3. **Updated MenuController** to track and use game modes:
+   - Added `currentGameMode` member variable
+   - Updated `newGame()` to set appropriate game mode based on user selection
+   - Modified `saveCurrentGame()` and `saveGame()` to pass `currentGameMode` to serializer
+   - Added `loadAndRunGame()` method to load game with mode and run appropriate game loop
+   - Updated `loadGame()` to use `loadAndRunGame()` for mode-aware loading
+
+4. **Testing and validation**:
+   - Created comprehensive test program to verify all three game modes save/load correctly
+   - Verified backward compatibility with old save files (defaults to HUMAN_VS_HUMAN)
+   - All tests pass: HUMAN_VS_HUMAN, HUMAN_VS_AI, and AI_VS_AI modes work correctly
+   - Build succeeds without errors or warnings
+
 ### Save Functionality Fix (Dec 18, 2025)
 **Problem**: Users couldn't save during gameplay and had to exit to main menu first, which terminated the program. Additionally, saved games didn't restore the board state correctly.
 

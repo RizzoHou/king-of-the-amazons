@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/GameState.hpp"
+#include "core/Player.hpp" // For GameMode
 #include "ui/TextDisplay.hpp"
 #include <memory>
 
@@ -15,6 +16,7 @@ public:
 private:
     std::unique_ptr<GameState> gameState;
     TextDisplay display;
+    GameMode currentGameMode;
     
     // Main menu
     void mainMenu();
@@ -37,6 +39,9 @@ private:
     void simpleGameLoop(); // Simple human vs human game
     void humanVsAIGameLoop(); // Human vs AI game
     void aiVsAiGameLoop(); // AI vs AI game
+    
+    // Game mode aware loading
+    void loadAndRunGame(const std::string& filename);
     
     // AI helper methods
     void makeAIMove(); // Make a move using AI

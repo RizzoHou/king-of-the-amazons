@@ -9,7 +9,7 @@
 
 namespace amazons {
 
-MenuController::MenuController() : gameState(std::make_unique<GameState>()) {}
+MenuController::MenuController() : gameState(std::make_unique<GameState>()), currentGameMode(GameMode::HUMAN_VS_HUMAN) {}
 
 void MenuController::run() {
     mainMenu();
@@ -200,12 +200,14 @@ void MenuController::newGame() {
         // Human vs Human
         gameState = std::make_unique<GameState>();
         gameState->initializeStandardGame();
+        currentGameMode = GameMode::HUMAN_VS_HUMAN;
         std::cout << "New Human vs Human game started. White goes first.\n";
         gameLoop();
     } else if (input == "2") {
         // Human vs AI
         gameState = std::make_unique<GameState>();
         gameState->initializeStandardGame();
+        currentGameMode = GameMode::HUMAN_VS_AI;
         std::cout << "New Human vs AI game started. White (Human) goes first.\n";
         std::cout << "AI will play as Black.\n";
         humanVsAIGameLoop();
@@ -213,6 +215,7 @@ void MenuController::newGame() {
         // AI vs AI
         gameState = std::make_unique<GameState>();
         gameState->initializeStandardGame();
+        currentGameMode = GameMode::AI_VS_AI;
         std::cout << "New AI vs AI game started. White AI goes first.\n";
         aiVsAiGameLoop();
     } else if (input == "4") {
@@ -260,17 +263,7 @@ void MenuController::loadGame() {
         }
         
         std::string selectedGame = savedGames[choice - 1];
-        auto loadedGame = serializer.loadGame(selectedGame);
-        
-        if (loadedGame) {
-            gameState = std::move(loadedGame);
-            std::cout << "Game loaded successfully.\n";
-            gameLoop();
-        } else {
-            std::cout << "Failed to load game.\n";
-            std::cout << "Press Enter to continue...";
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
+        loadAndRunGame(selectedGame);
     } catch (const std::exception& e) {
         std::cout << "Invalid input: " << e.what() << "\n";
         std::cout << "Press Enter to continue...";
@@ -321,7 +314,7 @@ void MenuController::saveGame() {
         }
     }
     
-    if (serializer.saveGame(*gameState, input)) {
+    if (serializer.saveGame(*gameState, currentGameMode, input)) {
         std::cout << "Game saved successfully as '" << input << "'.\n";
     } else {
         std::cout << "Failed to save game.\n";
@@ -368,7 +361,7 @@ void MenuController::saveCurrentGame() {
         }
     }
     
-    if (serializer.saveGame(*gameState, input)) {
+    if (serializer.saveGame(*gameState, currentGameMode, input)) {
         std::cout << "Game saved successfully as '" << input << "'.\n";
     } else {
         std::cout << "Failed to save game.\n";
@@ -512,6 +505,36 @@ void MenuController::makeAIMove() {
         std::cout << "AI made move: " << aiMove.toString() << "\n";
     } catch (const std::exception& e) {
         std::cout << "AI error: " << e.what() << "\n";
+    }
+}
+
+void MenuController::loadAndRunGame(const std::string& filename) {
+    Serializer serializer;
+    auto result = serializer.loadGameWithMode(filename);
+    
+    if (!result.first) {
+        std::cout << "Failed to load game.\n";
+        std::cout << "Press Enter to continue...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return;
+    }
+    
+    gameState = std::move(result.first);
+    currentGameMode = result.second;
+    
+    std::cout << "Game loaded successfully. Game mode: " << gameModeToString(currentGameMode) << "\n";
+    
+    // Run appropriate game loop based on saved game mode
+    switch (currentGameMode) {
+        case GameMode::HUMAN_VS_HUMAN:
+            gameLoop();
+            break;
+        case GameMode::HUMAN_VS_AI:
+            humanVsAIGameLoop();
+            break;
+        case GameMode::AI_VS_AI:
+            aiVsAiGameLoop();
+            break;
     }
 }
 

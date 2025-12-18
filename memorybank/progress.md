@@ -19,7 +19,14 @@
    - **Complete Game Flow**: Human vs Human, Human vs AI, and AI vs AI gameplay modes
    - **Integration**: All Phase 2 features working together seamlessly
 
-3. **Save Functionality Fix (Dec 18, 2025)**:
+3. **Game Mode Save/Load Feature (Dec 18, 2025)**:
+   - **Game mode tracking**: Added GameMode enum (HUMAN_VS_HUMAN, HUMAN_VS_AI, AI_VS_AI)
+   - **Save with mode**: Save files now include game mode information in JSON format
+   - **Load with mode**: Games load with correct game mode and resume in appropriate mode
+   - **Backward compatibility**: Old save files without game_mode field default to HUMAN_VS_HUMAN
+   - **Testing**: Comprehensive tests verify all three modes save/load correctly
+
+4. **Save Functionality Fix (Dec 18, 2025)**:
    - **Save during gameplay**: Users can now type "save" or "s" during gameplay to save current game
    - **Exit behavior**: "exit" command returns to main menu instead of terminating program
    - **Serializer fixes**: Proper board serialization (100-character string) and deserialization

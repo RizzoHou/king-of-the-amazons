@@ -9,9 +9,9 @@
 
 namespace amazons {
 
-bool Serializer::saveGame(const GameState& gameState, const std::string& filename) const {
+bool Serializer::saveGame(const GameState& gameState, GameMode gameMode, const std::string& filename) const {
     try {
-        std::string json = serializeGameState(gameState);
+        std::string json = serializeGameState(gameState, gameMode);
         std::string fullPath = getFullPath(filename);
         
         // Create save directory if it doesn't exist
@@ -78,6 +78,41 @@ std::unique_ptr<GameState> Serializer::loadGame(const std::string& filename) con
     }
 }
 
+std::pair<std::unique_ptr<GameState>, GameMode> Serializer::loadGameWithMode(const std::string& filename) const {
+    try {
+        std::string fullPath = getFullPath(filename);
+        
+        // Check if file exists
+        std::ifstream testFile(fullPath);
+        if (!testFile.good()) {
+            std::cerr << "Error: Save file does not exist: " << fullPath << std::endl;
+            return {nullptr, GameMode::HUMAN_VS_HUMAN};
+        }
+        testFile.close();
+        
+        std::ifstream file(fullPath);
+        if (!file.is_open()) {
+            std::cerr << "Error: Could not open file for reading: " << fullPath << std::endl;
+            return {nullptr, GameMode::HUMAN_VS_HUMAN};
+        }
+        
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        std::string json = buffer.str();
+        file.close();
+        
+        auto result = deserializeGameStateWithMode(json);
+        if (result.first) {
+            std::cout << "Game loaded from: " << fullPath << std::endl;
+        }
+        
+        return result;
+    } catch (const std::exception& e) {
+        std::cerr << "Error loading game: " << e.what() << std::endl;
+        return {nullptr, GameMode::HUMAN_VS_HUMAN};
+    }
+}
+
 std::vector<std::string> Serializer::getSavedGames() const {
     std::vector<std::string> savedGames;
     
@@ -134,7 +169,7 @@ bool Serializer::deleteSave(const std::string& filename) const {
     }
 }
 
-std::string Serializer::serializeGameState(const GameState& gameState) const {
+std::string Serializer::serializeGameState(const GameState& gameState, GameMode gameMode) const {
     std::stringstream ss;
     
     ss << "{\n";
@@ -162,7 +197,16 @@ std::string Serializer::serializeGameState(const GameState& gameState) const {
        << (gameState.getCurrentPlayer() == Player::WHITE ? "white" : "black") << "\",\n";
     
     // Serialize turn number
-    ss << "  \"" << FIELD_TURN_NUMBER << "\": " << gameState.getTurnNumber() << "\n";
+    ss << "  \"" << FIELD_TURN_NUMBER << "\": " << gameState.getTurnNumber() << ",\n";
+    
+    // Serialize game mode
+    ss << "  \"" << FIELD_GAME_MODE << "\": \"";
+    switch (gameMode) {
+        case GameMode::HUMAN_VS_HUMAN: ss << "human_vs_human"; break;
+        case GameMode::HUMAN_VS_AI: ss << "human_vs_ai"; break;
+        case GameMode::AI_VS_AI: ss << "ai_vs_ai"; break;
+    }
+    ss << "\"\n";
     
     ss << "}\n";
     
@@ -170,8 +214,14 @@ std::string Serializer::serializeGameState(const GameState& gameState) const {
 }
 
 std::unique_ptr<GameState> Serializer::deserializeGameState(const std::string& json) const {
+    // For backward compatibility, just parse game state without mode
+    auto result = deserializeGameStateWithMode(json);
+    return std::move(result.first);
+}
+
+std::pair<std::unique_ptr<GameState>, GameMode> Serializer::deserializeGameStateWithMode(const std::string& json) const {
     // Simple JSON parsing for our specific format
-    // We expect format: {"board": "..........BB......BB..........WW......WW..........", "current_player": "white", "turn_number": 1}
+    // We expect format: {"board": "..........BB......BB..........WW......WW..........", "current_player": "white", "turn_number": 1, "game_mode": "human_vs_human"}
     
     try {
         // Extract board string
@@ -229,6 +279,26 @@ std::unique_ptr<GameState> Serializer::deserializeGameState(const std::string& j
         std::string turnStr = json.substr(turnStart, turnEnd - turnStart);
         int turnNumber = std::stoi(turnStr);
         
+        // Extract game mode (optional for backward compatibility)
+        GameMode gameMode = GameMode::HUMAN_VS_HUMAN; // Default
+        size_t modeStart = json.find(FIELD_GAME_MODE);
+        if (modeStart != std::string::npos) {
+            modeStart = json.find('"', modeStart + strlen(FIELD_GAME_MODE) + 3);
+            if (modeStart != std::string::npos) {
+                size_t modeEnd = json.find('"', modeStart + 1);
+                if (modeEnd != std::string::npos) {
+                    std::string modeStr = json.substr(modeStart + 1, modeEnd - modeStart - 1);
+                    if (modeStr == "human_vs_human") {
+                        gameMode = GameMode::HUMAN_VS_HUMAN;
+                    } else if (modeStr == "human_vs_ai") {
+                        gameMode = GameMode::HUMAN_VS_AI;
+                    } else if (modeStr == "ai_vs_ai") {
+                        gameMode = GameMode::AI_VS_AI;
+                    }
+                }
+            }
+        }
+        
         // Create board from string
         Board board;
         for (int row = 0; row < Board::SIZE; ++row) {
@@ -249,12 +319,12 @@ std::unique_ptr<GameState> Serializer::deserializeGameState(const std::string& j
         // Create game state with restored board, player, and turn number
         auto gameState = std::make_unique<GameState>(board, currentPlayer, turnNumber);
         
-        return gameState;
+        return {std::move(gameState), gameMode};
         
     } catch (const std::exception& e) {
         std::cerr << "Error parsing JSON: " << e.what() << std::endl;
         std::cerr << "JSON: " << json << std::endl;
-        return nullptr;
+        return {nullptr, GameMode::HUMAN_VS_HUMAN};
     }
 }
 

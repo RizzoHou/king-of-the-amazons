@@ -28,6 +28,13 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Complete Game Flow**: Human vs Human, Human vs AI, and AI vs AI gameplay modes
   - **Integration**: All Phase 2 features working together seamlessly
 
+- **Game Mode Save/Load Feature (Dec 18, 2025)**:
+  - **Game mode tracking**: Added GameMode enum (HUMAN_VS_HUMAN, HUMAN_VS_AI, AI_VS_AI)
+  - **Save with mode**: Save files now include game mode information in JSON format
+  - **Load with mode**: Games load with correct game mode and resume in appropriate mode
+  - **Backward compatibility**: Old save files without game_mode field default to HUMAN_VS_HUMAN
+  - **Testing**: Comprehensive tests verify all three modes save/load correctly
+
 - **Save Functionality Fix (Dec 18, 2025)**:
   - **Save during gameplay**: Users can type "save" or "s" during gameplay to save current game
   - **Exit behavior**: "exit" command returns to main menu instead of terminating program

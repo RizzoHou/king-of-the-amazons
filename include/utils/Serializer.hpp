@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/GameState.hpp"
+#include "core/Player.hpp"  // For GameMode
 #include <string>
 #include <filesystem>
 
@@ -11,10 +12,13 @@ public:
     Serializer() = default;
     
     // Save game state to file
-    bool saveGame(const GameState& gameState, const std::string& filename) const;
+    bool saveGame(const GameState& gameState, GameMode gameMode, const std::string& filename) const;
     
     // Load game state from file
     std::unique_ptr<GameState> loadGame(const std::string& filename) const;
+    
+    // Load game state and game mode from file
+    std::pair<std::unique_ptr<GameState>, GameMode> loadGameWithMode(const std::string& filename) const;
     
     // Get list of saved games
     std::vector<std::string> getSavedGames() const;
@@ -27,8 +31,9 @@ public:
     
 private:
     // Helper methods for JSON serialization
-    std::string serializeGameState(const GameState& gameState) const;
+    std::string serializeGameState(const GameState& gameState, GameMode gameMode) const;
     std::unique_ptr<GameState> deserializeGameState(const std::string& json) const;
+    std::pair<std::unique_ptr<GameState>, GameMode> deserializeGameStateWithMode(const std::string& json) const;
     
     // File operations
     std::string getSaveDirectory() const;
@@ -38,6 +43,7 @@ private:
     static constexpr const char* FIELD_BOARD = "board";
     static constexpr const char* FIELD_CURRENT_PLAYER = "current_player";
     static constexpr const char* FIELD_TURN_NUMBER = "turn_number";
+    static constexpr const char* FIELD_GAME_MODE = "game_mode";
     static constexpr const char* FIELD_MOVE_HISTORY = "move_history";
     static constexpr const char* FIELD_PLAYER_WHITE = "white";
     static constexpr const char* FIELD_PLAYER_BLACK = "black";

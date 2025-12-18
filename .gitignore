@@ -206,6 +206,13 @@ wheels/
 .installed.cfg
 *.egg
 
+# Node.js/NPM
+package-lock.json
+package.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
 # Python
 __pycache__/
 *.py[cod]
