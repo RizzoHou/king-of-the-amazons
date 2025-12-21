@@ -80,39 +80,42 @@ Day 7: Buffer/cleanup and integration testing
 - User-friendly interface with helpful feedback
 - Passes first review session requirements
 
-## Phase 3: Graphical GUI and Features (Week 3: Dec 31, 2025 - Jan 6, 2026)
+## Phase 3: Graphical GUI Improvements (Week 3: Dec 31, 2025 - Jan 6, 2026)
 
 ### Objectives
-- Implement graphical user interface with SFML
-- Add enhanced features (undo/redo, game analysis)
+- Implement pure graphical user interface with SFML in separate window
+- Remove console fallbacks and ensure fully graphical experience
+- Add GUI improvements based on user feedback
 - Optimize performance and user experience
 - Prepare for second review session
 
 ### Key Deliverables
-1. **Graphical GUI Development** (100%)
-   - SFML-based graphical display implementation
-   - GraphicalDisplay class with window management
-   - Mouse-based interaction for move selection
-   - Visual board rendering with pieces and arrows
+1. **Pure Graphical GUI Development** (100%)
+   - SFML-based graphical controller implementation (`GraphicalController`)
+   - Separate window with proper state machine
+   - Mouse-based three-step interaction (select queen → select destination → select arrow)
+   - Visual board rendering with pieces, arrows, and color-coded highlights
+   - Mode selection screen with graphical buttons
 
-2. **Enhanced Features** (100%)
-   - Undo/redo functionality with graphical feedback
-   - Game analysis and statistics in graphical interface
-   - Improved user interface with graphical menus
-   - Additional game modes or configurations
+2. **GUI Improvements** (100%)
+   - ESC key behavior fix (return to menu instead of exiting program)
+   - "Continue Previous Game" feature with dynamic button layout
+   - Non-blocking AI moves with 3-second timeout
+   - Sequential move display for clear visual feedback
+   - Updated UI instructions and status messages
 
-3. **Performance Optimization** (100%)
-   - Graphical rendering efficiency improvements
-   - Memory usage optimization for graphical assets
-   - Code refactoring and quality improvements
-   - Dual entry point architecture (console + graphical)
+3. **Enhanced Features Integration** (100%)
+   - Undo functionality integrated with graphical interface (U key)
+   - Game status and analysis in graphical display
+   - Keyboard shortcuts (R for restart, U for undo, ESC for menu)
+   - Dual mode architecture (graphical default, text mode with `--text` flag)
 
 ### Success Criteria
-- Graphical interface provides intuitive gameplay
-- Enhanced features integrated into graphical UI
-- Performance meets targets (rendering within 16ms/frame)
-- Code quality and test coverage improved
-- Ready for comprehensive review
+- Pure graphical interface provides intuitive gameplay without console fallbacks
+- GUI improvements enhance user experience
+- Performance meets targets (rendering within 16ms/frame, 60 FPS)
+- Code quality and test coverage maintained
+- Ready for comprehensive review with graphical demonstration
 
 ## Phase 4: Polish and Finalization (Week 4: Jan 7-10, 2026)
 

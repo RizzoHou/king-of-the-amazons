@@ -315,58 +315,121 @@ private:
 };
 ```
 
-### Graphical Display Interface (SFML-based)
+### Graphical Controller Interface (SFML-based Pure GUI)
 ```cpp
-class GraphicalDisplay : public Display {
+class GraphicalController {
 private:
-    sf::RenderWindow window;
+    enum class SelectionState {
+        NO_SELECTION,
+        AMAZON_SELECTED,
+        MOVE_SELECTED
+    };
+    
+    enum class GameModeGUI {
+        NOT_SELECTED,
+        HUMAN_VS_HUMAN,
+        HUMAN_VS_AI,
+        AI_VS_AI
+    };
+    
+    std::unique_ptr<sf::RenderWindow> window;
     sf::Font font;
-    sf::Texture amazonWhiteTexture;
-    sf::Texture amazonBlackTexture;
-    sf::Texture arrowTexture;
-    sf::Texture boardTexture;
+    std::unique_ptr<GameState> gameState;
+    std::unique_ptr<GameState> savedGameState;
+    GameModeGUI savedGameMode;
+    SelectionState selectionState;
+    Position selectedPosition;
+    Position moveToPosition;
+    std::vector<Position> validMoves;
+    std::vector<Position> validArrowPositions;
+    GameModeGUI currentGameMode;
+    bool showModeSelection;
+    std::string statusMessage;
+    std::unique_ptr<BasicAI> ai;
     
-    const int WINDOW_WIDTH = 800;
-    const int WINDOW_HEIGHT = 800;
-    const int CELL_SIZE = 70;
-    const int BOARD_MARGIN = 50;
-    
-    std::optional<Position> lastMouseClick;
+    // Constants
+    static const int WINDOW_WIDTH = 800;
+    static const int WINDOW_HEIGHT = 800;
+    static const int CELL_SIZE = 70;
+    static const int BOARD_OFFSET_X = 50;
+    static const int BOARD_OFFSET_Y = 100;
+    static const int BOARD_SIZE = CELL_SIZE * Board::SIZE;
     
 public:
-    GraphicalDisplay();
-    ~GraphicalDisplay();
+    GraphicalController();
+    ~GraphicalController();
     
-    void initializeWindow(int width, int height) override;
-    void closeWindow() override;
-    bool isWindowOpen() const override;
-    void processEvents() override;
-    
-    void showBoard(const Board& board) override;
-    void showMessage(const std::string& message) override;
-    void showMenu(const std::vector<std::string>& options) override;
-    void showGameStatus(const GameState& state) override;
-    void showAnalysis(const GameAnalyzer::AnalysisResult& analysis) override;
-    
-    std::string getInput() override;
-    bool hasMouseInput() const override { return true; }
-    std::optional<Position> getMouseClick() override;
+    bool initialize();
+    void run();
     
 private:
-    void drawBoard(const Board& board);
-    void drawPieces(const Board& board);
-    void drawGrid();
-    void drawCoordinates();
-    void drawMessage(const std::string& message);
-    void drawMenu(const std::vector<std::string>& options);
-    
+    void handleEvents();
+    void handleMouseClick(int x, int y);
+    void handleModeSelection(int x, int y);
+    void handleKeyPress(sf::Keyboard::Key key);
+    void continueGame();
+    void startGame(GameModeGUI mode);
+    void selectAmazon(const Position& pos);
+    void selectMoveDestination(const Position& pos);
+    void selectArrowDestination(const Position& pos);
+    void makeMove(const Move& move);
+    void processAIMove();
+    void resetSelection();
+    void updateStatusMessage();
+    void render();
+    void drawModeSelection();
+    void drawBoard();
+    void drawPieces();
+    void drawHighlights();
+    void drawUI();
     sf::Color getCellColor(int row, int col) const;
-    sf::Vector2f getCellPosition(int row, int col) const;
-    std::optional<Position> getCellFromMouse(int mouseX, int mouseY) const;
-    
-    bool loadTextures();
-    bool loadFont();
+    std::optional<Position> getBoardPosition(int mouseX, int mouseY) const;
+    bool loadResources();
 };
+```
+
+### Dual Mode Architecture
+```cpp
+// Main entry point with command-line argument parsing
+int main(int argc, char* argv[]) {
+    // Check command line arguments for mode preference
+    enum class RunMode { GRAPHICAL, TEXT };
+    RunMode runMode = RunMode::GRAPHICAL; // Default to graphical
+    
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if (arg == "--graphical" || arg == "-g") {
+            runMode = RunMode::GRAPHICAL;
+        } else if (arg == "--text" || arg == "-t") {
+            runMode = RunMode::TEXT;
+        } else if (arg == "--help" || arg == "-h") {
+            // Show help
+            return 0;
+        }
+    }
+    
+    if (runMode == RunMode::GRAPHICAL) {
+#ifdef WITH_GRAPHICAL_GUI
+        std::cout << "Starting pure graphical interface...\n";
+        amazons::GraphicalController controller;
+        controller.run();
+        return 0;
+#else
+        std::cout << "Graphical interface not available. Falling back to text interface.\n";
+        runMode = RunMode::TEXT;
+#endif
+    }
+    
+    // Text mode
+    if (runMode == RunMode::TEXT) {
+        auto display = std::make_unique<amazons::TextDisplay>();
+        amazons::MenuController controller(std::move(display));
+        controller.run();
+        return 0;
+    }
+    
+    return 0;
+}
 ```
 
 ### Menu System

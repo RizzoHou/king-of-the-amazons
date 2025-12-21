@@ -68,6 +68,7 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 - **Severity**: Medium (affects Phase 3 deliverables but not core requirements)
 - **Probability**: Likely (graphical programming has learning curve)
 - **Impact**: Delayed graphical interface, potential performance issues, reduced user experience quality
+- **Current Status**: ✅ MITIGATED - Pure graphical GUI (`GraphicalController`) implemented with separate window, mouse interaction, and visual feedback. Console fallbacks removed for pure graphical experience.
 
 #### T7: Save/Load System Reliability with Enhanced Features
 - **Description**: Game state serialization/deserialization fails or corrupts data, especially with move history
@@ -100,6 +101,7 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 - **Severity**: Medium (affects Phase 3 deliverables but core game remains functional)
 - **Probability**: Likely (graphical programming often takes longer than expected)
 - **Impact**: Reduced graphical feature set, potential need to fall back to text interface
+- **Current Status**: ✅ MITIGATED - Graphical GUI completed on schedule with `GraphicalController`. Dual mode architecture allows fallback to text interface if needed.
 
 #### S5: Enhanced Features Time Consumption
 - **Description**: UI improvements and additional features take more time than allocated
@@ -201,6 +203,8 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 4. **Cross-Platform Testing**: Test graphical interface on target platforms early
 5. **Performance Monitoring**: Profile graphical rendering for efficiency
 6. **Fallback Option**: Maintain text interface as backup
+7. **Pure Graphical Controller**: Implement `GraphicalController` with separate window and no console fallbacks
+8. **GUI Improvements**: Add features like ESC key behavior fix, "Continue Previous Game", non-blocking AI moves
 
 #### T7 Mitigation: Save/Load Reliability
 1. **Robust Serialization**: Use well-tested JSON library (nlohmann/json)
@@ -243,6 +247,8 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 4. **Time Boxing**: Allocate specific time for graphical features with fallback plan
 5. **Cross-Platform Testing**: Test graphical interface early on target platforms
 6. **Documentation**: Good documentation of graphical implementation decisions
+7. **GUI Improvements Focus**: Prioritize user-requested improvements (pure graphical window, no console fallbacks)
+8. **Incremental Enhancement**: Build upon existing `GraphicalController` with targeted improvements
 
 #### S5 Mitigation: Enhanced Features Time
 1. **Realistic Estimation**: Allocate buffer time for UI/UX work
@@ -342,6 +348,7 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 4. Document graphical limitations and future improvements
 5. Seek SFML community resources or TA assistance
 **Fallback Goal**: Functional graphical interface with core gameplay features
+**Current Status**: ✅ RESOLVED - Pure graphical GUI implemented successfully with `GraphicalController`. All core gameplay features working in graphical mode.
 
 #### Scenario 4: Enhanced Features Too Complex (Week 3)
 **Trigger**: Undo/redo or analysis features causing significant delays
