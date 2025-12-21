@@ -19,7 +19,12 @@ king-of-the-amazons/
 │   ├── project_setup.md
 │   ├── version_control.md
 │   └── workflows/
-│       └── manual_update.md      # Game manual update workflow
+│       ├── git_status_clear.md   # Clean git working directory
+│       ├── implementation_plan_update.md # Update implementation plan docs
+│       ├── manual_update.md      # Game manual update workflow
+│       ├── memory_bank_update.md # Update memory bank documentation
+│       ├── readme_update.md      # Update README documentation
+│       └── task_completion.md    # Comprehensive task completion
 ├── docs/                          # Documentation
 │   ├── implementation/            # Implementation plan (this directory)
 │   │   ├── 01_project_structure.md

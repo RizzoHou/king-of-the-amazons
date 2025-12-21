@@ -78,7 +78,8 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 
 - **Project Rules and Documentation**:
   - **Task Preparation Rule**: Added to `.clinerules/project_setup.md` requiring reading of `docs/implementation/`, `memorybank/`, `README.md`, and other critical files before starting new tasks
-  - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, and manual maintenance
+  - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, manual maintenance, and implementation plan updates
+  - **Implementation Plan Update Workflow**: Created `.clinerules/workflows/implementation_plan_update.md` to ensure `docs/implementation/` stays synchronized with project state
   - **Comprehensive Coverage**: Rules cover project setup, development workflow, documentation, version control, and memory bank management
 
 ### What's Next (Phase 4: Polish and Finalization)
