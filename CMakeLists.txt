@@ -30,6 +30,16 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   endif()
 endif()
 
+# Option for graphical interface
+option(WITH_GRAPHICAL_GUI "Build with SFML-based graphical GUI" ON)
+
+# Find SFML if graphical GUI is enabled
+if(WITH_GRAPHICAL_GUI)
+  find_package(SFML 3.0 COMPONENTS Graphics Window System REQUIRED)
+  message(STATUS "SFML found: ${SFML_VERSION}")
+  add_definitions(-DWITH_GRAPHICAL_GUI)
+endif()
+
 # Google Test setup
 enable_testing()
 
@@ -51,6 +61,14 @@ add_executable(amazons src/main.cpp)
 
 # Link game_components library
 target_link_libraries(amazons game_components)
+
+# Link SFML if graphical GUI is enabled
+if(WITH_GRAPHICAL_GUI)
+  target_link_libraries(amazons sfml-graphics sfml-window sfml-system)
+  target_include_directories(amazons PRIVATE /opt/homebrew/Cellar/sfml/3.0.2/include)
+  target_link_directories(amazons PRIVATE /opt/homebrew/Cellar/sfml/3.0.2/lib)
+  message(STATUS "Linking with SFML libraries")
+endif()
 
 # Target properties
 set_target_properties(amazons PROPERTIES

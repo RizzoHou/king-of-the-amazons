@@ -1,4 +1,8 @@
 #include "ui/MenuController.hpp"
+#include "ui/TextDisplay.hpp"
+#ifdef WITH_GRAPHICAL_GUI
+#include "ui/GraphicalDisplay.hpp"
+#endif
 #include "utils/Serializer.hpp"
 #include "ai/BasicAI.hpp"
 #include <iostream>
@@ -9,7 +13,30 @@
 
 namespace amazons {
 
-MenuController::MenuController() : gameState(std::make_unique<GameState>()), currentGameMode(GameMode::HUMAN_VS_HUMAN) {}
+MenuController::MenuController() 
+    : gameState(std::make_unique<GameState>()), 
+      display(createDisplay()),
+      currentGameMode(GameMode::HUMAN_VS_HUMAN) {}
+
+MenuController::MenuController(std::unique_ptr<Display> display)
+    : gameState(std::make_unique<GameState>()),
+      display(std::move(display)),
+      currentGameMode(GameMode::HUMAN_VS_HUMAN) {}
+
+MenuController::~MenuController() = default;
+
+std::unique_ptr<Display> MenuController::createDisplay(bool useGraphical) {
+    if (useGraphical) {
+#ifdef WITH_GRAPHICAL_GUI
+        return std::make_unique<GraphicalDisplay>();
+#else
+        std::cout << "Warning: Graphical display requested but not available. Using text display.\n";
+        return std::make_unique<TextDisplay>();
+#endif
+    } else {
+        return std::make_unique<TextDisplay>();
+    }
+}
 
 void MenuController::run() {
     mainMenu();
@@ -37,7 +64,7 @@ void MenuController::simpleGameLoop() {
     
     try {
         Player winner = gameState->getWinner();
-        std::cout << display.playerToString(winner) << " wins!\n";
+        std::cout << Display::playerToString(winner) << " wins!\n";
     } catch (const std::exception& e) {
         std::cout << "Error determining winner: " << e.what() << "\n";
     }
@@ -47,23 +74,33 @@ void MenuController::simpleGameLoop() {
 }
 
 void MenuController::showGameStatus() const {
-    if (!gameState) return;
+    if (!gameState || !display) return;
     
-    display.displayGameState(*gameState);
+    display->showGameState(*gameState);
 }
 
 bool MenuController::playerTurn() {
-    if (!gameState || gameState->isGameOver()) return true;
+    if (!gameState || !display || gameState->isGameOver()) return true;
     
     Player current = gameState->getCurrentPlayer();
-    std::cout << display.playerToString(current) << "'s turn.\n";
+    display->showMessage(Display::playerToString(current) + "'s turn.");
     
     return makePlayerMove();
 }
 
 bool MenuController::makePlayerMove() {
-    if (!gameState) return true;
+    if (!gameState || !display) return true;
     
+    // Try to get move interactively (for graphical display)
+    auto move = display->getMoveInteractively(*gameState);
+    if (move.has_value()) {
+        // Graphical move was successful
+        gameState->makeMove(move.value());
+        display->showMessage("Move made: " + move->toString());
+        return true;
+    }
+    
+    // Fall back to text input
     while (true) {
         try {
             std::cout << "Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col\n";
@@ -85,12 +122,13 @@ bool MenuController::makePlayerMove() {
                 // Show legal moves
                 auto moves = gameState->getLegalMoves();
                 if (moves.empty()) {
-                    std::cout << "No legal moves available.\n";
+                    display->showMessage("No legal moves available.");
                 } else {
-                    std::cout << "Legal moves:\n";
+                    std::string message = "Legal moves:\n";
                     for (const auto& move : moves) {
-                        std::cout << "  " << move.toString() << "\n";
+                        message += "  " + move.toString() + "\n";
                     }
+                    display->showMessage(message);
                 }
                 continue;
             }
@@ -98,10 +136,10 @@ bool MenuController::makePlayerMove() {
             if (input == "undo" || input == "u") {
                 if (gameState->canUndo()) {
                     gameState->undoLastMove();
-                    std::cout << "Last move undone.\n";
+                    display->showMessage("Last move undone.");
                     showGameStatus();
                 } else {
-                    std::cout << "No moves to undo.\n";
+                    display->showMessage("No moves to undo.");
                 }
                 continue;
             }
@@ -123,19 +161,19 @@ bool MenuController::makePlayerMove() {
                 Move move = Move::fromString(input);
                 if (gameState->isValidMove(move)) {
                     gameState->makeMove(move);
-                    std::cout << "Move made: " << move.toString() << "\n";
+                    display->showMessage("Move made: " + move.toString());
                     return true; // Move successful
                 } else {
-                    std::cout << "Invalid move: Move is not legal in current position.\n";
+                    display->showMessage("Invalid move: Move is not legal in current position.");
                 }
             } catch (const std::exception& e) {
-                std::cout << "Invalid move format: " << e.what() << "\n";
-                std::cout << "Please use format: from_row from_col to_row to_col arrow_row arrow_col (6 numbers).\n";
+                display->showMessage("Invalid move format: " + std::string(e.what()));
+                display->showMessage("Please use format: from_row from_col to_row to_col arrow_row arrow_col (6 numbers).");
             }
             
         } catch (const std::exception& e) {
-            std::cout << "Error: " << e.what() << "\n";
-            std::cout << "Please try again.\n";
+            display->showMessage("Error: " + std::string(e.what()));
+            display->showMessage("Please try again.");
         }
     }
 }
@@ -386,7 +424,7 @@ void MenuController::gameLoop() {
     
     try {
         Player winner = gameState->getWinner();
-        std::cout << display.playerToString(winner) << " wins!\n";
+        std::cout << Display::playerToString(winner) << " wins!\n";
     } catch (const std::exception& e) {
         std::cout << "Error determining winner: " << e.what() << "\n";
     }
@@ -405,7 +443,7 @@ void MenuController::humanVsAIGameLoop() {
         showGameStatus();
         
         Player current = gameState->getCurrentPlayer();
-        std::cout << display.playerToString(current) << "'s turn.\n";
+        std::cout << Display::playerToString(current) << "'s turn.\n";
         
         if (current == Player::WHITE) {
             // Human turn (White)
@@ -435,7 +473,7 @@ void MenuController::humanVsAIGameLoop() {
     
     try {
         Player winner = gameState->getWinner();
-        std::cout << display.playerToString(winner) << " wins!\n";
+        std::cout << Display::playerToString(winner) << " wins!\n";
     } catch (const std::exception& e) {
         std::cout << "Error determining winner: " << e.what() << "\n";
     }
@@ -456,7 +494,7 @@ void MenuController::aiVsAiGameLoop() {
         showGameStatus();
         
         Player current = gameState->getCurrentPlayer();
-        std::cout << display.playerToString(current) << " AI's turn.\n";
+        std::cout << Display::playerToString(current) << " AI's turn.\n";
         
         std::cout << "AI is thinking...\n";
         std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // Delay for visibility
@@ -484,7 +522,7 @@ void MenuController::aiVsAiGameLoop() {
         std::cout << "Game Over! ";
         try {
             Player winner = gameState->getWinner();
-            std::cout << display.playerToString(winner) << " wins!\n";
+            std::cout << Display::playerToString(winner) << " wins!\n";
         } catch (const std::exception& e) {
             std::cout << "Error determining winner: " << e.what() << "\n";
         }

@@ -80,36 +80,37 @@ Day 7: Buffer/cleanup and integration testing
 - User-friendly interface with helpful feedback
 - Passes first review session requirements
 
-## Phase 3: Advanced AI and Features (Week 3: Dec 31, 2025 - Jan 6, 2026)
+## Phase 3: Graphical GUI and Features (Week 3: Dec 31, 2025 - Jan 6, 2026)
 
 ### Objectives
-- Implement advanced AI algorithms
+- Implement graphical user interface with SFML
 - Add enhanced features (undo/redo, game analysis)
 - Optimize performance and user experience
 - Prepare for second review session
 
 ### Key Deliverables
-1. **Advanced AI Development** (100%)
-   - Minimax with alpha-beta pruning
-   - Improved heuristic evaluation functions
-   - Depth-limited search with move ordering
-   - Performance optimization
+1. **Graphical GUI Development** (100%)
+   - SFML-based graphical display implementation
+   - GraphicalDisplay class with window management
+   - Mouse-based interaction for move selection
+   - Visual board rendering with pieces and arrows
 
 2. **Enhanced Features** (100%)
-   - Undo/redo functionality
-   - Game analysis and statistics
-   - Improved user interface
+   - Undo/redo functionality with graphical feedback
+   - Game analysis and statistics in graphical interface
+   - Improved user interface with graphical menus
    - Additional game modes or configurations
 
 3. **Performance Optimization** (100%)
-   - Move generation efficiency improvements
-   - Memory usage optimization
+   - Graphical rendering efficiency improvements
+   - Memory usage optimization for graphical assets
    - Code refactoring and quality improvements
+   - Dual entry point architecture (console + graphical)
 
 ### Success Criteria
-- AI makes competent strategic moves
-- Enhanced features improve user experience
-- Performance meets targets (moves within 2 seconds)
+- Graphical interface provides intuitive gameplay
+- Enhanced features integrated into graphical UI
+- Performance meets targets (rendering within 16ms/frame)
 - Code quality and test coverage improved
 - Ready for comprehensive review
 
@@ -169,11 +170,11 @@ Day 5-6: Greedy AI implementation
 Day 7: Testing and preparation for first review
 ```
 
-### Week 3: Advanced AI and Features
+### Week 3: Graphical GUI and Features
 ```
-Day 1-2: Minimax algorithm implementation
-Day 3-4: Alpha-beta pruning and optimization
-Day 5-6: Enhanced features (undo/redo, analysis)
+Day 1-2: SFML setup and basic window implementation
+Day 3-4: Graphical board rendering and mouse interaction
+Day 5-6: Enhanced features integration in graphical UI
 Day 7: Performance tuning and documentation
 ```
 
@@ -201,9 +202,9 @@ Day 7: Final preparation and submission
    - ✓ Ready for first review session
 
 3. **Phase 3 Complete**:
-   - ✓ Advanced AI makes competent moves
-   - ✓ Enhanced features implemented
-   - ✓ Performance optimized
+   - ✓ Graphical interface provides intuitive gameplay
+   - ✓ Enhanced features implemented in graphical UI
+   - ✓ Performance optimized for graphical rendering
    - ✓ Ready for comprehensive review
 
 4. **Phase 4 Complete**:
@@ -231,9 +232,10 @@ Day 7: Final preparation and submission
 - **AI basic functionality**: Mitigated by starting with simple greedy algorithm
 
 ### Week 3 Risks
-- **AI performance issues**: Mitigated by algorithm optimization
-- **Feature complexity**: Mitigated by prioritizing core enhancements
+- **GUI implementation complexity**: Mitigated by using SFML library
+- **Feature integration complexity**: Mitigated by prioritizing core graphical gameplay
 - **Time management**: Mitigated by strict schedule adherence
+- **Cross-platform graphical issues**: Mitigated by testing on target platforms
 
 ### Week 4 Risks
 - **Testing completeness**: Mitigated by early test development
@@ -261,10 +263,10 @@ Day 7: Final preparation and submission
 - Explain project structure and progress
 
 ### Second Review Session (Jan 9)
-- Demonstrate complete game with advanced AI
-- Show enhanced features (undo/redo, analysis)
+- Demonstrate complete game with graphical interface
+- Show enhanced features (undo/redo, analysis) in graphical UI
 - Present performance characteristics
-- Explain algorithm implementation
+- Explain graphical implementation and architecture
 
 ### Final Review Session (Jan 10)
 - Final comprehensive demonstration
@@ -277,7 +279,7 @@ Day 7: Final preparation and submission
 ### Weekly Checkpoints
 1. **Week 1**: Project compiles, basic components work, human vs human playable
 2. **Week 2**: Complete game flow, save/load functional, basic AI working
-3. **Week 3**: Advanced AI operational, enhanced features implemented
+3. **Week 3**: Graphical interface operational, enhanced features implemented in GUI
 4. **Week 4**: All requirements met, polished interface, ready for submission
 
 ### Quality Gates

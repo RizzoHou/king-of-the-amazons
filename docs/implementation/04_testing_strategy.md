@@ -457,6 +457,65 @@ TEST(ErrorHandlingSystem, ComprehensiveErrorRecovery) {
 }
 ```
 
+#### Graphical Interface Tests
+```cpp
+TEST(GraphicalInterfaceSystem, BasicWindowOperations) {
+    GraphicalDisplay display;
+    
+    // Test window initialization
+    display.initializeWindow(800, 800);
+    EXPECT_TRUE(display.isWindowOpen());
+    
+    // Test event processing
+    display.processEvents();
+    EXPECT_TRUE(display.isWindowOpen());
+    
+    // Test mouse input capability
+    EXPECT_TRUE(display.hasMouseInput());
+    
+    // Test window closure
+    display.closeWindow();
+    EXPECT_FALSE(display.isWindowOpen());
+}
+
+TEST(GraphicalInterfaceSystem, BoardRendering) {
+    GraphicalDisplay display;
+    Board board;
+    board.initializeStandardPosition();
+    
+    display.initializeWindow(800, 800);
+    
+    // Test board rendering (visual test would be manual, but we can test function calls)
+    EXPECT_NO_THROW(display.showBoard(board));
+    
+    // Test that board display doesn't crash
+    display.processEvents();
+    
+    display.closeWindow();
+}
+
+TEST(GraphicalInterfaceSystem, MouseInputHandling) {
+    GraphicalDisplay display;
+    display.initializeWindow(800, 800);
+    
+    // Test mouse click position conversion
+    // Simulate click at cell (3, 4) - center of cell
+    int cellX = 50 + 4 * 70 + 35; // BOARD_MARGIN + col * CELL_SIZE + CELL_SIZE/2
+    int cellY = 50 + 3 * 70 + 35; // BOARD_MARGIN + row * CELL_SIZE + CELL_SIZE/2
+    
+    // Note: Actual mouse simulation would require mocking SFML
+    // This test would verify the conversion logic works
+    auto maybePos = display.getCellFromMouse(cellX, cellY);
+    EXPECT_TRUE(maybePos.has_value());
+    if (maybePos.has_value()) {
+        EXPECT_EQ(maybePos->row, 3);
+        EXPECT_EQ(maybePos->col, 4);
+    }
+    
+    display.closeWindow();
+}
+```
+
 ## Performance Testing
 
 ### Benchmark Tests

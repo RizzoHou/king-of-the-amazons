@@ -2,7 +2,7 @@
 
 #include "core/GameState.hpp"
 #include "core/Player.hpp" // For GameMode
-#include "ui/TextDisplay.hpp"
+#include "ui/Display.hpp"
 #include <memory>
 
 namespace amazons {
@@ -10,13 +10,18 @@ namespace amazons {
 class MenuController {
 public:
     MenuController();
+    explicit MenuController(std::unique_ptr<Display> display);
+    ~MenuController();
     
     void run();
     
 private:
     std::unique_ptr<GameState> gameState;
-    TextDisplay display;
+    std::unique_ptr<Display> display;
     GameMode currentGameMode;
+    
+    // Factory method to create appropriate display
+    static std::unique_ptr<Display> createDisplay(bool useGraphical = false);
     
     // Main menu
     void mainMenu();

@@ -256,6 +256,40 @@ public:
 
 ## User Interface Specifications
 
+### Display Interface (Abstract Base Class)
+```cpp
+class Display {
+public:
+    virtual ~Display() = default;
+    
+    // Core display methods
+    virtual void showBoard(const Board& board) = 0;
+    virtual void showMessage(const std::string& message) = 0;
+    virtual void showMenu(const std::vector<std::string>& options) = 0;
+    virtual void showGameStatus(const GameState& state) = 0;
+    virtual void showAnalysis(const GameAnalyzer::AnalysisResult& analysis) = 0;
+    
+    // Input handling
+    virtual std::string getInput() = 0;
+    virtual bool hasMouseInput() const = 0;
+    virtual std::optional<Position> getMouseClick() = 0;
+    
+    // Window management (for graphical displays)
+    virtual void initializeWindow(int width, int height) { }
+    virtual void closeWindow() { }
+    virtual bool isWindowOpen() const { return true; }
+    virtual void processEvents() { }
+    
+    // Factory method
+    static std::unique_ptr<Display> create(DisplayType type);
+};
+
+enum class DisplayType {
+    TEXT,
+    GRAPHICAL
+};
+```
+
 ### Text Display Interface
 ```cpp
 class TextDisplay : public Display {
@@ -272,10 +306,66 @@ public:
     void showGameStatus(const GameState& state) override;
     void showAnalysis(const GameAnalyzer::AnalysisResult& analysis) override;
     std::string getInput() override;
+    bool hasMouseInput() const override { return false; }
+    std::optional<Position> getMouseClick() override { return std::nullopt; }
     
 private:
     std::string cellToString(Board::Cell cell) const;
     void printBoardWithCoordinates(const Board& board);
+};
+```
+
+### Graphical Display Interface (SFML-based)
+```cpp
+class GraphicalDisplay : public Display {
+private:
+    sf::RenderWindow window;
+    sf::Font font;
+    sf::Texture amazonWhiteTexture;
+    sf::Texture amazonBlackTexture;
+    sf::Texture arrowTexture;
+    sf::Texture boardTexture;
+    
+    const int WINDOW_WIDTH = 800;
+    const int WINDOW_HEIGHT = 800;
+    const int CELL_SIZE = 70;
+    const int BOARD_MARGIN = 50;
+    
+    std::optional<Position> lastMouseClick;
+    
+public:
+    GraphicalDisplay();
+    ~GraphicalDisplay();
+    
+    void initializeWindow(int width, int height) override;
+    void closeWindow() override;
+    bool isWindowOpen() const override;
+    void processEvents() override;
+    
+    void showBoard(const Board& board) override;
+    void showMessage(const std::string& message) override;
+    void showMenu(const std::vector<std::string>& options) override;
+    void showGameStatus(const GameState& state) override;
+    void showAnalysis(const GameAnalyzer::AnalysisResult& analysis) override;
+    
+    std::string getInput() override;
+    bool hasMouseInput() const override { return true; }
+    std::optional<Position> getMouseClick() override;
+    
+private:
+    void drawBoard(const Board& board);
+    void drawPieces(const Board& board);
+    void drawGrid();
+    void drawCoordinates();
+    void drawMessage(const std::string& message);
+    void drawMenu(const std::vector<std::string>& options);
+    
+    sf::Color getCellColor(int row, int col) const;
+    sf::Vector2f getCellPosition(int row, int col) const;
+    std::optional<Position> getCellFromMouse(int mouseX, int mouseY) const;
+    
+    bool loadTextures();
+    bool loadFont();
 };
 ```
 
@@ -366,12 +456,17 @@ private:
 - **State Evaluation**: ≤ 10ms per evaluation
 - **Save/Load Operations**: ≤ 1 second for typical game state
 - **Undo/Redo Operations**: ≤ 50ms per operation
+- **Graphical Rendering**: ≤ 16ms per frame (60 FPS)
+- **Mouse Input Response**: ≤ 50ms for click processing
+- **Window Resize/Update**: ≤ 100ms for complete redraw
 
 ### Memory Constraints
 - **Game State**: ≤ 1 MB per state
 - **Search Tree**: ≤ 100 MB maximum during AI search
 - **Save Files**: ≤ 10 KB per saved game
 - **History Storage**: ≤ 10 MB for undo/redo and replay systems
+- **Graphical Assets**: ≤ 50 MB for textures and fonts
+- **Window Buffer**: ≤ 10 MB for frame buffer
 
 ### Computational Complexity
 - **Move Generation**: O(n²) where n is board size (10x10)
@@ -474,6 +569,7 @@ public:
 ### Dependencies
 - **Required**: C++17 standard library
 - **Optional**: nlohmann/json for JSON serialization
+- **Graphical**: SFML 2.5 (Graphics, Window, System modules)
 - **Testing**: Google Test framework
 - **Build**: CMake ≥ 3.16
 

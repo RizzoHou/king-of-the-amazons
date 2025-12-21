@@ -2,28 +2,14 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <limits>
 
 namespace amazons {
 
-std::string TextDisplay::cellToString(Board::Cell cell) {
-    switch (cell) {
-        case Board::Cell::EMPTY: return ".";
-        case Board::Cell::ARROW: return "X";
-        case Board::Cell::WHITE_AMAZON: return "W";
-        case Board::Cell::BLACK_AMAZON: return "B";
-        default: return "?";
-    }
-}
+// Note: cellToString and playerToString are now static methods in Display class
+// We'll use Display::cellToString() and Display::playerToString() instead
 
-std::string TextDisplay::playerToString(Player player) {
-    switch (player) {
-        case Player::WHITE: return "White";
-        case Player::BLACK: return "Black";
-        default: return "Unknown";
-    }
-}
-
-void TextDisplay::displayBoard(const Board& board) const {
+void TextDisplay::showBoard(const Board& board) {
     displayBoardWithCoordinates(board);
 }
 
@@ -49,18 +35,18 @@ void TextDisplay::displayBoardWithCoordinates(const Board& board) const {
     std::cout << "\n\n";
 }
 
-void TextDisplay::displayGameState(const GameState& state) const {
+void TextDisplay::showGameState(const GameState& state) {
     std::cout << "=== King of the Amazons ===\n";
-    displayTurnNumber(state.getTurnNumber());
-    displayCurrentPlayer(state.getCurrentPlayer());
-    displayBoard(state.getBoard());
+    showTurnNumber(state.getTurnNumber());
+    showCurrentPlayer(state.getCurrentPlayer());
+    showBoard(state.getBoard());
     
     if (state.isGameOver()) {
-        displayWinner(state.getWinner());
+        showWinner(state.getWinner());
     }
 }
 
-void TextDisplay::displayLegalMoves(const GameState& state, const Position& from) const {
+void TextDisplay::showLegalMoves(const GameState& state, const Position& from) {
     auto moves = state.getLegalMoves();
     std::vector<Move> movesFromPosition;
     
@@ -80,15 +66,15 @@ void TextDisplay::displayLegalMoves(const GameState& state, const Position& from
     }
 }
 
-void TextDisplay::displayWinner(Player winner) const {
-    std::cout << "Game Over! " << playerToString(winner) << " wins!\n";
+void TextDisplay::showWinner(Player winner) {
+    std::cout << "Game Over! " << Display::playerToString(winner) << " wins!\n";
 }
 
-void TextDisplay::displayCurrentPlayer(Player player) const {
-    std::cout << "Current player: " << playerToString(player) << "\n";
+void TextDisplay::showCurrentPlayer(Player player) {
+    std::cout << "Current player: " << Display::playerToString(player) << "\n";
 }
 
-void TextDisplay::displayTurnNumber(int turn) const {
+void TextDisplay::showTurnNumber(int turn) {
     std::cout << "Turn: " << turn << "\n";
 }
 
@@ -104,7 +90,7 @@ std::string TextDisplay::boardToString(const Board& board) const {
     for (int row = 0; row < Board::SIZE; ++row) {
         oss << row << " ";
         for (int col = 0; col < Board::SIZE; ++col) {
-            oss << " " << cellToString(board.getCell(row, col)) << " ";
+            oss << " " << Display::cellToString(board.getCell(row, col)) << " ";
         }
         oss << " " << row << "\n";
     }
@@ -122,11 +108,11 @@ std::string TextDisplay::gameStateToString(const GameState& state) const {
     std::ostringstream oss;
     
     oss << "Turn: " << state.getTurnNumber() << "\n";
-    oss << "Current player: " << playerToString(state.getCurrentPlayer()) << "\n";
+    oss << "Current player: " << Display::playerToString(state.getCurrentPlayer()) << "\n";
     oss << boardToString(state.getBoard());
     
     if (state.isGameOver()) {
-        oss << "Game Over! " << playerToString(state.getWinner()) << " wins!\n";
+        oss << "Game Over! " << Display::playerToString(state.getWinner()) << " wins!\n";
     }
     
     return oss.str();
@@ -146,6 +132,52 @@ std::string TextDisplay::formatMoveList(const std::vector<Move>& moves) const {
     }
     
     return oss.str();
+}
+
+// New methods for Display interface
+void TextDisplay::showMessage(const std::string& message) {
+    std::cout << message << "\n";
+}
+
+void TextDisplay::showMenu(const std::vector<std::string>& options) {
+    std::cout << "\n=== Menu ===\n";
+    for (size_t i = 0; i < options.size(); ++i) {
+        std::cout << i + 1 << ". " << options[i] << "\n";
+    }
+    std::cout << "Select an option: ";
+}
+
+std::string TextDisplay::getInput() {
+    std::string input;
+    std::getline(std::cin, input);
+    return input;
+}
+
+std::optional<Position> TextDisplay::getMouseClick() {
+    // Text display doesn't support mouse clicks
+    // Return empty optional to indicate no mouse input available
+    return {};
+}
+
+std::optional<Move> TextDisplay::getMoveInteractively(const GameState& state) {
+    // Text display falls back to text input
+    // Just return empty optional to indicate text input should be used
+    (void)state; // Mark parameter as unused to avoid warning
+    return {};
+}
+
+void TextDisplay::clearScreen() {
+    // Simple clear screen for cross-platform
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
+void TextDisplay::waitForContinue() {
+    std::cout << "\nPress Enter to continue...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 } // namespace amazons

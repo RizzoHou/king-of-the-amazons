@@ -63,7 +63,13 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 - **Probability**: Medium (different compiler/OS versions)
 - **Impact**: Difficulties during review sessions, potential functionality issues
 
-#### T6: Save/Load System Reliability with Enhanced Features
+#### T6: Graphical GUI Implementation Complexity
+- **Description**: SFML integration, window management, mouse interaction, and graphical rendering more complex than anticipated
+- **Severity**: Medium (affects Phase 3 deliverables but not core requirements)
+- **Probability**: Likely (graphical programming has learning curve)
+- **Impact**: Delayed graphical interface, potential performance issues, reduced user experience quality
+
+#### T7: Save/Load System Reliability with Enhanced Features
 - **Description**: Game state serialization/deserialization fails or corrupts data, especially with move history
 - **Severity**: Medium (affects save/load functionality requirement)
 - **Probability**: Low (standard JSON format, but enhanced features add complexity)
@@ -89,7 +95,13 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 - **Probability**: Very Likely (end of semester period)
 - **Impact**: Reduced focus on project, potential delays, increased stress
 
-#### S4: Enhanced Features Time Consumption
+#### S4: Graphical GUI Development Time
+- **Description**: SFML-based graphical interface development takes more time than allocated in Phase 3
+- **Severity**: Medium (affects Phase 3 deliverables but core game remains functional)
+- **Probability**: Likely (graphical programming often takes longer than expected)
+- **Impact**: Reduced graphical feature set, potential need to fall back to text interface
+
+#### S5: Enhanced Features Time Consumption
 - **Description**: UI improvements and additional features take more time than allocated
 - **Severity**: Medium (affects polish but not core requirements)
 - **Probability**: Likely (UI/UX work often underestimated)
@@ -182,7 +194,15 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 4. **Documentation**: Clear setup instructions for different platforms
 5. **Containerization Option**: Docker configuration as backup
 
-#### T6 Mitigation: Save/Load Reliability
+#### T6 Mitigation: Graphical GUI Complexity
+1. **SFML Learning Resources**: Use official SFML tutorials and documentation
+2. **Incremental Implementation**: Start with basic window, then board rendering, then interaction
+3. **Modular Design**: Separate graphical display from game logic with clear interfaces
+4. **Cross-Platform Testing**: Test graphical interface on target platforms early
+5. **Performance Monitoring**: Profile graphical rendering for efficiency
+6. **Fallback Option**: Maintain text interface as backup
+
+#### T7 Mitigation: Save/Load Reliability
 1. **Robust Serialization**: Use well-tested JSON library (nlohmann/json)
 2. **Data Validation**: Validate loaded data before use, especially move history
 3. **Backup System**: Keep previous save files as backup
@@ -216,7 +236,15 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 5. **Balance Maintenance**: Regular breaks to maintain productivity
 6. **Early Start**: Begin work early each day to avoid last-minute pressure
 
-#### S4 Mitigation: Enhanced Features Time
+#### S4 Mitigation: Graphical GUI Development Time
+1. **Early SFML Setup**: Set up SFML development environment in Week 2
+2. **Prototype First**: Create simple graphical prototype before full implementation
+3. **Feature Prioritization**: Focus on core graphical gameplay first (board display, mouse input)
+4. **Time Boxing**: Allocate specific time for graphical features with fallback plan
+5. **Cross-Platform Testing**: Test graphical interface early on target platforms
+6. **Documentation**: Good documentation of graphical implementation decisions
+
+#### S5 Mitigation: Enhanced Features Time
 1. **Realistic Estimation**: Allocate buffer time for UI/UX work
 2. **Minimal Viable Features**: Implement core of each feature first, polish later
 3. **User Feedback**: Simple testing to identify most important improvements
@@ -305,7 +333,17 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 5. Seek TA assistance for blocking issues
 **Fallback Goal**: Minimum viable product for first review session
 
-#### Scenario 3: Enhanced Features Too Complex (Week 3)
+#### Scenario 3: Graphical GUI Implementation Issues (Week 3)
+**Trigger**: SFML integration or graphical rendering causing significant delays
+**Contingency Actions**:
+1. Focus on core graphical gameplay (board display, mouse input)
+2. Simplify graphical features (basic rendering without textures or animations)
+3. Maintain text interface as primary with graphical as optional
+4. Document graphical limitations and future improvements
+5. Seek SFML community resources or TA assistance
+**Fallback Goal**: Functional graphical interface with core gameplay features
+
+#### Scenario 4: Enhanced Features Too Complex (Week 3)
 **Trigger**: Undo/redo or analysis features causing significant delays
 **Contingency Actions**:
 1. Implement basic undo/redo only (limit history)
@@ -315,7 +353,7 @@ Low        |   YELLOW    | GREEN  | GREEN    |     GREEN
 5. Document feature limitations and future plans
 **Fallback Goal**: Core enhanced features working reliably
 
-#### Scenario 4: Cross-Platform Issues at Review
+#### Scenario 5: Cross-Platform Issues at Review
 **Trigger**: Code doesn't run on TA's machine during review
 **Contingency Actions**:
 1. Have backup executable ready (statically linked if possible)

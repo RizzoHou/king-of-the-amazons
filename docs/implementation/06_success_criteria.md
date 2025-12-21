@@ -59,7 +59,7 @@ This document defines the success criteria for the "King of the Amazons" project
   - Overall ease of use
 
 - [ ] **Interface Aesthetics (0.5 points)**
-  - Visually appealing display
+  - Visually appealing display (graphical or text-based)
   - Consistent visual design
   - Appropriate use of colors/symbols
   - Professional presentation
@@ -71,10 +71,10 @@ This document defines the success criteria for the "King of the Amazons" project
   - Consistent user experience across features
 
 - [ ] **Enhanced Features (1.0 point)**
-  - Undo/redo functionality working reliably
-  - Game analysis and position evaluation
+  - Graphical user interface with mouse interaction
+  - Undo/redo functionality working reliably with graphical feedback
+  - Game analysis and position evaluation in graphical interface
   - Statistics tracking and reporting
-  - Replay system for completed games
   - Additional innovative features beyond requirements
 
 ## Technical Success Criteria
@@ -117,29 +117,48 @@ This document defines the success criteria for the "King of the Amazons" project
   - Menu navigation intuitive
   - Game status always visible
 
+#### Graphical Interface (Enhanced Requirement)
+- [ ] **Window Management**
+  - Separate graphical window for gameplay
+  - Proper window initialization and closure
+  - Event processing for user interaction
+  - Responsive window resizing (if supported)
+
+- [ ] **Board Rendering**
+  - Graphical representation of 10×10 board
+  - Distinct visual representation of White/Black Amazons
+  - Clear arrow visualization
+  - Grid lines and coordinates for easy reference
+
+- [ ] **Mouse Interaction**
+  - Mouse-based move selection (click to select Amazon, destination, arrow target)
+  - Visual feedback for selected pieces and valid moves
+  - Intuitive drag-and-drop or click-based interaction
+  - Right-click or context menu for additional actions
+
 #### Enhanced Interface Features
 - [ ] **Undo/Redo System**
-  - Multiple levels of undo/redo
-  - Clear indication of undo/redo availability
+  - Multiple levels of undo/redo with graphical feedback
+  - Clear visual indication of undo/redo availability
   - Consistent state restoration
-  - Integration with game flow
+  - Integration with game flow in graphical interface
 
 - [ ] **Game Analysis**
-  - Position evaluation and scoring
-  - Territory calculation display
-  - Move suggestions and analysis
-  - Strategic insights
+  - Position evaluation and scoring displayed graphically
+  - Territory calculation visualization
+  - Move suggestions and analysis in graphical interface
+  - Strategic insights with visual aids
 
 - [ ] **Statistics Tracking**
-  - Game history recording
-  - Win/loss statistics
-  - Performance metrics
+  - Game history recording with graphical representation
+  - Win/loss statistics with charts or visual summaries
+  - Performance metrics display
   - Exportable statistics
 
 - [ ] **Replay System**
-  - Complete game recording
-  - Step-by-step replay
-  - Navigation controls
+  - Complete game recording with graphical playback
+  - Step-by-step replay with visual navigation
+  - Navigation controls integrated in graphical interface
   - Export/import functionality
 
 ### Save/Load System
@@ -303,19 +322,21 @@ This document defines the success criteria for the "King of the Amazons" project
   - All basic functionality working
   - AI opponent operational
   - Save/load system reliable
-  - User interface polished
+  - User interface polished (graphical and text)
 
 - [ ] **Enhanced Features**
-  - Undo/redo functionality demonstrated
-  - Game analysis features shown
+  - Graphical user interface with mouse interaction demonstrated
+  - Undo/redo functionality with graphical feedback
+  - Game analysis features shown in graphical interface
   - Statistics tracking operational
   - Replay system working
 
 - [ ] **Technical Understanding**
+  - Graphical implementation (SFML) explained
   - Algorithm explanation
-  - Architecture decisions justified
-  - Performance characteristics discussed
-  - Testing approach explained
+  - Architecture decisions justified (dual interface design)
+  - Performance characteristics discussed (graphical rendering performance)
+  - Testing approach explained (graphical interface testing)
 
 ### Final Review Session (Jan 10, 2026)
 
@@ -346,8 +367,11 @@ AI Move Time                    | ≤2 seconds  | Performance testing
 Memory Usage (peak)             | ≤100 MB     | Memory profiling
 Save/Load Time                  | ≤1 second   | Performance testing
 Undo/Redo Time                  | ≤50ms       | Performance testing
+Graphical Rendering Time        | ≤16ms/frame | Performance testing (60 FPS)
+Mouse Input Response            | ≤50ms       | Performance testing
 Bug Count (critical)            | 0           | Testing and usage
 Enhanced Features Coverage      | ≥75%        | Feature testing
+Graphical Interface Coverage    | ≥70%        | Graphical feature testing
 ```
 
 ### Qualitative Metrics
@@ -382,22 +406,22 @@ Enhanced Features Coverage      | ≥75%        | Feature testing
    - Sophisticated algorithms (minimax with alpha-beta)
    - Optimized performance
 
-2. **Polished Interface**
-   - Professional presentation
-   - Enhanced user experience
-   - Additional features beyond requirements
+2. **Polished Graphical Interface**
+   - Professional graphical presentation with SFML
+   - Enhanced user experience with mouse interaction
+   - Additional features beyond requirements in graphical UI
 
 3. **Comprehensive Enhanced Features**
-   - Robust undo/redo system
-   - Detailed game analysis
-   - Comprehensive statistics
-   - Functional replay system
+   - Robust undo/redo system with graphical feedback
+   - Detailed game analysis integrated in graphical interface
+   - Comprehensive statistics with visual representation
+   - Functional replay system with graphical playback
 
 4. **Comprehensive Quality**
-   - Thorough testing
-   - Excellent documentation
-   - Robust error handling
-   - Professional code quality
+   - Thorough testing including graphical interface tests
+   - Excellent documentation including graphical implementation
+   - Robust error handling for graphical operations
+   - Professional code quality with graphical architecture
 
 ## Success Verification Process
 

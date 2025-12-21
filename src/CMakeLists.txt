@@ -20,7 +20,17 @@ add_library(game_components
   ai/BasicAI.cpp
 )
 
+# Add GraphicalDisplay if graphical GUI is enabled
+if(WITH_GRAPHICAL_GUI)
+  target_sources(game_components PRIVATE ui/GraphicalDisplay.cpp ui/GraphicalController.cpp)
+endif()
+
 # Link libraries
 target_include_directories(game_components PUBLIC
   ${CMAKE_SOURCE_DIR}/include
 )
+
+# Add SFML includes if graphical GUI is enabled
+if(WITH_GRAPHICAL_GUI)
+  target_include_directories(game_components PRIVATE /opt/homebrew/Cellar/sfml/3.0.2/include)
+endif()
