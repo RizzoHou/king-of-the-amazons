@@ -5,10 +5,10 @@
 Welcome to **King of the Amazons**, a C++ implementation of the classic abstract strategy board game "Game of the Amazons" (also known as "Queen's Game"). This project is a university assignment that demonstrates comprehensive C++ programming skills, game development principles, and artificial intelligence implementation.
 
 ### Current Status
-- **Phase**: Phase 2 Complete (Complete Game System)
-- **Version**: 1.0.0
-- **Last Updated**: December 18, 2025
-- **Overall Completion**: 50% (Phase 1 & 2 complete, ready for Phase 3)
+- **Phase**: Phase 3 Complete (Graphical GUI Implemented)
+- **Version**: 1.1.0
+- **Last Updated**: December 21, 2025
+- **Overall Completion**: 75% (Phase 1, 2, and 3 complete, Phase 4 in progress)
 
 ## Getting Started
 
@@ -47,8 +47,17 @@ make clean        # Clean build artifacts
 
 ### Running the Game
 ```bash
-# After building
-./build/amazons   # Or equivalent executable name
+# Graphical mode (default) - modern interface with mouse interaction
+./build/amazons
+
+# Text mode - traditional console interface with keyboard input
+./build/amazons --text
+
+# Graphical mode explicitly (same as default)
+./build/amazons --graphical
+
+# Help - show command-line options
+./build/amazons --help
 ```
 
 ## Game Rules
@@ -97,7 +106,113 @@ Each turn consists of **two parts**:
 
 ## User Interface Guide
 
-### Main Menu
+### Dual Interface Modes
+King of the Amazons now supports two interface modes:
+
+1. **Graphical Mode (Default)**: Modern graphical interface with mouse interaction
+2. **Text Mode**: Traditional console interface with keyboard input
+
+**Running Different Modes**:
+```bash
+# Graphical mode (default)
+./build/amazons
+
+# Text mode (console interface)
+./build/amazons --text
+
+# Graphical mode explicitly
+./build/amazons --graphical
+```
+
+### Graphical Interface Guide
+
+#### Mode Selection Screen
+When starting in graphical mode, you'll see a visual mode selection screen:
+
+```
+┌─────────────────────────────────────────┐
+│        King of the Amazons              │
+│           Graphical Mode                 │
+│                                         │
+│      [Continue Previous Game]           │
+│      [Human vs Human]                   │
+│      [Human vs AI]                      │
+│      [AI vs AI]                         │
+│                                         │
+│      Select a game mode to start        │
+│      Press ESC to return to menu        │
+└─────────────────────────────────────────┘
+```
+
+**Features**:
+- **Continue Previous Game**: Button appears when you have a saved game from a previous session
+- **Dynamic Layout**: Button positions adjust based on whether a saved game exists
+- **Visual Feedback**: Buttons highlight on mouse hover
+- **Instructions**: Clear guidance at the bottom of the screen
+
+#### Gameplay Interface
+The graphical gameplay interface includes:
+
+1. **Game Board**: 10×10 grid with alternating light/dark squares
+2. **Visual Pieces**:
+   - White Amazons: Light circles with dark outline
+   - Black Amazons: Dark circles with darker outline
+   - Arrows: Small red circles
+3. **Status Display**: Current turn, player, and game status
+4. **Instructions**: Keyboard shortcuts and gameplay guidance
+
+#### Mouse Interaction
+The graphical interface uses a **three-step mouse interaction** system:
+
+1. **Select Amazon**: Click on one of your Amazons
+   - Selected Amazon is highlighted in yellow
+   - Valid move destinations are highlighted in green
+
+2. **Select Destination**: Click on a green highlighted square
+   - Destination is highlighted in blue
+   - Valid arrow positions are highlighted in red
+
+3. **Select Arrow Position**: Click on a red highlighted square
+   - Move is executed
+   - Board updates with new Amazon position and arrow
+
+#### Keyboard Shortcuts
+During graphical gameplay:
+
+| Key | Function | Description |
+|-----|----------|-------------|
+| **R** | Restart | Return to mode selection screen |
+| **U** | Undo | Undo the last move |
+| **ESC** | Menu | Return to main menu (saves game state) |
+| **Mouse** | Select | Three-step selection: Amazon → Destination → Arrow |
+
+#### Visual Feedback
+- **Hover Effects**: Squares highlight when mouse hovers over them
+- **Color Coding**:
+  - Yellow: Selected Amazon
+  - Green: Valid move destinations
+  - Blue: Selected move destination
+  - Red: Valid arrow positions
+- **Status Messages**: Clear text updates at top of screen
+- **AI Thinking**: Shows "AI is thinking..." during AI computation
+
+#### "Continue Previous Game" Feature
+When you press **ESC** during gameplay:
+- Game state is automatically saved
+- "Continue Previous Game" button appears on mode selection screen
+- Clicking the button restores your exact game state and mode
+- Allows seamless continuation of interrupted games
+
+#### Non-blocking AI Moves
+In Human vs AI mode:
+- AI moves are processed asynchronously (no UI freezing)
+- Status shows "AI is thinking..." during computation
+- AI has 3-second timeout for decision making
+- UI remains responsive during AI thinking
+
+### Text Interface Guide
+
+#### Main Menu
 When you start the game, you'll see the main menu:
 
 ```
@@ -471,15 +586,22 @@ The project maintains comprehensive documentation in `memorybank/`:
 - ✅ Complete game flow integration
 - ✅ Ready for First Review Session (Dec 30, 2025)
 
-### Phase 3 (Planned) - Advanced AI and Features
-- Advanced AI algorithms (Minimax with alpha-beta pruning)
-- Enhanced features (game analysis, improved undo/redo)
-- Performance optimization
+### Phase 3 (Dec 31, 2025 - Jan 6, 2026) - Graphical GUI and Features - ✅ COMPLETE
+- ✅ Pure graphical interface with mouse manipulation
+- ✅ Three-step interaction: select Amazon → select destination → select arrow
+- ✅ Visual feedback with hover effects and color-coded highlights
+- ✅ Dual mode support: graphical (default) and text mode (`--text` flag)
+- ✅ Mode selection screen with Human vs Human, Human vs AI, AI vs AI options
+- ✅ Keyboard shortcuts: R (restart), U (undo), ESC (return to menu)
+- ✅ GUI Improvements: ESC key fix, "Continue Previous Game" feature, non-blocking AI moves, sequential move display
+- ✅ Build success: All changes compile without errors, program runs without crashing
 
-### Phase 4 (Planned) - Polish and Finalization
-- Comprehensive testing and quality assurance
-- Enhanced features polish (statistics, replay system)
-- User interface refinement
+### Phase 4 (Jan 7-10, 2026) - Polish and Finalization - 🟡 IN PROGRESS
+- Enhanced features polish (statistics tracking, replay system)
+- Testing and quality assurance (graphical interface tests, integration tests)
+- Documentation finalization (game manual updates with graphical interface)
+- User interface refinement and bug fixes
+- **Critical Deadlines**: Second Review Session (Jan 9, 2026), Final Review Session and project submission (Jan 10, 2026)
 
 ## Credits & License
 
