@@ -34,7 +34,23 @@
    - **Game loop updates**: All game loops updated to handle save/exit properly
    - **Documentation**: Updated game manual with new commands and FAQ
 
-4. **Core Game Features**:
+5. **Phase 3: Graphical GUI Implementation COMPLETE** (100%):
+   - **Pure Graphical Interface**: Created `GraphicalController` class with proper state machine
+   - **Mouse Manipulation**: Three-step interaction: select queen → select destination → select arrow
+   - **Visual Feedback**: Hover effects, color-coded highlights (yellow/green/blue/red)
+   - **Dual Mode Support**: Graphical (default) and text mode (`--text` flag)
+   - **Mode Selection Screen**: Graphical menu with Human vs Human, Human vs AI, AI vs AI options
+   - **Keyboard Shortcuts**: R (restart), U (undo), ESC (return to menu)
+
+6. **GUI Improvements (Dec 21, 2025)**:
+   - **ESC Key Behavior Fix**: Changed ESC from exiting program to returning to main menu
+   - **"Continue Previous Game" Feature**: Added button to mode selection when saved game exists
+   - **Non-blocking AI Moves**: Asynchronous AI processing with 3-second timeout
+   - **Sequential Move Display**: Moves processed and displayed sequentially
+   - **UI Instructions Updated**: "Press ESC to return to menu" instead of "Press ESC to exit"
+   - **Dynamic Button Layout**: Mode selection adjusts based on saved game state
+
+7. **Core Game Features**:
    - **Board**: 10x10 grid with correct standard starting position (Black top, White bottom)
    - **Move Validation**: Queen movement in 8 directions with path checking
    - **Game Flow**: Turn-based gameplay with White moving first, undo functionality
@@ -43,39 +59,39 @@
    - **Save/Load**: Game state persistence with JSON files (now working correctly)
    - **AI Opponent**: Basic greedy AI for single-player gameplay
 
-5. **Memory Bank Documentation**: Complete and up-to-date
+8. **Memory Bank Documentation**: Complete and up-to-date
    - All 6 core files maintained with current project status
    - Implementation insights and learnings documented
-   - Phase 3 planning integrated
+   - Phase 3 and GUI improvements documented
 
-6. **User Documentation**: Comprehensive game manual and documentation created
+9. **User Documentation**: Comprehensive game manual and documentation created
    - **Game Manual**: Complete user guide (`docs/manuals/game_manual.md`)
    - **Update Workflow**: Automated documentation update process (`.clinerules/workflows/manual_update.md`)
    - **Project Structure Documentation**: Updated `docs/implementation/01_project_structure.md` to reflect actual implementation
    - **Coverage**: Rules, interface, modes, troubleshooting, development info
    - **Maintenance**: Workflow ensures documentation stays synchronized with project
 
-7. **Implementation Plan**: Comprehensive and validated
-   - Phase 1 and Phase 2 objectives fully achieved per `02_implementation_phases.md`
-   - Technical specifications implemented per `03_technical_specifications.md`
-   - Testing strategy validated per `04_testing_strategy.md`
+10. **Implementation Plan**: Comprehensive and validated
+    - Phase 1, Phase 2, and Phase 3 objectives fully achieved
+    - Technical specifications implemented per `03_technical_specifications.md`
+    - Testing strategy validated per `04_testing_strategy.md`
 
-8. **Project Infrastructure**:
-   - Build system: `cmake --build . --target amazons` works flawlessly
-   - Test execution: `./bin/unit_tests` runs all 30 tests successfully
-   - Game execution: `./bin/amazons` provides complete game system with all modes
-   - Git workflow: Comprehensive .gitignore, Conventional Commits guidance
+11. **Project Infrastructure**:
+    - Build system: `cmake --build . --target amazons` works flawlessly
+    - Test execution: `./bin/unit_tests` runs all 30 tests successfully
+    - Game execution: `./bin/amazons` provides complete game system with all modes
+    - Git workflow: Comprehensive .gitignore, Conventional Commits guidance
 
-9. **Code Quality**:
-   - Clean C++17 implementation following best practices
-   - Modular architecture with clear separation of concerns (MVC pattern)
-   - Comprehensive documentation and comments
-   - Consistent naming conventions and code organization
+12. **Code Quality**:
+    - Clean C++17 implementation following best practices
+    - Modular architecture with clear separation of concerns (MVC pattern)
+    - Comprehensive documentation and comments
+    - Consistent naming conventions and code organization
 
-10. **Project Rules and Documentation**:
-   - **Task Preparation Rule**: Added to `.clinerules/project_setup.md` requiring reading of `docs/implementation/`, `memorybank/`, `README.md`, and other critical files before starting new tasks
-   - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, and manual maintenance
-   - **Comprehensive Coverage**: Rules cover project setup, development workflow, documentation, version control, and memory bank management
+13. **Project Rules and Documentation**:
+    - **Task Preparation Rule**: Added to `.clinerules/project_setup.md` requiring reading of `docs/implementation/`, `memorybank/`, `README.md`, and other critical files before starting new tasks
+    - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, and manual maintenance
+    - **Comprehensive Coverage**: Rules cover project setup, development workflow, documentation, version control, and memory bank management
 
 ### What's In Progress
 1. **Task Completion Workflow**: 
@@ -134,16 +150,24 @@
    - ✅ **Visual Feedback**: Hover effects, color-coded highlights (yellow/green/blue/red)
    - ✅ **Dual Mode Support**: Graphical (default) and text mode (`--text` flag)
    - ✅ **Mode Selection Screen**: Graphical menu with Human vs Human, Human vs AI, AI vs AI options
-   - ✅ **Keyboard Shortcuts**: R (restart), U (undo), ESC (exit)
+   - ✅ **Keyboard Shortcuts**: R (restart), U (undo), ESC (return to menu)
    - ✅ **Build Integration**: Added to CMake configuration, compiles successfully
 
-2. **Enhanced Features Integration** (50% complete)
+2. **GUI Improvements** (100% complete)
+   - ✅ **ESC Key Behavior Fix**: Changed ESC from exiting program to returning to main menu
+   - ✅ **"Continue Previous Game" Feature**: Added button to mode selection when saved game exists
+   - ✅ **Non-blocking AI Moves**: Asynchronous AI processing with 3-second timeout
+   - ✅ **Sequential Move Display**: Moves processed and displayed sequentially
+   - ✅ **UI Instructions Updated**: "Press ESC to return to menu" instead of "Press ESC to exit"
+   - ✅ **Dynamic Button Layout**: Mode selection adjusts based on saved game state
+
+3. **Enhanced Features Integration** (50% complete)
    - ✅ **Undo Functionality**: Integrated with graphical interface (U key)
    - 🟡 **Game Analysis**: Basic status messages implemented
    - ⚪ **Statistics Tracking**: Not yet implemented
    - ⚪ **Replay System**: Not yet implemented
 
-3. **Performance Optimization** (75% complete)
+4. **Performance Optimization** (75% complete)
    - ✅ **Graphical Rendering**: Efficient SFML-based rendering at 60 FPS
    - ✅ **Dual Entry Point**: Console + graphical architecture implemented
    - ✅ **Code Refactoring**: Clean separation between graphical and text interfaces

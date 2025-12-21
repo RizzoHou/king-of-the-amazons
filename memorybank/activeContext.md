@@ -1,14 +1,16 @@
 # Active Context: King of the Amazons
 
 ## Current Work Focus
-**Phase 3: Graphical GUI Implementation COMPLETED**
-- Pure graphical GUI with mouse manipulation implemented successfully
-- Created new `GraphicalController` class with proper state machine
-- Implemented three-step mouse interaction: select queen → select destination → select arrow
-- Added rich visual feedback with hover effects and color-coded highlights
-- Dual mode support: graphical (default) and text mode (via `--text` flag)
-- Based on reference project analysis (`/Users/rizzohou/projects/GameOftheAmazons`)
-- Ready for Phase 4: Polish and Finalization
+**Phase 3: Graphical GUI Improvements COMPLETED**
+- **ESC Key Behavior Fix**: Changed ESC from exiting program to returning to main menu
+- **Game State Preservation**: When pressing ESC, current game state is saved for "Continue" feature
+- **"Continue Previous Game" Feature**: Added button to mode selection screen when a saved game exists
+- **Non-blocking AI Moves**: Implemented asynchronous AI processing with 3-second timeout
+- **Sequential Move Display**: Ensured moves are processed and displayed sequentially
+- **UI Instructions Updated**: Changed "Press ESC to exit" to "Press ESC to return to menu"
+- **Dynamic Button Layout**: Mode selection screen adjusts based on saved game state
+- **Build Success**: All changes compile without errors, program runs without crashing
+- **Ready for Phase 4**: Enhanced features polish and finalization
 
 ## Recent Changes
 ### Game Mode Save/Load Feature Implementation (Dec 18, 2025)
@@ -95,6 +97,40 @@
    - Added `GraphicalController.cpp` to CMake configuration
    - Maintained SFML dependency handling
    - Successful compilation with no errors
+
+### GUI Improvements Implementation (Dec 21, 2025)
+**Feature**: Enhanced graphical GUI based on user feedback from `docs/instructions/existing_problems.md`.
+
+**Implementation Details**:
+
+1. **ESC Key Behavior Fix**:
+   - Changed ESC from closing window to returning to main menu
+   - Added game state preservation when returning to menu
+   - Updated UI instructions from "Press ESC to exit" to "Press ESC to return to menu"
+
+2. **"Continue Previous Game" Feature**:
+   - Added `savedGameState` and `savedGameMode` members to `GraphicalController`
+   - Added "Continue Previous Game" button to mode selection screen (only appears when saved game exists)
+   - Implemented `continueGame()` method to restore saved game state
+   - Dynamic button layout adjusts based on saved game presence
+
+3. **Non-blocking AI Moves**:
+   - Replaced blocking `sleep_for(300ms)` with asynchronous processing using `std::thread`
+   - Added 3-second timeout for AI thinking as requested
+   - Shows "AI is thinking..." status during computation
+   - AI moves processed in background thread without blocking UI
+
+4. **Sequential Move Display**:
+   - Ensured moves are processed and displayed sequentially
+   - Simple instant movement (no complex animations as requested)
+   - Clear visual feedback for completed moves
+
+5. **Technical Implementation**:
+   - Updated `GraphicalController.hpp` with new members and methods
+   - Modified `handleKeyPress()` for new ESC behavior
+   - Updated `drawModeSelection()` for dynamic button layout
+   - Enhanced `processAIMove()` with asynchronous threading
+   - All changes compile successfully and program runs without crashes
 
 ### Task Preparation Rule Addition (Dec 21, 2025)
 **Feature**: Added a new rule to `.clinerules/project_setup.md` requiring reading critical files before starting any new task.

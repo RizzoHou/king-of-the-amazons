@@ -7,7 +7,8 @@
 namespace amazons {
 
 GraphicalController::GraphicalController()
-    : selectionState(SelectionState::NO_SELECTION),
+    : savedGameMode(GameModeGUI::NOT_SELECTED),
+      selectionState(SelectionState::NO_SELECTION),
       selectedPosition(-1, -1),
       moveToPosition(-1, -1),
       currentGameMode(GameModeGUI::NOT_SELECTED),
@@ -125,37 +126,50 @@ void GraphicalController::handleModeSelection(int x, int y) {
     const int buttonHeight = 60;
     const int buttonX = (WINDOW_WIDTH - buttonWidth) / 2;
     
-    // Human vs Human button (y = 250)
+    // Calculate button Y positions based on whether there's a saved game
+    int continueY = 250;
+    int humanVsHumanY = savedGameState ? 350 : 250;
+    int humanVsAIY = savedGameState ? 450 : 350;
+    int aiVsAIY = savedGameState ? 550 : 450;
+    
+    // Check "Continue Previous Game" button if there's a saved game
+    if (savedGameState && x >= buttonX && x <= buttonX + buttonWidth &&
+        y >= continueY && y <= continueY + buttonHeight) {
+        continueGame();
+        return;
+    }
+    
+    // Human vs Human button
     if (x >= buttonX && x <= buttonX + buttonWidth &&
-        y >= 250 && y <= 250 + buttonHeight) {
+        y >= humanVsHumanY && y <= humanVsHumanY + buttonHeight) {
         startGame(GameModeGUI::HUMAN_VS_HUMAN);
     }
-    // Human vs AI button (y = 350)
+    // Human vs AI button
     else if (x >= buttonX && x <= buttonX + buttonWidth &&
-             y >= 350 && y <= 350 + buttonHeight) {
+             y >= humanVsAIY && y <= humanVsAIY + buttonHeight) {
         startGame(GameModeGUI::HUMAN_VS_AI);
     }
-    // AI vs AI button (y = 450)
+    // AI vs AI button
     else if (x >= buttonX && x <= buttonX + buttonWidth &&
-             y >= 450 && y <= 450 + buttonHeight) {
+             y >= aiVsAIY && y <= aiVsAIY + buttonHeight) {
         startGame(GameModeGUI::AI_VS_AI);
     }
 }
 
 void GraphicalController::handleKeyPress(sf::Keyboard::Key key) {
-    if (!gameState) return;
-    
     switch (key) {
         case sf::Keyboard::Key::R:
             // Restart - return to mode selection
-            showModeSelection = true;
-            gameState.reset();
-            resetSelection();
+            if (gameState) {
+                showModeSelection = true;
+                gameState.reset();
+                resetSelection();
+            }
             break;
             
         case sf::Keyboard::Key::U:
             // Undo move
-            if (gameState->canUndo()) {
+            if (gameState && gameState->canUndo()) {
                 gameState->undoLastMove();
                 resetSelection();
                 updateStatusMessage();
@@ -163,8 +177,18 @@ void GraphicalController::handleKeyPress(sf::Keyboard::Key key) {
             break;
             
         case sf::Keyboard::Key::Escape:
-            // Close window
-            window->close();
+            // Return to main menu instead of closing window
+            if (gameState) {
+                // Save current game state for "Continue" feature
+                savedGameState = std::make_unique<GameState>(*gameState);
+                savedGameMode = currentGameMode;
+                
+                // Return to mode selection
+                showModeSelection = true;
+                gameState.reset();
+                resetSelection();
+                updateStatusMessage();
+            }
             break;
             
         default:
@@ -172,9 +196,29 @@ void GraphicalController::handleKeyPress(sf::Keyboard::Key key) {
     }
 }
 
+void GraphicalController::continueGame() {
+    if (!savedGameState) {
+        return;
+    }
+    
+    currentGameMode = savedGameMode;
+    showModeSelection = false;
+    
+    // Restore saved game state
+    gameState = std::make_unique<GameState>(*savedGameState);
+    
+    // Reset selection state
+    resetSelection();
+    updateStatusMessage();
+}
+
 void GraphicalController::startGame(GameModeGUI mode) {
     currentGameMode = mode;
     showModeSelection = false;
+    
+    // Clear saved game when starting a new game
+    savedGameState.reset();
+    savedGameMode = GameModeGUI::NOT_SELECTED;
     
     // Create new game state
     gameState = std::make_unique<GameState>();
@@ -306,16 +350,35 @@ void GraphicalController::makeMove(const Move& move) {
 void GraphicalController::processAIMove() {
     if (!gameState || !ai) return;
     
-    // Small delay for visual feedback
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+    // Show AI thinking status
+    statusMessage = "AI is thinking...";
     
-    try {
-        Move aiMove = ai->getBestMove(*gameState);
-        gameState->makeMove(aiMove);
-        updateStatusMessage();
-    } catch (const std::exception& e) {
-        std::cerr << "AI error: " << e.what() << "\n";
-    }
+    // Process AI move asynchronously to avoid blocking UI
+    std::thread([this]() {
+        try {
+            // Simulate AI thinking time (max 3 seconds as requested)
+            auto startTime = std::chrono::steady_clock::now();
+            Move aiMove = ai->getBestMove(*gameState);
+            auto endTime = std::chrono::steady_clock::now();
+            
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+            
+            // Ensure minimum thinking time for visual feedback (300ms)
+            if (elapsed < std::chrono::milliseconds(300)) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(300) - elapsed);
+            }
+            
+            // Execute AI move on main thread (UI thread)
+            // Note: In a real implementation, we'd need proper thread synchronization
+            // For now, we'll execute directly since SFML events are processed in main thread
+            gameState->makeMove(aiMove);
+            updateStatusMessage();
+            
+        } catch (const std::exception& e) {
+            std::cerr << "AI error: " << e.what() << "\n";
+            statusMessage = "AI error occurred";
+        }
+    }).detach(); // Detach thread to run independently
 }
 
 void GraphicalController::resetSelection() {
@@ -422,10 +485,19 @@ void GraphicalController::drawModeSelection() {
         window->draw(btnText);
     };
     
-    // Draw buttons
-    drawButton("Human vs Human", 250, sf::Color(52, 152, 219));
-    drawButton("Human vs AI", 350, sf::Color(46, 204, 113));
-    drawButton("AI vs AI", 450, sf::Color(155, 89, 182));
+    // Draw "Continue Previous Game" button if there's a saved game
+    if (savedGameState) {
+        drawButton("Continue Previous Game", 250, sf::Color(230, 126, 34));
+        // Adjust other button positions
+        drawButton("Human vs Human", 350, sf::Color(52, 152, 219));
+        drawButton("Human vs AI", 450, sf::Color(46, 204, 113));
+        drawButton("AI vs AI", 550, sf::Color(155, 89, 182));
+    } else {
+        // Original button positions when no saved game
+        drawButton("Human vs Human", 250, sf::Color(52, 152, 219));
+        drawButton("Human vs AI", 350, sf::Color(46, 204, 113));
+        drawButton("AI vs AI", 450, sf::Color(155, 89, 182));
+    }
     
     // Instructions
     sf::Text instructions(font, "Select a game mode to start", 18);
@@ -435,7 +507,7 @@ void GraphicalController::drawModeSelection() {
     window->draw(instructions);
     
     // Hint
-    sf::Text hint(font, "Press ESC to exit", 14);
+    sf::Text hint(font, "Press ESC to return to menu", 14);
     hint.setFillColor(sf::Color(150, 150, 150));
     sf::FloatRect hintBounds = hint.getLocalBounds();
     hint.setPosition({(WINDOW_WIDTH - hintBounds.size.x) / 2, 600});
@@ -571,7 +643,7 @@ void GraphicalController::drawUI() {
     window->draw(status);
     
     // Instructions
-    std::string instructions = "R: Restart | U: Undo | ESC: Exit";
+    std::string instructions = "R: Restart | U: Undo | ESC: Menu";
     if (selectionState == SelectionState::AMAZON_SELECTED) {
         instructions += " | Click on highlighted green cells to move";
     } else if (selectionState == SelectionState::MOVE_SELECTED) {

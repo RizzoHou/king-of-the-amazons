@@ -48,6 +48,10 @@ private:
     std::unique_ptr<GameState> gameState;
     std::unique_ptr<BasicAI> ai;
     
+    // Saved game for "Continue" feature
+    std::unique_ptr<GameState> savedGameState;
+    GameModeGUI savedGameMode;
+    
     // Selection state
     SelectionState selectionState;
     Position selectedPosition;
@@ -93,6 +97,7 @@ private:
     
     // Mode management
     void startGame(GameModeGUI mode);
+    void continueGame();
 };
 
 } // namespace amazons

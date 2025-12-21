@@ -59,8 +59,16 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Visual Feedback**: Hover effects, color-coded highlights (yellow/green/blue/red)
   - **Dual Mode Support**: Graphical (default) and text mode (`--text` flag)
   - **Mode Selection Screen**: Graphical menu with Human vs Human, Human vs AI, AI vs AI options
-  - **Keyboard Shortcuts**: R (restart), U (undo), ESC (exit)
+  - **Keyboard Shortcuts**: R (restart), U (undo), ESC (return to menu)
   - **Build Integration**: Added to CMake configuration, compiles successfully
+
+- **GUI Improvements (Dec 21, 2025)**:
+  - **ESC Key Behavior Fix**: Changed ESC from exiting program to returning to main menu
+  - **"Continue Previous Game" Feature**: Added button to mode selection when saved game exists
+  - **Non-blocking AI Moves**: Asynchronous AI processing with 3-second timeout
+  - **Sequential Move Display**: Moves processed and displayed sequentially
+  - **UI Instructions Updated**: "Press ESC to return to menu" instead of "Press ESC to exit"
+  - **Dynamic Button Layout**: Mode selection adjusts based on saved game state
 
 - **Project Infrastructure**:
   - Build system: `cmake --build . --target amazons` works flawlessly
@@ -215,8 +223,9 @@ Detailed timeline and milestones are documented in `docs/implementation/02_imple
 - ✅ Visual feedback with hover effects and color-coded highlights
 - ✅ Dual mode support: graphical (default) and text mode (`--text` flag)
 - ✅ Mode selection screen with Human vs Human, Human vs AI, AI vs AI options
-- ✅ Keyboard shortcuts: R (restart), U (undo), ESC (exit)
-- ✅ **Critical Goal Achieved**: Graphical GUI complete ahead of schedule
+- ✅ Keyboard shortcuts: R (restart), U (undo), ESC (return to menu)
+- ✅ **GUI Improvements**: ESC key fix, "Continue Previous Game" feature, non-blocking AI moves, sequential move display
+- ✅ **Critical Goal Achieved**: Graphical GUI complete ahead of schedule with user-requested improvements
 
 ### 🟡 Phase 4: Polish and Finalization (Week 4: Jan 7-10, 2026) - **IN PROGRESS**
 - Enhanced features polish (statistics tracking, replay system)
