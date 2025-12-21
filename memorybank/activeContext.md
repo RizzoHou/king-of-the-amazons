@@ -71,6 +71,17 @@
    - Added FAQ about exit behavior
    - Updated input format description to include new commands
 
+
+### Task Preparation Rule Addition (Dec 21, 2025)
+**Feature**: Added a new rule to `.clinerules/project_setup.md` requiring reading critical files before starting any new task.
+
+**Implementation Details**:
+
+1. **New Rule Added**: Added "Task Preparation" as the third requirement in the Setup Requirements section of `project_setup.md`
+2. **Rule Content**: "Before starting any new task, read the whole plan in `docs/implementation/`, the complete `memorybank/`, `README.md`, and other relevant critical files to ensure full context understanding."
+3. **Rationale**: This rule ensures comprehensive context understanding before beginning work, aligning with the existing memory bank reading requirements but expanding to include implementation plans and README.
+4. **Integration**: The rule is placed in `project_setup.md` as it relates to project setup and task preparation, applying specifically when starting new tasks.
+
 ### Phase 2: Complete Game System Implementation (COMPLETED) + Input Format Change
 1. **Enhanced Menu System Implementation**:
    - Updated input format from "()->()->()" to 6 numbers (row col row col row col)

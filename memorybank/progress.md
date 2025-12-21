@@ -72,6 +72,11 @@
    - Comprehensive documentation and comments
    - Consistent naming conventions and code organization
 
+10. **Project Rules and Documentation**:
+   - **Task Preparation Rule**: Added to `.clinerules/project_setup.md` requiring reading of `docs/implementation/`, `memorybank/`, `README.md`, and other critical files before starting new tasks
+   - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, and manual maintenance
+   - **Comprehensive Coverage**: Rules cover project setup, development workflow, documentation, version control, and memory bank management
+
 ### What's In Progress
 1. **Task Completion Workflow**: 
    - ✅ Step 1: Memory Bank Review - COMPLETED

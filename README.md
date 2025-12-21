@@ -59,6 +59,11 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - Game execution: `./bin/amazons` provides complete game system with all modes
   - Comprehensive memory bank documentation maintained and updated
 
+- **Project Rules and Documentation**:
+  - **Task Preparation Rule**: Added to `.clinerules/project_setup.md` requiring reading of `docs/implementation/`, `memorybank/`, `README.md`, and other critical files before starting new tasks
+  - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, and manual maintenance
+  - **Comprehensive Coverage**: Rules cover project setup, development workflow, documentation, version control, and memory bank management
+
 ### What's Next (Phase 3: Advanced AI and Features)
 - **Advanced AI Algorithms**: Minimax with alpha-beta pruning implementation
 - **Enhanced Features Foundation**: Complete undo/redo system, game analysis, basic statistics
