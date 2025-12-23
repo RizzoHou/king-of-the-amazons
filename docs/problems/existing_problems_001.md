@@ -1,0 +1,2 @@
+- the "Press ESC to return to menu" statement appears at the bottom of the main menu. it should only appear in the process of a game.
+- when i temporarily return to the main menu, the newly-added button of "continue previous game" 让所有按钮下移了，从而使"Select a game to start"等提示与最下面的按钮重叠。

@@ -69,6 +69,10 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Sequential Move Display**: Moves processed and displayed sequentially
   - **UI Instructions Updated**: "Press ESC to return to menu" instead of "Press ESC to exit"
   - **Dynamic Button Layout**: Mode selection adjusts based on saved game state
+  - **UI Overlap Fixes**: Fixed overlapping UI elements in mode selection screen
+    - Removed ESC hint from main menu (only appears during gameplay)
+    - Fixed "Select a game mode to start" instruction overlapping with buttons
+    - Implemented precise positioning calculation based on button height and spacing
 
 - **Project Infrastructure**:
   - Build system: `cmake --build . --target amazons` works flawlessly

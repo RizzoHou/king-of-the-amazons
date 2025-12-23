@@ -499,19 +499,23 @@ void GraphicalController::drawModeSelection() {
         drawButton("AI vs AI", 450, sf::Color(155, 89, 182));
     }
     
+    // Calculate Y position for instructions based on last button position
+    // Button height is 60 pixels, add 30 pixels spacing
+    const int buttonHeight = 60;
+    const int spacing = 30;
+    
+    int lastButtonY = savedGameState ? 550 : 450; // AI vs AI button Y position
+    int instructionsY = lastButtonY + buttonHeight + spacing;
+    
     // Instructions
     sf::Text instructions(font, "Select a game mode to start", 18);
     instructions.setFillColor(sf::Color(189, 195, 199));
     sf::FloatRect instBounds = instructions.getLocalBounds();
-    instructions.setPosition({(WINDOW_WIDTH - instBounds.size.x) / 2, 550});
+    instructions.setPosition({(WINDOW_WIDTH - instBounds.size.x) / 2, static_cast<float>(instructionsY)});
     window->draw(instructions);
     
-    // Hint
-    sf::Text hint(font, "Press ESC to return to menu", 14);
-    hint.setFillColor(sf::Color(150, 150, 150));
-    sf::FloatRect hintBounds = hint.getLocalBounds();
-    hint.setPosition({(WINDOW_WIDTH - hintBounds.size.x) / 2, 600});
-    window->draw(hint);
+    // Note: ESC hint removed from main menu - it only appears during gameplay
+    // in the drawUI() function as part of the instructions line
 }
 
 void GraphicalController::drawBoard() {

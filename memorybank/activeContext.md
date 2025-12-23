@@ -9,6 +9,10 @@
 - **Sequential Move Display**: Ensured moves are processed and displayed sequentially
 - **UI Instructions Updated**: Changed "Press ESC to exit" to "Press ESC to return to menu"
 - **Dynamic Button Layout**: Mode selection screen adjusts based on saved game state
+- **UI Overlap Fixes**: Fixed overlapping UI elements in mode selection screen
+  - Removed ESC hint from main menu (only appears during gameplay)
+  - Fixed "Select a game mode to start" instruction overlapping with buttons
+  - Implemented precise positioning calculation based on button height and spacing
 - **Build Success**: All changes compile without errors, program runs without crashing
 - **Ready for Phase 4**: Enhanced features polish and finalization
 

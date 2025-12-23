@@ -49,6 +49,10 @@
    - **Sequential Move Display**: Moves processed and displayed sequentially
    - **UI Instructions Updated**: "Press ESC to return to menu" instead of "Press ESC to exit"
    - **Dynamic Button Layout**: Mode selection adjusts based on saved game state
+   - **UI Overlap Fixes**: Fixed overlapping UI elements in mode selection screen
+     - Removed ESC hint from main menu (only appears during gameplay)
+     - Fixed "Select a game mode to start" instruction overlapping with buttons
+     - Implemented precise positioning calculation based on button height and spacing
 
 7. **Core Game Features**:
    - **Board**: 10x10 grid with correct standard starting position (Black top, White bottom)
