@@ -98,9 +98,7 @@ void GraphicalController::handleMouseClick(int x, int y) {
         return;
     }
     
-    if (currentGameMode == GameModeGUI::AI_VS_AI) {
-        return; // AI vs AI is automatic
-    }
+    // AI vs AI mode has been removed from the graphical interface
     
     auto pos = getBoardPosition(x, y);
     if (!pos.has_value()) {
@@ -130,7 +128,6 @@ void GraphicalController::handleModeSelection(int x, int y) {
     int continueY = 250;
     int humanVsHumanY = savedGameState ? 350 : 250;
     int humanVsAIY = savedGameState ? 450 : 350;
-    int aiVsAIY = savedGameState ? 550 : 450;
     
     // Check "Continue Previous Game" button if there's a saved game
     if (savedGameState && x >= buttonX && x <= buttonX + buttonWidth &&
@@ -148,11 +145,6 @@ void GraphicalController::handleModeSelection(int x, int y) {
     else if (x >= buttonX && x <= buttonX + buttonWidth &&
              y >= humanVsAIY && y <= humanVsAIY + buttonHeight) {
         startGame(GameModeGUI::HUMAN_VS_AI);
-    }
-    // AI vs AI button
-    else if (x >= buttonX && x <= buttonX + buttonWidth &&
-             y >= aiVsAIY && y <= aiVsAIY + buttonHeight) {
-        startGame(GameModeGUI::AI_VS_AI);
     }
 }
 
@@ -228,10 +220,7 @@ void GraphicalController::startGame(GameModeGUI mode) {
     resetSelection();
     updateStatusMessage();
     
-    // If AI vs AI, start AI moves
-    if (mode == GameModeGUI::AI_VS_AI) {
-        // Start AI moves in a separate thread or with delay
-    }
+    // AI vs AI mode has been removed from the graphical interface
 }
 
 void GraphicalController::selectAmazon(const Position& pos) {
@@ -340,11 +329,7 @@ void GraphicalController::makeMove(const Move& move) {
         processAIMove();
     }
     
-    // If AI vs AI and game not over, continue AI moves
-    if (currentGameMode == GameModeGUI::AI_VS_AI && !gameState->isGameOver()) {
-        // For now, just process one AI move per click
-        // Could be enhanced to run full AI vs AI automatically
-    }
+    // AI vs AI mode has been removed from the graphical interface
 }
 
 void GraphicalController::processAIMove() {
@@ -491,12 +476,10 @@ void GraphicalController::drawModeSelection() {
         // Adjust other button positions
         drawButton("Human vs Human", 350, sf::Color(52, 152, 219));
         drawButton("Human vs AI", 450, sf::Color(46, 204, 113));
-        drawButton("AI vs AI", 550, sf::Color(155, 89, 182));
     } else {
         // Original button positions when no saved game
         drawButton("Human vs Human", 250, sf::Color(52, 152, 219));
         drawButton("Human vs AI", 350, sf::Color(46, 204, 113));
-        drawButton("AI vs AI", 450, sf::Color(155, 89, 182));
     }
     
     // Calculate Y position for instructions based on last button position
@@ -504,7 +487,7 @@ void GraphicalController::drawModeSelection() {
     const int buttonHeight = 60;
     const int spacing = 30;
     
-    int lastButtonY = savedGameState ? 550 : 450; // AI vs AI button Y position
+    int lastButtonY = savedGameState ? 450 : 350; // Last button Y position (Human vs AI)
     int instructionsY = lastButtonY + buttonHeight + spacing;
     
     // Instructions
@@ -668,9 +651,6 @@ void GraphicalController::drawUI() {
                 break;
             case GameModeGUI::HUMAN_VS_AI:
                 modeStr = "Mode: Human vs AI";
-                break;
-            case GameModeGUI::AI_VS_AI:
-                modeStr = "Mode: AI vs AI";
                 break;
             default:
                 modeStr = "";

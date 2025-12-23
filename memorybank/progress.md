@@ -54,6 +54,14 @@
      - Fixed "Select a game mode to start" instruction overlapping with buttons
      - Implemented precise positioning calculation based on button height and spacing
 
+7. **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
+   - **Problem Resolution**: Fixed issue documented in `docs/problems/existing_problems_002.md` where AI vs AI mode was "unusable and unnecessary"
+   - **Code Changes**: Removed AI vs AI button and all related logic from `GraphicalController.cpp`
+   - **Interface Simplification**: Graphical mode selection now only shows: Continue Previous Game (when available), Human vs Human, and Human vs AI
+   - **Documentation Updates**: Updated problem documentation to mark issue as RESOLVED
+   - **Testing**: Successfully compiled and verified program runs without errors
+   - **Rationale**: User explicitly stated "I don't need such a mode" and it was causing game to get stuck at first turn
+
 7. **Core Game Features**:
    - **Board**: 10x10 grid with correct standard starting position (Black top, White bottom)
    - **Move Validation**: Queen movement in 8 directions with path checking

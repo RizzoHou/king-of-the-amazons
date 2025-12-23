@@ -19,6 +19,39 @@
 **Documentation Workflow Enhancement**: Created implementation plan update workflow to ensure `docs/implementation/` stays synchronized with project state
 
 ## Recent Changes
+### AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)
+**Feature**: Completely removed AI vs AI mode from the graphical interface as requested by the user.
+
+**Implementation Details**:
+
+1. **Problem Analysis**: The user documented in `docs/problems/existing_problems_002.md` that AI vs AI mode is "both unusable and unnecessary" because it causes the game to get stuck at the first turn and the user doesn't need such a mode.
+
+2. **Code Changes in `GraphicalController.cpp`**:
+   - Removed AI vs AI button from the graphical mode selection screen
+   - Updated button layout and positioning (only Human vs Human and Human vs AI buttons now)
+   - Removed all AI vs AI related logic:
+     - Removed AI vs AI check in `handleMouseClick()` function
+     - Removed AI vs AI automatic move processing in `makeMove()` function
+     - Removed AI vs AI startup logic in `startGame()` function
+     - Removed AI vs AI case from game mode indicator in `drawUI()` function
+   - Updated instructions positioning calculations
+   - Added comments indicating "AI vs AI mode has been removed from the graphical interface"
+
+3. **Documentation Updates**:
+   - Updated `docs/problems/existing_problems_002.md` to mark the issue as RESOLVED with detailed solution information
+   - Updated `docs/problems/existing_problems.md` to include the AI vs AI problem as SOLVED
+
+4. **Testing and Validation**:
+   - Successfully compiled the project with CMake and make
+   - Verified the program runs without errors using `--help` flag
+   - Graphical interface now only shows: Continue Previous Game (when available), Human vs Human, and Human vs AI
+
+**Rationale**:
+- The user explicitly stated "I don't need such a mode"
+- AI vs AI mode was causing the game to get stuck at the first turn in the graphical interface
+- The mode is not required by the assignment specifications
+- Text mode (`--text` flag) still supports AI vs AI for testing/demonstration purposes
+
 ### Game Mode Save/Load Feature Implementation (Dec 18, 2025)
 **Feature**: Enable the "save function" to save the corresponding game mode (like human vs AI) and enable the save to be reloaded in correspondent mode.
 

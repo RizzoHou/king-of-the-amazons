@@ -1,0 +1,3 @@
+1. when i using `esc` to quit current games, the whole program will just exits. what i want is to just return to the main menu. also, each time i return to the main menu, it should add one option to continue previous game. SOLVED
+2. each time when i is in a game of human vs ai, the whole program will stuck at ai's turn for several seconds even with my operations in previous turn not taking effect. and at some point, my and ai operations will just take effect on the display simutaneously. SOLVED
+3. The mode of ai vs ai is both unusable and unnecessary. It's unusable because it can cause the game to stuck at the first turn. It's unnecessary because I don't need such a mode. SOLVED (AI vs AI mode removed from graphical interface)

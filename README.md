@@ -58,9 +58,17 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Mouse Manipulation**: Three-step interaction: select queen → select destination → select arrow
   - **Visual Feedback**: Hover effects, color-coded highlights (yellow/green/blue/red)
   - **Dual Mode Support**: Graphical (default) and text mode (`--text` flag)
-  - **Mode Selection Screen**: Graphical menu with Human vs Human, Human vs AI, AI vs AI options
+  - **Mode Selection Screen**: Graphical menu with Human vs Human, Human vs AI options (AI vs AI removed from graphical interface)
   - **Keyboard Shortcuts**: R (restart), U (undo), ESC (return to menu)
   - **Build Integration**: Added to CMake configuration, compiles successfully
+
+- **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
+  - **Problem Resolution**: Fixed issue documented in `docs/problems/existing_problems_002.md` where AI vs AI mode was "unusable and unnecessary"
+  - **Code Changes**: Removed AI vs AI button and all related logic from `GraphicalController.cpp`
+  - **Interface Simplification**: Graphical mode selection now only shows: Continue Previous Game (when available), Human vs Human, and Human vs AI
+  - **Documentation Updates**: Updated problem documentation to mark issue as RESOLVED
+  - **Testing**: Successfully compiled and verified program runs without errors
+  - **Rationale**: User explicitly stated "I don't need such a mode" and it was causing game to get stuck at first turn
 
 - **GUI Improvements (Dec 21, 2025)**:
   - **ESC Key Behavior Fix**: Changed ESC from exiting program to returning to main menu
