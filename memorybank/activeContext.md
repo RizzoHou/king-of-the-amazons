@@ -3,6 +3,41 @@
 ## Current Work Focus
 **Phase 4: Enhanced Features Polish and Bug Fixes (Dec 24, 2025)**
 
+### Menu Aesthetics Improvements (Dec 24, 2025)
+**Problem**: The graphical interface had poor color aesthetics, particularly:
+1. Valid move highlights used "completely green" (`sf::Color(0, 255, 0, 80)`) which was visually overwhelming
+2. Overall color scheme lacked modern, cohesive design
+3. Instructions still referred to "green cells" and "red cells" after color changes
+
+**Solution**: Implemented modern color scheme with improved visual hierarchy:
+
+1. **Modern Color Palette Implementation**:
+   - **Board colors**: Light squares: `sf::Color(232, 235, 239)` (light blue-gray), Dark squares: `sf::Color(125, 135, 150)` (slate blue)
+   - **Highlight colors**: 
+     - Selected Amazon: `sf::Color(255, 215, 0, 120)` (gold) instead of bright yellow
+     - Valid moves: `sf::Color(100, 200, 225, 100)` (soft teal-blue) instead of "completely green"
+     - Move destination: `sf::Color(70, 130, 180, 120)` (steel blue) instead of bright blue
+     - Valid arrows: `sf::Color(220, 100, 100, 100)` (muted coral red) instead of bright red
+     - Hover effect: `sf::Color(255, 255, 255, 60)` (white with transparency)
+   - **Piece colors**:
+     - White Amazon: `sf::Color(245, 245, 245)` with `sf::Color(100, 100, 100)` outline
+     - Black Amazon: `sf::Color(40, 40, 40)` with `sf::Color(200, 200, 200)` outline
+     - Arrows: `sf::Color(180, 70, 70)` (muted red) with darker outline
+
+2. **Updated Instructions**: Changed from "green cells" to "teal cells" and "red cells" to "coral cells" to match new color scheme
+
+3. **Files Modified**:
+   - `src/ui/GraphicalController.cpp`: Updated `getCellColor()`, `drawHighlights()`, `drawPieces()`, and `drawUI()` functions
+   - Build compiles successfully, program runs with improved visual aesthetics
+
+**Key Improvements**:
+- ✅ Modern, professional color scheme implemented
+- ✅ Valid moves are now soft teal-blue instead of overwhelming green
+- ✅ All highlights are moderately visible but not overwhelming as requested
+- ✅ Color palette creates cohesive visual experience
+- ✅ Instructions updated to reflect new color names
+- ✅ Simple color changes only (no complex visual effects as requested)
+
 ### Arrow Validation Bug Fix (Dec 24, 2025)
 **Problem**: The implementation incorrectly prevented arrows from targeting or passing through vacated squares (the original position of the moved amazon). According to Game of Amazons rules, after an amazon moves, the vacated square becomes empty and can be targeted by the arrow.
 

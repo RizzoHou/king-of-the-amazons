@@ -89,6 +89,19 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Save Button Position Fix**: Moved button from Y=80 to Y=50 to avoid overlapping game board
   - **Implementation Details**: Uses existing Serializer class, compatible with text mode
 
+- **Menu Aesthetics Improvements (Dec 24, 2025)**:
+  - **Problem**: Graphical interface had poor color aesthetics with "completely green" valid moves and lack of modern design
+  - **Solution**: Implemented modern color scheme with improved visual hierarchy
+  - **Key Improvements**: 
+    - Board colors: Light blue-gray and slate blue for modern look
+    - Valid moves: Soft teal-blue instead of overwhelming green
+    - Highlights: Gold for selected Amazon, steel blue for destination, muted coral red for arrows
+    - Piece colors: Enhanced white and black Amazons with better outlines
+    - Instructions updated to reflect new color names
+  - **Testing**: Build compiles successfully, program runs with improved visual aesthetics
+  - **File Modified**: src/ui/GraphicalController.cpp
+  - **Build Status**: Compiles successfully
+
 - **Arrow Validation Bug Fix (Dec 24, 2025)**:
   - **Problem**: Implementation incorrectly prevented arrows from targeting or passing through vacated squares
   - **Solution**: Updated GameState.cpp with new helper functions for proper arrow validation

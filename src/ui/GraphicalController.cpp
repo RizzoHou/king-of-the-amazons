@@ -561,12 +561,12 @@ void GraphicalController::drawPieces() {
                 amazon.setPosition({cx, cy});
                 
                 if (cell == Board::Cell::WHITE_AMAZON) {
-                    amazon.setFillColor(sf::Color(245, 245, 240));
-                    amazon.setOutlineColor(sf::Color(80, 80, 80));
+                    amazon.setFillColor(sf::Color(245, 245, 245)); // Pure white for modern look
+                    amazon.setOutlineColor(sf::Color(100, 100, 100)); // Medium gray outline
                     amazon.setOutlineThickness(2);
                 } else {
-                    amazon.setFillColor(sf::Color(50, 50, 50));
-                    amazon.setOutlineColor(sf::Color(20, 20, 20));
+                    amazon.setFillColor(sf::Color(40, 40, 40)); // Dark charcoal
+                    amazon.setOutlineColor(sf::Color(200, 200, 200)); // Light gray outline
                     amazon.setOutlineThickness(2);
                 }
                 
@@ -577,8 +577,8 @@ void GraphicalController::drawPieces() {
                 sf::CircleShape arrow(radius);
                 arrow.setOrigin({radius, radius});
                 arrow.setPosition({cx, cy});
-                arrow.setFillColor(sf::Color(192, 57, 43));
-                arrow.setOutlineColor(sf::Color(146, 43, 33));
+                arrow.setFillColor(sf::Color(180, 70, 70)); // Muted red
+                arrow.setOutlineColor(sf::Color(140, 50, 50)); // Darker muted red
                 arrow.setOutlineThickness(1);
                 window->draw(arrow);
             }
@@ -599,7 +599,7 @@ void GraphicalController::drawHighlights() {
             BOARD_OFFSET_X + hoverPos->col * CELL_SIZE,
             BOARD_OFFSET_Y + hoverPos->row * CELL_SIZE
         ));
-        hoverHighlight.setFillColor(sf::Color(255, 255, 255, 50));
+        hoverHighlight.setFillColor(sf::Color(255, 255, 255, 60)); // Slightly more visible
         window->draw(hoverHighlight);
     }
 
@@ -611,17 +611,17 @@ void GraphicalController::drawHighlights() {
             BOARD_OFFSET_X + selectedPosition.col * CELL_SIZE,
             BOARD_OFFSET_Y + selectedPosition.row * CELL_SIZE
         ));
-        highlight.setFillColor(sf::Color(255, 255, 0, 100));
+        highlight.setFillColor(sf::Color(255, 215, 0, 120)); // Gold instead of bright yellow
         window->draw(highlight);
         
-        // Highlight valid moves
+        // Highlight valid moves - modern teal-blue instead of bright green
         for (const auto& pos : validMoves) {
             sf::RectangleShape moveHighlight(sf::Vector2f(CELL_SIZE, CELL_SIZE));
             moveHighlight.setPosition(sf::Vector2f(
                 BOARD_OFFSET_X + pos.col * CELL_SIZE,
                 BOARD_OFFSET_Y + pos.row * CELL_SIZE
             ));
-            moveHighlight.setFillColor(sf::Color(0, 255, 0, 80));
+            moveHighlight.setFillColor(sf::Color(100, 200, 225, 100)); // Soft teal-blue
             window->draw(moveHighlight);
         }
     }
@@ -634,7 +634,7 @@ void GraphicalController::drawHighlights() {
             BOARD_OFFSET_X + moveToPosition.col * CELL_SIZE,
             BOARD_OFFSET_Y + moveToPosition.row * CELL_SIZE
         ));
-        highlight.setFillColor(sf::Color(0, 0, 255, 100));
+        highlight.setFillColor(sf::Color(70, 130, 180, 120)); // Steel blue instead of bright blue
         window->draw(highlight);
         
         // Highlight valid arrow positions
@@ -644,7 +644,7 @@ void GraphicalController::drawHighlights() {
                 BOARD_OFFSET_X + pos.col * CELL_SIZE,
                 BOARD_OFFSET_Y + pos.row * CELL_SIZE
             ));
-            arrowHighlight.setFillColor(sf::Color(255, 0, 0, 80));
+            arrowHighlight.setFillColor(sf::Color(220, 100, 100, 100)); // Muted coral red
             window->draw(arrowHighlight);
         }
     }
@@ -660,9 +660,9 @@ void GraphicalController::drawUI() {
     // Instructions
     std::string instructions = "R: Restart | U: Undo | ESC: Menu";
     if (selectionState == SelectionState::AMAZON_SELECTED) {
-        instructions += " | Click on highlighted green cells to move";
+        instructions += " | Click on highlighted teal cells to move";
     } else if (selectionState == SelectionState::MOVE_SELECTED) {
-        instructions += " | Click on highlighted red cells for arrow";
+        instructions += " | Click on highlighted coral cells for arrow";
     }
     
     sf::Text instrText(font, instructions, 14);
@@ -719,11 +719,11 @@ void GraphicalController::drawUI() {
 }
 
 sf::Color GraphicalController::getCellColor(int row, int col) const {
-    // Checkerboard pattern
+    // Checkerboard pattern with modern colors
     if ((row + col) % 2 == 0) {
-        return sf::Color(238, 238, 210); // Light cream
+        return sf::Color(232, 235, 239); // Light blue-gray (modern light square)
     } else {
-        return sf::Color(118, 150, 86); // Soft green
+        return sf::Color(125, 135, 150); // Slate blue (modern dark square)
     }
 }
 

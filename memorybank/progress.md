@@ -77,7 +77,20 @@
    - **File Modified**: GraphicalController.hpp (SAVE_BUTTON_Y: 80 → 50)
    - **Build Status**: Compiles successfully
 
-10. **Arrow Validation Bug Fix (Dec 24, 2025)**:
+10. **Menu Aesthetics Improvements (Dec 24, 2025)**:
+    - **Problem**: Graphical interface had poor color aesthetics with "completely green" valid moves and lack of modern design
+    - **Solution**: Implemented modern color scheme with improved visual hierarchy
+    - **Key Improvements**: 
+      - Board colors: Light blue-gray and slate blue for modern look
+      - Valid moves: Soft teal-blue instead of overwhelming green
+      - Highlights: Gold for selected Amazon, steel blue for destination, muted coral red for arrows
+      - Piece colors: Enhanced white and black Amazons with better outlines
+      - Instructions updated to reflect new color names
+    - **Testing**: Build compiles successfully, program runs with improved visual aesthetics
+    - **File Modified**: src/ui/GraphicalController.cpp
+    - **Build Status**: Compiles successfully
+
+11. **Arrow Validation Bug Fix (Dec 24, 2025)**:
     - **Problem**: Implementation incorrectly prevented arrows from targeting or passing through vacated squares
     - **Solution**: Updated GameState.cpp with new helper functions for proper arrow validation
     - **Key Improvements**: Arrows can now target vacated squares and pass through them to reach beyond
