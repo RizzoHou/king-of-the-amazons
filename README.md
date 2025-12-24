@@ -89,6 +89,14 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Save Button Position Fix**: Moved button from Y=80 to Y=50 to avoid overlapping game board
   - **Implementation Details**: Uses existing Serializer class, compatible with text mode
 
+- **Arrow Validation Bug Fix (Dec 24, 2025)**:
+  - **Problem**: Implementation incorrectly prevented arrows from targeting or passing through vacated squares
+  - **Solution**: Updated GameState.cpp with new helper functions for proper arrow validation
+  - **Key Improvements**: Arrows can now target vacated squares and pass through them to reach beyond
+  - **Testing**: All 30 unit tests pass, user confirms fix works in both text and GUI modes
+  - **File Modified**: src/core/GameState.cpp
+  - **Build Status**: Compiles successfully, all tests pass
+
 - **Project Infrastructure**:
   - Build system: `cmake --build . --target amazons` works flawlessly
   - Test execution: `./bin/unit_tests` runs all 30 tests successfully

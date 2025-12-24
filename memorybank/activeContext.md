@@ -1,7 +1,28 @@
 # Active Context: King of the Amazons
 
 ## Current Work Focus
-**Phase 3: Save/Load GUI Implementation COMPLETED (Dec 24, 2025)**
+**Phase 4: Enhanced Features Polish and Bug Fixes (Dec 24, 2025)**
+
+### Arrow Validation Bug Fix (Dec 24, 2025)
+**Problem**: The implementation incorrectly prevented arrows from targeting or passing through vacated squares (the original position of the moved amazon). According to Game of Amazons rules, after an amazon moves, the vacated square becomes empty and can be targeted by the arrow.
+
+**Solution**: Implemented comprehensive fix for arrow validation:
+1. **New Helper Functions in GameState.cpp**:
+   - `isArrowPathClearWithVacated()`: Checks if arrow path is clear, treating the vacated square as empty
+   - `getLegalArrowPositions()`: Gets all legal arrow positions from a position, treating vacated square as empty
+2. **Updated `getLegalMovesForPlayer()`**: Now uses `getLegalArrowPositions()` instead of `board.getLegalShots()`
+3. **Updated `isValidMove()`**: Now uses `isArrowPathClearWithVacated()` for all arrow validation
+
+**Key Improvements**:
+- ✅ Arrows can now target the vacated square (original position)
+- ✅ Arrows can pass through the vacated square to reach squares beyond it
+- ✅ Normal arrow validation still works correctly for other cases
+- ✅ All existing unit tests pass (30/30 tests)
+- ✅ User confirms the fix works in both text and GUI modes
+
+**File Modified**: `src/core/GameState.cpp` - Added new helper functions and updated validation logic
+
+**Build Status**: Compiles successfully, all tests pass
 
 ### Save Button Position Fix (Dec 24, 2025)
 **Problem**: "Save Game" button at Y=80 overlapped with game board starting at Y=100.

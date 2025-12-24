@@ -77,13 +77,21 @@
    - **File Modified**: GraphicalController.hpp (SAVE_BUTTON_Y: 80 → 50)
    - **Build Status**: Compiles successfully
 
-7. **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
-   - **Problem Resolution**: Fixed issue documented in `docs/problems/existing_problems_002.md` where AI vs AI mode was "unusable and unnecessary"
-   - **Code Changes**: Removed AI vs AI button and all related logic from `GraphicalController.cpp`
-   - **Interface Simplification**: Graphical mode selection now only shows: Continue Previous Game (when available), Human vs Human, and Human vs AI
-   - **Documentation Updates**: Updated problem documentation to mark issue as RESOLVED
-   - **Testing**: Successfully compiled and verified program runs without errors
-   - **Rationale**: User explicitly stated "I don't need such a mode" and it was causing game to get stuck at first turn
+10. **Arrow Validation Bug Fix (Dec 24, 2025)**:
+    - **Problem**: Implementation incorrectly prevented arrows from targeting or passing through vacated squares
+    - **Solution**: Updated GameState.cpp with new helper functions for proper arrow validation
+    - **Key Improvements**: Arrows can now target vacated squares and pass through them to reach beyond
+    - **Testing**: All 30 unit tests pass, user confirms fix works in both text and GUI modes
+    - **File Modified**: src/core/GameState.cpp
+    - **Build Status**: Compiles successfully, all tests pass
+
+11. **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
+    - **Problem Resolution**: Fixed issue documented in `docs/problems/existing_problems_002.md` where AI vs AI mode was "unusable and unnecessary"
+    - **Code Changes**: Removed AI vs AI button and all related logic from `GraphicalController.cpp`
+    - **Interface Simplification**: Graphical mode selection now only shows: Continue Previous Game (when available), Human vs Human, and Human vs AI
+    - **Documentation Updates**: Updated problem documentation to mark issue as RESOLVED
+    - **Testing**: Successfully compiled and verified program runs without errors
+    - **Rationale**: User explicitly stated "I don't need such a mode" and it was causing game to get stuck at first turn
 
 7. **Core Game Features**:
    - **Board**: 10x10 grid with correct standard starting position (Black top, White bottom)

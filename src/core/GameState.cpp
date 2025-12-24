@@ -4,6 +4,91 @@
 
 namespace amazons {
 
+namespace {
+    // Helper function to check if path is clear for arrow shot, treating vacated square as empty
+    bool isArrowPathClearWithVacated(const Board& board, 
+                                     const Position& arrowFrom, 
+                                     const Position& arrowTo,
+                                     const Position& vacatedSquare) {
+        // Check if arrow target is valid
+        if (!board.isValidPosition(arrowTo)) {
+            return false;
+        }
+        
+        // Arrow target must be empty or be the vacated square (which becomes empty)
+        if (board.getCell(arrowTo) != Board::Cell::EMPTY && 
+            !(arrowTo.row == vacatedSquare.row && arrowTo.col == vacatedSquare.col)) {
+            return false;
+        }
+        
+        // Check if path is clear for queen move (straight or diagonal)
+        int dr = (arrowTo.row > arrowFrom.row) ? 1 : (arrowTo.row < arrowFrom.row) ? -1 : 0;
+        int dc = (arrowTo.col > arrowFrom.col) ? 1 : (arrowTo.col < arrowFrom.col) ? -1 : 0;
+        
+        // If arrowFrom == arrowTo (zero-length move), path is trivially clear
+        if (dr == 0 && dc == 0) {
+            return true;
+        }
+        
+        // Start from the first cell after 'arrowFrom'
+        int r = arrowFrom.row + dr;
+        int c = arrowFrom.col + dc;
+        
+        // Check all cells up to but not including 'arrowTo'
+        while (r != arrowTo.row || c != arrowTo.col) {
+            if (!board.isValidPosition(r, c)) {
+                return false;
+            }
+            
+            // Cell is not empty AND it's not the vacated square
+            if (board.getCell(r, c) != Board::Cell::EMPTY && 
+                !(r == vacatedSquare.row && c == vacatedSquare.col)) {
+                return false;
+            }
+            
+            r += dr;
+            c += dc;
+        }
+        
+        return true;
+    }
+    
+    // Helper function to get all legal arrow positions from a position, treating vacated square as empty
+    std::vector<Position> getLegalArrowPositions(const Board& board,
+                                                 const Position& arrowFrom,
+                                                 const Position& vacatedSquare) {
+        std::vector<Position> positions;
+        
+        // 8 directions: up, down, left, right, and 4 diagonals
+        const std::array<std::pair<int, int>, 8> DIRECTIONS = {{
+            {-1, -1}, {-1, 0}, {-1, 1},
+            {0, -1},           {0, 1},
+            {1, -1},  {1, 0},  {1, 1}
+        }};
+        
+        for (const auto& [dr, dc] : DIRECTIONS) {
+            int r = arrowFrom.row + dr;
+            int c = arrowFrom.col + dc;
+            
+            while (board.isValidPosition(r, c)) {
+                // Check if cell is empty or is the vacated square
+                if (board.getCell(r, c) == Board::Cell::EMPTY || 
+                    (r == vacatedSquare.row && c == vacatedSquare.col)) {
+                    positions.emplace_back(r, c);
+                } else {
+                    // Stop in this direction if we hit a non-empty cell that's not the vacated square
+                    break;
+                }
+                
+                r += dr;
+                c += dc;
+            }
+        }
+        
+        return positions;
+    }
+}
+
 GameState::GameState() : currentPlayer(Player::WHITE), turnNumber(1) {
     board.initializeStandardPosition();
 }
@@ -55,15 +140,12 @@ std::vector<Move> GameState::getLegalMovesForPlayer(Player player) const {
                 
                 // For each move position, get all possible arrow shots
                 for (const auto& to : movePositions) {
-                    // Temporarily move the Amazon to get legal shots from new position
-                    // For now, we'll use a simplified approach
-                    auto shotPositions = board.getLegalShots(to);
+                    // Get all legal arrow positions from new position, treating 'from' as vacated
+                    auto arrowPositions = getLegalArrowPositions(board, to, from);
                     
-                    for (const auto& arrow : shotPositions) {
-                        // Arrow cannot be shot to the from position (where Amazon was)
-                        if (arrow != from) {
-                            legalMoves.emplace_back(from, to, arrow);
-                        }
+                    // Add all legal arrow shots
+                    for (const auto& arrow : arrowPositions) {
+                        legalMoves.emplace_back(from, to, arrow);
                     }
                 }
             }
@@ -93,14 +175,8 @@ bool GameState::isValidMove(const Move& move) const {
     }
     
     // Check if arrow shot is legal from new position
-    // For now, use simplified check
-    auto legalShots = board.getLegalShots(move.to);
-    if (std::find(legalShots.begin(), legalShots.end(), move.arrow) == legalShots.end()) {
-        return false;
-    }
-    
-    // Arrow cannot be shot to the from position
-    if (move.arrow == move.from) {
+    // Use helper that treats the vacated square (move.from) as empty
+    if (!isArrowPathClearWithVacated(board, move.to, move.arrow, move.from)) {
         return false;
     }
     
