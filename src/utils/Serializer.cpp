@@ -329,6 +329,17 @@ std::pair<std::unique_ptr<GameState>, GameMode> Serializer::deserializeGameState
 }
 
 std::string Serializer::getSaveDirectory() const {
+    // Try to find the project root directory
+    // First check if data/saves exists in current directory (project root)
+    struct stat info;
+    if (stat("data/saves/", &info) == 0 && S_ISDIR(info.st_mode)) {
+        return "data/saves/";
+    }
+    // If not, try ../data/saves/ (when running from build/ directory)
+    if (stat("../data/saves/", &info) == 0 && S_ISDIR(info.st_mode)) {
+        return "../data/saves/";
+    }
+    // Default to data/saves/ in current directory
     return "data/saves/";
 }
 

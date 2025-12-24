@@ -1,6 +1,60 @@
 # Active Context: King of the Amazons
 
 ## Current Work Focus
+**Phase 3: Save/Load GUI Implementation COMPLETED (Dec 24, 2025)**
+
+### Save Button Position Fix (Dec 24, 2025)
+**Problem**: "Save Game" button at Y=80 overlapped with game board starting at Y=100.
+
+**Solution**: Moved button from Y=80 to Y=50:
+- Mode indicator: Y≈15-35
+- Save button: Y=50-80
+- Game board: Y=100
+- Gaps: 15px from mode indicator, 20px to board
+
+**File Modified**: `include/ui/GraphicalController.hpp` - changed SAVE_BUTTON_Y from 80 to 50
+
+**Build Status**: Compiles successfully
+
+### Scrollable Load Screen Fix (Dec 24, 2025)
+**Problem**: When many saved games exist, the list items overlap with the "Load Selected Game" and "Back to Menu" buttons.
+
+**Solution**: Implemented scrollable saves list:
+- Added `scrollOffset` member variable to track scroll position
+- Added `MAX_VISIBLE_SAVES = 5` constant to limit visible saves
+- Added scroll buttons (▲ and ▼) on the right side of the save list
+- Added position indicator showing current range (e.g., "1-5/10")
+- Modified `drawLoadScreen()` to only render visible saves
+- Modified `handleLoadScreenClick()` to handle scroll button clicks
+- Buttons are disabled when at start/end of list
+
+**Files Modified**:
+- `include/ui/GraphicalController.hpp` - Added scrollOffset, MAX_VISIBLE_SAVES, SCROLL_BUTTON_SIZE constants
+- `src/ui/GraphicalController.cpp` - Updated openLoadScreen(), handleLoadScreenClick(), drawLoadScreen()
+
+**Build Status**: Compiles successfully
+
+**Phase 3: Save/Load GUI Implementation COMPLETED (Dec 24, 2025)**
+- **Save Game Button**: Added "Save Game" button to game UI (top-right area)
+  - Saves with timestamp-based filenames (format: `game_YYYYMMDD_HHMMSS.json`)
+  - Uses existing Serializer class to persist to `data/saves/`
+  - Shows confirmation message in status bar
+  
+- **Load Game Feature**: Added "Load Game" button to main menu
+  - Opens dedicated load screen showing all saved games
+  - Click to select a saved game, then "Load Selected Game" to load
+  - "Back to Menu" button to return to main menu
+  - Shows "No saved games found" when no saves exist
+
+**Implementation Details**:
+- Added `Serializer serializer` member to `GraphicalController` for save/load operations
+- Added `savedGamesList` vector and `selectedSaveIndex` for load screen
+- Added `showLoadScreen` flag for load screen toggle
+- Implemented `saveCurrentGame()`, `openLoadScreen()`, `handleLoadScreenClick()`, `drawLoadScreen()`, `loadSavedGamesList()` methods
+- Save files are compatible with text mode load functionality
+- Games save with game mode information (Human vs Human, Human vs AI)
+- Build completes successfully
+
 **Phase 3: Graphical GUI Improvements COMPLETED**
 - **ESC Key Behavior Fix**: Changed ESC from exiting program to returning to main menu
 - **Game State Preservation**: When pressing ESC, current game state is saved for "Continue" feature

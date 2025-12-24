@@ -54,6 +54,29 @@
      - Fixed "Select a game mode to start" instruction overlapping with buttons
      - Implemented precise positioning calculation based on button height and spacing
 
+7. **Save/Load GUI Implementation (Dec 24, 2025)**:
+   - **Save Game Button**: Added "Save Game" button to game UI (top-right area)
+   - **Load Game Feature**: Added "Load Game" button to main menu with dedicated load screen
+   - **Implementation Details**: Added Serializer member, savedGamesList, selectedSaveIndex, showLoadScreen
+   - **Methods Added**: saveCurrentGame(), openLoadScreen(), handleLoadScreenClick(), drawLoadScreen(), loadSavedGamesList()
+   - **Build Status**: Compiles successfully, no errors or warnings
+
+8. **Scrollable Load Screen Fix (Dec 24, 2025)**:
+   - **Problem**: When many saved games exist, list items overlap with buttons
+   - **Solution**: Implemented scrollable saves list with 5 visible items
+   - **Scroll Buttons**: Added ▲/▼ buttons on right side of save list
+   - **Position Indicator**: Shows current range (e.g., "1-5/10")
+   - **Constants Added**: scrollOffset, MAX_VISIBLE_SAVES (5), SCROLL_BUTTON_SIZE (30)
+   - **Files Modified**: GraphicalController.hpp, GraphicalController.cpp
+   - **Build Status**: Compiles successfully
+
+9. **Save Button Position Fix (Dec 24, 2025)**:
+   - **Problem**: "Save Game" button at Y=80 overlapped with game board at Y=100
+   - **Solution**: Moved button from Y=80 to Y=50
+   - **New Layout**: 15px gap from mode indicator, 20px gap to board
+   - **File Modified**: GraphicalController.hpp (SAVE_BUTTON_Y: 80 → 50)
+   - **Build Status**: Compiles successfully
+
 7. **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
    - **Problem Resolution**: Fixed issue documented in `docs/problems/existing_problems_002.md` where AI vs AI mode was "unusable and unnecessary"
    - **Code Changes**: Removed AI vs AI button and all related logic from `GraphicalController.cpp`

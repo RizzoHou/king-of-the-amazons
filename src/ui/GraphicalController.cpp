@@ -3,6 +3,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <ctime>
 
 namespace amazons {
 
@@ -13,7 +14,10 @@ GraphicalController::GraphicalController()
       moveToPosition(-1, -1),
       currentGameMode(GameModeGUI::NOT_SELECTED),
       showModeSelection(true),
-      statusMessage("Welcome to King of the Amazons!") {
+      showLoadScreen(false),
+      statusMessage("Welcome to King of the Amazons!"),
+      selectedSaveIndex(-1),
+      scrollOffset(0) {
     
     if (!initialize()) {
         throw std::runtime_error("Failed to initialize GraphicalController");
@@ -88,6 +92,18 @@ void GraphicalController::handleMouseClick(int x, int y) {
         return;
     }
     
+    if (showLoadScreen) {
+        handleLoadScreenClick(x, y);
+        return;
+    }
+    
+    // Check if Save button was clicked
+    if (x >= SAVE_BUTTON_X && x <= SAVE_BUTTON_X + SAVE_BUTTON_WIDTH &&
+        y >= SAVE_BUTTON_Y && y <= SAVE_BUTTON_Y + SAVE_BUTTON_HEIGHT) {
+        saveCurrentGame();
+        return;
+    }
+    
     if (!gameState || gameState->isGameOver()) {
         return;
     }
@@ -128,6 +144,7 @@ void GraphicalController::handleModeSelection(int x, int y) {
     int continueY = 250;
     int humanVsHumanY = savedGameState ? 350 : 250;
     int humanVsAIY = savedGameState ? 450 : 350;
+    int loadGameY = savedGameState ? 550 : 450;
     
     // Check "Continue Previous Game" button if there's a saved game
     if (savedGameState && x >= buttonX && x <= buttonX + buttonWidth &&
@@ -145,6 +162,11 @@ void GraphicalController::handleModeSelection(int x, int y) {
     else if (x >= buttonX && x <= buttonX + buttonWidth &&
              y >= humanVsAIY && y <= humanVsAIY + buttonHeight) {
         startGame(GameModeGUI::HUMAN_VS_AI);
+    }
+    // Load Game button
+    else if (x >= buttonX && x <= buttonX + buttonWidth &&
+             y >= loadGameY && y <= loadGameY + buttonHeight) {
+        openLoadScreen();
     }
 }
 
@@ -404,7 +426,9 @@ void GraphicalController::updateStatusMessage() {
 void GraphicalController::render() {
     window->clear(sf::Color(240, 240, 240));
     
-    if (showModeSelection) {
+    if (showLoadScreen) {
+        drawLoadScreen();
+    } else if (showModeSelection) {
         drawModeSelection();
     } else {
         drawBoard();
@@ -476,10 +500,14 @@ void GraphicalController::drawModeSelection() {
         // Adjust other button positions
         drawButton("Human vs Human", 350, sf::Color(52, 152, 219));
         drawButton("Human vs AI", 450, sf::Color(46, 204, 113));
+        // Load Game button
+        drawButton("Load Game", 550, sf::Color(155, 89, 182));
     } else {
         // Original button positions when no saved game
         drawButton("Human vs Human", 250, sf::Color(52, 152, 219));
         drawButton("Human vs AI", 350, sf::Color(46, 204, 113));
+        // Load Game button
+        drawButton("Load Game", 450, sf::Color(155, 89, 182));
     }
     
     // Calculate Y position for instructions based on last button position
@@ -487,7 +515,7 @@ void GraphicalController::drawModeSelection() {
     const int buttonHeight = 60;
     const int spacing = 30;
     
-    int lastButtonY = savedGameState ? 450 : 350; // Last button Y position (Human vs AI)
+    int lastButtonY = savedGameState ? 550 : 450; // Last button Y position (Load Game)
     int instructionsY = lastButtonY + buttonHeight + spacing;
     
     // Instructions
@@ -663,6 +691,31 @@ void GraphicalController::drawUI() {
             window->draw(modeText);
         }
     }
+    
+    // Draw Save Game button
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
+    sf::RectangleShape saveButton(sf::Vector2f(SAVE_BUTTON_WIDTH, SAVE_BUTTON_HEIGHT));
+    saveButton.setPosition({SAVE_BUTTON_X, SAVE_BUTTON_Y});
+    
+    bool isHovered = mousePos.x >= SAVE_BUTTON_X && mousePos.x <= SAVE_BUTTON_X + SAVE_BUTTON_WIDTH &&
+                    mousePos.y >= SAVE_BUTTON_Y && mousePos.y <= SAVE_BUTTON_Y + SAVE_BUTTON_HEIGHT;
+    
+    if (isHovered) {
+        saveButton.setFillColor(sf::Color(46, 204, 113));
+        saveButton.setOutlineThickness(2);
+        saveButton.setOutlineColor(sf::Color::White);
+    } else {
+        saveButton.setFillColor(sf::Color(39, 174, 96));
+    }
+    
+    window->draw(saveButton);
+    
+    sf::Text saveText(font, "Save Game", 16);
+    saveText.setFillColor(sf::Color::White);
+    sf::FloatRect textBounds = saveText.getLocalBounds();
+    saveText.setPosition({SAVE_BUTTON_X + (SAVE_BUTTON_WIDTH - textBounds.size.x) / 2, 
+                        SAVE_BUTTON_Y + (SAVE_BUTTON_HEIGHT - textBounds.size.y) / 2 - 5});
+    window->draw(saveText);
 }
 
 sf::Color GraphicalController::getCellColor(int row, int col) const {
@@ -688,6 +741,338 @@ std::optional<Position> GraphicalController::getBoardPosition(int mouseX, int mo
     }
     
     return std::nullopt;
+}
+
+void GraphicalController::saveCurrentGame() {
+    if (!gameState) {
+        statusMessage = "No game to save!";
+        return;
+    }
+    
+    // Generate timestamp-based filename
+    auto now = std::chrono::system_clock::now();
+    auto time = std::chrono::system_clock::to_time_t(now);
+    auto tm = *std::localtime(&time);
+    
+    char buffer[32];
+    std::strftime(buffer, sizeof(buffer), "game_%Y%m%d_%H%M%S", &tm);
+    std::string filename(buffer);
+    
+    // Convert GameModeGUI to GameMode
+    GameMode gameMode;
+    switch (currentGameMode) {
+        case GameModeGUI::HUMAN_VS_HUMAN:
+            gameMode = GameMode::HUMAN_VS_HUMAN;
+            break;
+        case GameModeGUI::HUMAN_VS_AI:
+            gameMode = GameMode::HUMAN_VS_AI;
+            break;
+        default:
+            gameMode = GameMode::HUMAN_VS_HUMAN;
+    }
+    
+    if (serializer.saveGame(*gameState, gameMode, filename)) {
+        statusMessage = "Game saved: " + filename;
+    } else {
+        statusMessage = "Failed to save game!";
+    }
+}
+
+void GraphicalController::loadSavedGamesList() {
+    savedGamesList = serializer.getSavedGames();
+}
+
+void GraphicalController::openLoadScreen() {
+    loadSavedGamesList();
+    showLoadScreen = true;
+    showModeSelection = false;
+    selectedSaveIndex = -1;
+    scrollOffset = 0;  // Reset scroll to top
+}
+
+void GraphicalController::handleLoadScreenClick(int x, int y) {
+    const int buttonWidth = 400;
+    const int buttonHeight = 40;
+    const int buttonX = (WINDOW_WIDTH - buttonWidth) / 2;
+    
+    // Fixed positions for action buttons
+    const int loadButtonY = WINDOW_HEIGHT - 150;
+    const int backButtonY = WINDOW_HEIGHT - 100;
+    
+    // Scroll button positions (right side of the list)
+    const int scrollX = buttonX + buttonWidth + 10;
+    const int scrollY = 200;
+    const int scrollButtonSize = SCROLL_BUTTON_SIZE;
+    
+    // Check scroll down button (bottom)
+    if (x >= scrollX && x <= scrollX + scrollButtonSize &&
+        y >= scrollY + scrollButtonSize && y <= scrollY + scrollButtonSize * 2) {
+        // Scroll down
+        int maxOffset = static_cast<int>(savedGamesList.size()) - MAX_VISIBLE_SAVES;
+        if (maxOffset > 0 && scrollOffset < maxOffset) {
+            scrollOffset++;
+        }
+        return;
+    }
+    
+    // Check scroll up button (top)
+    if (x >= scrollX && x <= scrollX + scrollButtonSize &&
+        y >= scrollY && y <= scrollY + scrollButtonSize) {
+        // Scroll up
+        if (scrollOffset > 0) {
+            scrollOffset--;
+        }
+        return;
+    }
+    
+    // Check Back button
+    if (x >= buttonX && x <= buttonX + buttonWidth &&
+        y >= backButtonY && y <= backButtonY + buttonHeight) {
+        showLoadScreen = false;
+        showModeSelection = true;
+        return;
+    }
+    
+    // Check if clicked on a save game entry (only visible ones)
+    int startY = 200;
+    int spacing = 50;
+    
+    for (int i = scrollOffset; i < scrollOffset + MAX_VISIBLE_SAVES && i < static_cast<int>(savedGamesList.size()); ++i) {
+        int yPos = startY + (i - scrollOffset) * spacing;
+        if (x >= buttonX && x <= buttonX + buttonWidth &&
+            y >= yPos && y <= yPos + buttonHeight) {
+            selectedSaveIndex = i;
+            return;
+        }
+    }
+    
+    // Check Load button (only if a save is selected)
+    if (selectedSaveIndex >= 0 && selectedSaveIndex < static_cast<int>(savedGamesList.size())) {
+        if (x >= buttonX && x <= buttonX + buttonWidth &&
+            y >= loadButtonY && y <= loadButtonY + buttonHeight) {
+            // Load the selected game
+            std::string selectedSave = savedGamesList[selectedSaveIndex];
+            auto result = serializer.loadGameWithMode(selectedSave);
+            
+            if (result.first) {
+                gameState = std::move(result.first);
+                
+                // Convert GameMode to GameModeGUI
+                switch (result.second) {
+                    case GameMode::HUMAN_VS_HUMAN:
+                        currentGameMode = GameModeGUI::HUMAN_VS_HUMAN;
+                        break;
+                    case GameMode::HUMAN_VS_AI:
+                        currentGameMode = GameModeGUI::HUMAN_VS_AI;
+                        break;
+                    default:
+                        currentGameMode = GameModeGUI::HUMAN_VS_HUMAN;
+                }
+                
+                showLoadScreen = false;
+                showModeSelection = false;
+                resetSelection();
+                updateStatusMessage();
+                statusMessage = "Game loaded: " + selectedSave;
+            } else {
+                statusMessage = "Failed to load game!";
+            }
+        }
+    }
+}
+
+void GraphicalController::drawLoadScreen() {
+    // Background
+    sf::RectangleShape bg(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+    bg.setFillColor(sf::Color(44, 62, 80));
+    window->draw(bg);
+    
+    // Title
+    sf::Text title(font, "Load Saved Game", 36);
+    title.setFillColor(sf::Color(236, 240, 241));
+    sf::FloatRect titleBounds = title.getLocalBounds();
+    title.setPosition({(WINDOW_WIDTH - titleBounds.size.x) / 2, 80});
+    window->draw(title);
+    
+    // Get mouse position for hover effects
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
+    
+    // Draw saved games list - only visible portion
+    const int buttonWidth = 400;
+    const int buttonHeight = 40;
+    const int buttonX = (WINDOW_WIDTH - buttonWidth) / 2;
+    int startY = 200;
+    int spacing = 50;
+    
+    // Scroll button positions
+    const int scrollX = buttonX + buttonWidth + 10;
+    const int scrollY = 200;
+    const int scrollButtonSize = SCROLL_BUTTON_SIZE;
+    
+    if (savedGamesList.empty()) {
+        sf::Text noSaves(font, "No saved games found", 20);
+        noSaves.setFillColor(sf::Color(189, 195, 199));
+        sf::FloatRect bounds = noSaves.getLocalBounds();
+        noSaves.setPosition({(WINDOW_WIDTH - bounds.size.x) / 2, 200});
+        window->draw(noSaves);
+    } else {
+        // Only draw visible saves (respect scroll offset)
+        int visibleCount = 0;
+        for (int i = scrollOffset; i < scrollOffset + MAX_VISIBLE_SAVES && i < static_cast<int>(savedGamesList.size()); ++i) {
+            int yPos = startY + visibleCount * spacing;
+            
+            sf::RectangleShape button(sf::Vector2f(buttonWidth, buttonHeight));
+            button.setPosition({static_cast<float>(buttonX), static_cast<float>(yPos)});
+            
+            bool isHovered = mousePos.x >= buttonX && mousePos.x <= buttonX + buttonWidth &&
+                            mousePos.y >= yPos && mousePos.y <= yPos + buttonHeight;
+            bool isSelected = i == selectedSaveIndex;
+            
+            if (isSelected) {
+                button.setFillColor(sf::Color(46, 204, 113));
+                button.setOutlineThickness(2);
+                button.setOutlineColor(sf::Color::White);
+            } else if (isHovered) {
+                button.setFillColor(sf::Color(52, 152, 219));
+                button.setOutlineThickness(2);
+                button.setOutlineColor(sf::Color::White);
+            } else {
+                button.setFillColor(sf::Color(52, 73, 94));
+                button.setOutlineThickness(0);
+            }
+            
+            window->draw(button);
+            
+            // Button text
+            sf::Text btnText(font, savedGamesList[i], 18);
+            btnText.setFillColor(sf::Color::White);
+            sf::FloatRect textBounds = btnText.getLocalBounds();
+            btnText.setPosition({buttonX + (buttonWidth - textBounds.size.x) / 2, 
+                               static_cast<float>(yPos + (buttonHeight - textBounds.size.y) / 2 - 5)});
+            window->draw(btnText);
+            
+            visibleCount++;
+        }
+        
+        // Draw scroll buttons if there are more saves than visible
+        int maxOffset = static_cast<int>(savedGamesList.size()) - MAX_VISIBLE_SAVES;
+        
+        if (maxOffset > 0) {
+            // Draw scroll up button (▲)
+            sf::RectangleShape upButton(sf::Vector2f(scrollButtonSize, scrollButtonSize));
+            upButton.setPosition({static_cast<float>(scrollX), static_cast<float>(scrollY)});
+            bool isUpHovered = mousePos.x >= scrollX && mousePos.x <= scrollX + scrollButtonSize &&
+                              mousePos.y >= scrollY && mousePos.y <= scrollY + scrollButtonSize;
+            
+            if (scrollOffset > 0) {
+                if (isUpHovered) {
+                    upButton.setFillColor(sf::Color(52, 152, 219));
+                    upButton.setOutlineThickness(2);
+                    upButton.setOutlineColor(sf::Color::White);
+                } else {
+                    upButton.setFillColor(sf::Color(41, 128, 185));
+                }
+            } else {
+                upButton.setFillColor(sf::Color(100, 100, 100)); // Disabled
+            }
+            window->draw(upButton);
+            
+            sf::Text upText(font, "^", 20);
+            upText.setFillColor(sf::Color::White);
+            sf::FloatRect upBounds = upText.getLocalBounds();
+            upText.setPosition({scrollX + (scrollButtonSize - upBounds.size.x) / 2 - 3, 
+                              scrollY + (scrollButtonSize - upBounds.size.y) / 2 - 8});
+            window->draw(upText);
+            
+            // Draw scroll down button (▼)
+            sf::RectangleShape downButton(sf::Vector2f(scrollButtonSize, scrollButtonSize));
+            downButton.setPosition({static_cast<float>(scrollX), static_cast<float>(scrollY + scrollButtonSize)});
+            bool isDownHovered = mousePos.x >= scrollX && mousePos.x <= scrollX + scrollButtonSize &&
+                                mousePos.y >= scrollY + scrollButtonSize && mousePos.y <= scrollY + scrollButtonSize * 2;
+            
+            if (scrollOffset < maxOffset) {
+                if (isDownHovered) {
+                    downButton.setFillColor(sf::Color(52, 152, 219));
+                    downButton.setOutlineThickness(2);
+                    downButton.setOutlineColor(sf::Color::White);
+                } else {
+                    downButton.setFillColor(sf::Color(41, 128, 185));
+                }
+            } else {
+                downButton.setFillColor(sf::Color(100, 100, 100)); // Disabled
+            }
+            window->draw(downButton);
+            
+            sf::Text downText(font, "v", 20);
+            downText.setFillColor(sf::Color::White);
+            sf::FloatRect downBounds = downText.getLocalBounds();
+            downText.setPosition({scrollX + (scrollButtonSize - downBounds.size.x) / 2 - 3, 
+                                scrollY + scrollButtonSize + (scrollButtonSize - downBounds.size.y) / 2 - 8});
+            window->draw(downText);
+            
+            // Draw scroll position indicator
+            std::string scrollInfo = "(" + std::to_string(scrollOffset + 1) + "-" + 
+                                     std::to_string(scrollOffset + visibleCount) + "/" + 
+                                     std::to_string(savedGamesList.size()) + ")";
+            sf::Text scrollInfoText(font, scrollInfo, 14);
+            scrollInfoText.setFillColor(sf::Color(189, 195, 199));
+            scrollInfoText.setPosition({static_cast<float>(scrollX), static_cast<float>(scrollY + scrollButtonSize * 2 + 5)});
+            window->draw(scrollInfoText);
+        }
+    }
+    
+    // Load button (only show if a save is selected)
+    if (selectedSaveIndex >= 0 && selectedSaveIndex < static_cast<int>(savedGamesList.size())) {
+        int loadButtonY = WINDOW_HEIGHT - 150;
+        
+        sf::RectangleShape loadButton(sf::Vector2f(buttonWidth, buttonHeight));
+        loadButton.setPosition({static_cast<float>(buttonX), static_cast<float>(loadButtonY)});
+        
+        bool isHovered = mousePos.x >= buttonX && mousePos.x <= buttonX + buttonWidth &&
+                        mousePos.y >= loadButtonY && mousePos.y <= loadButtonY + buttonHeight;
+        
+        if (isHovered) {
+            loadButton.setFillColor(sf::Color(46, 204, 113));
+            loadButton.setOutlineThickness(2);
+            loadButton.setOutlineColor(sf::Color::White);
+        } else {
+            loadButton.setFillColor(sf::Color(39, 174, 96));
+        }
+        
+        window->draw(loadButton);
+        
+        sf::Text loadText(font, "Load Selected Game", 20);
+        loadText.setFillColor(sf::Color::White);
+        sf::FloatRect textBounds = loadText.getLocalBounds();
+        loadText.setPosition({buttonX + (buttonWidth - textBounds.size.x) / 2, 
+                            static_cast<float>(loadButtonY + (buttonHeight - textBounds.size.y) / 2 - 5)});
+        window->draw(loadText);
+    }
+    
+    // Back button
+    int backButtonY = WINDOW_HEIGHT - 100;
+    sf::RectangleShape backButton(sf::Vector2f(buttonWidth, buttonHeight));
+    backButton.setPosition({static_cast<float>(buttonX), static_cast<float>(backButtonY)});
+    
+    bool isBackHovered = mousePos.x >= buttonX && mousePos.x <= buttonX + buttonWidth &&
+                        mousePos.y >= backButtonY && mousePos.y <= backButtonY + buttonHeight;
+    
+    if (isBackHovered) {
+        backButton.setFillColor(sf::Color(231, 76, 60));
+        backButton.setOutlineThickness(2);
+        backButton.setOutlineColor(sf::Color::White);
+    } else {
+        backButton.setFillColor(sf::Color(192, 57, 43));
+    }
+    
+    window->draw(backButton);
+    
+    sf::Text backText(font, "Back to Menu", 20);
+    backText.setFillColor(sf::Color::White);
+    sf::FloatRect backBounds = backText.getLocalBounds();
+    backText.setPosition({buttonX + (buttonWidth - backBounds.size.x) / 2, 
+                        static_cast<float>(backButtonY + (buttonHeight - backBounds.size.y) / 2 - 5)});
+    window->draw(backText);
 }
 
 } // namespace amazons

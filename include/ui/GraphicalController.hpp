@@ -4,9 +4,11 @@
 #include "core/Board.hpp"
 #include "core/Move.hpp"
 #include "ai/BasicAI.hpp"
+#include "utils/Serializer.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
+#include <string>
 
 namespace amazons {
 
@@ -62,7 +64,24 @@ private:
     // UI state
     GameModeGUI currentGameMode;
     bool showModeSelection;
+    bool showLoadScreen;
     std::string statusMessage;
+    
+    // Save/Load
+    Serializer serializer;
+    std::vector<std::string> savedGamesList;
+    int selectedSaveIndex;
+    int scrollOffset;  // For scrolling through many saves
+    
+    // Scroll settings
+    static constexpr int MAX_VISIBLE_SAVES = 5;
+    static constexpr int SCROLL_BUTTON_SIZE = 30;
+    
+    // Save button position and size
+    static constexpr float SAVE_BUTTON_X = 650.f;
+    static constexpr float SAVE_BUTTON_Y = 50.f;
+    static constexpr float SAVE_BUTTON_WIDTH = 120.f;
+    static constexpr float SAVE_BUTTON_HEIGHT = 30.f;
     
     // Initialization
     bool initialize();
@@ -98,6 +117,13 @@ private:
     // Mode management
     void startGame(GameModeGUI mode);
     void continueGame();
+    
+    // Save/Load methods
+    void saveCurrentGame();
+    void loadSavedGamesList();
+    void openLoadScreen();
+    void handleLoadScreenClick(int x, int y);
+    void drawLoadScreen();
 };
 
 } // namespace amazons

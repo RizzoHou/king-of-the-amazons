@@ -82,6 +82,13 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
     - Fixed "Select a game mode to start" instruction overlapping with buttons
     - Implemented precise positioning calculation based on button height and spacing
 
+- **Save/Load GUI Implementation (Dec 24, 2025)**:
+  - **Save Game Button**: Added "Save Game" button to game UI (top-right area)
+  - **Load Game Feature**: Added "Load Game" button to main menu with dedicated load screen
+  - **Scrollable Load Screen**: Implemented scrollable saves list with 5 visible items when many saves exist
+  - **Save Button Position Fix**: Moved button from Y=80 to Y=50 to avoid overlapping game board
+  - **Implementation Details**: Uses existing Serializer class, compatible with text mode
+
 - **Project Infrastructure**:
   - Build system: `cmake --build . --target amazons` works flawlessly
   - Test execution: `./bin/unit_tests` runs all 30 tests successfully
