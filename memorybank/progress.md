@@ -98,7 +98,7 @@
     - **File Modified**: src/core/GameState.cpp
     - **Build Status**: Compiles successfully, all tests pass
 
-11. **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
+12. **AI vs AI Mode Removal from Graphical Interface (Dec 23, 2025)**:
     - **Problem Resolution**: Fixed issue documented in `docs/problems/existing_problems_002.md` where AI vs AI mode was "unusable and unnecessary"
     - **Code Changes**: Removed AI vs AI button and all related logic from `GraphicalController.cpp`
     - **Interface Simplification**: Graphical mode selection now only shows: Continue Previous Game (when available), Human vs Human, and Human vs AI
@@ -106,49 +106,14 @@
     - **Testing**: Successfully compiled and verified program runs without errors
     - **Rationale**: User explicitly stated "I don't need such a mode" and it was causing game to get stuck at first turn
 
-7. **Core Game Features**:
-   - **Board**: 10x10 grid with correct standard starting position (Black top, White bottom)
-   - **Move Validation**: Queen movement in 8 directions with path checking
-   - **Game Flow**: Turn-based gameplay with White moving first, undo functionality
-   - **User Interface**: Console display with coordinates, help command, input validation
-   - **Error Handling**: Robust validation and exception handling
-   - **Save/Load**: Game state persistence with JSON files (now working correctly)
-   - **AI Opponent**: Basic greedy AI for single-player gameplay
-
-8. **Memory Bank Documentation**: Complete and up-to-date
-   - All 6 core files maintained with current project status
-   - Implementation insights and learnings documented
-   - Phase 3 and GUI improvements documented
-
-9. **User Documentation**: Comprehensive game manual and documentation created
-   - **Game Manual**: Complete user guide (`docs/manuals/game_manual.md`)
-   - **Update Workflow**: Automated documentation update process (`.clinerules/workflows/manual_update.md`)
-   - **Project Structure Documentation**: Updated `docs/implementation/01_project_structure.md` to reflect actual implementation
-   - **Coverage**: Rules, interface, modes, troubleshooting, development info
-   - **Maintenance**: Workflow ensures documentation stays synchronized with project
-
-10. **Implementation Plan**: Comprehensive and validated
-    - Phase 1, Phase 2, and Phase 3 objectives fully achieved
-    - Technical specifications implemented per `03_technical_specifications.md`
-    - Testing strategy validated per `04_testing_strategy.md`
-
-11. **Project Infrastructure**:
-    - Build system: `cmake --build . --target amazons` works flawlessly
-    - Test execution: `./bin/unit_tests` runs all 30 tests successfully
-    - Game execution: `./bin/amazons` provides complete game system with all modes
-    - Git workflow: Comprehensive .gitignore, Conventional Commits guidance
-
-12. **Code Quality**:
-    - Clean C++17 implementation following best practices
-    - Modular architecture with clear separation of concerns (MVC pattern)
-    - Comprehensive documentation and comments
-    - Consistent naming conventions and code organization
-
-13. **Project Rules and Documentation**:
-    - **Task Preparation Rule**: Added to `.clinerules/project_setup.md` requiring reading of `docs/implementation/`, `memorybank/`, `README.md`, and other critical files before starting new tasks
-    - **Documentation Workflows**: Established workflows for memory bank updates, README synchronization, manual maintenance, and implementation plan updates
-    - **Implementation Plan Update Workflow**: Created `.clinerules/workflows/implementation_plan_update.md` to ensure `docs/implementation/` stays synchronized with project state
-    - **Comprehensive Coverage**: Rules cover project setup, development workflow, documentation, version control, and memory bank management
+13. **AI Algorithm Migration from amazing-amazons Project (Dec 25, 2025)**:
+    - **Source Project**: `~/projects/amazing-amazons/` (bot003.cpp and technical report)
+    - **BotzoneAI and BotProcess Implementation**: Created classes to interface with external bot003 executable
+    - **Board Size Compatibility Fix**: Updated Position.hpp/Position.cpp to use Board::SIZE (8) instead of hardcoded 10
+    - **Test Updates**: Fixed GameStateTest.cpp to check correct positions for 8x8 board
+    - **Configuration**: Created `data/config/bot_config.json` with bot path
+    - **Testing**: All 30 unit tests pass, test_botzone executable successfully communicates with bot003
+    - **Build Status**: Compiles successfully, all tests pass
 
 ### What's In Progress
 1. **Task Completion Workflow**: 

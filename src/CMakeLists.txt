@@ -18,6 +18,8 @@ add_library(game_components
   ui/MenuController.cpp
   utils/Serializer.cpp
   ai/BasicAI.cpp
+  ai/BotzoneAI.cpp
+  ai/BotProcess.cpp
 )
 
 # Add GraphicalDisplay if graphical GUI is enabled

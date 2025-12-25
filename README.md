@@ -44,13 +44,14 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Documentation**: Updated game manual with new commands and FAQ
 
 - **Core Game Features**:
-  - 10x10 board with standard starting position (Black top, White bottom)
+  - 8x8 board with standard starting position (Black top, White bottom)
   - Queen movement validation in 8 directions with path checking
   - Turn-based gameplay with White moving first, undo functionality
   - Console display with coordinates, help command, input validation
   - Error handling and robust validation
 - **Save/Load**: Game state persistence with JSON files (now working correctly)
 - **AI Opponent**: Basic greedy AI for single-player gameplay
+- **Advanced AI Integration**: BotzoneAI class interfaces with external bot003 executable from amazing-amazons project
 - **Input Format**: Simplified from "()->()->()" to 6 numbers (row col row col row col)
 
 - **Phase 3: Graphical GUI Implementation COMPLETE** (100%):
@@ -216,8 +217,10 @@ make clean        # Clean build artifacts
 ## Game Rules (Amazons)
 
 ### Board
-- 10×10 grid
-- Each player starts with 4 Amazons in standard positions
+- 8×8 grid (standard implementation for this project)
+- Each player starts with 4 Amazons in standard positions:
+  - Black Amazons: (0, 2), (2, 0), (5, 0), (7, 2)
+  - White Amazons: (0, 5), (2, 7), (5, 7), (7, 5)
 
 ### Movement
 1. **Amazon Move**: Move one Amazon like a queen in chess (any distance in 8 directions)
@@ -227,6 +230,20 @@ make clean        # Clean build artifacts
 ### Game End
 - Game ends when a player cannot make a legal move
 - Winner is the player with the most territory (reachable squares)
+
+## AI Integration
+
+### Advanced AI from amazing-amazons Project
+This project includes integration with an advanced AI algorithm from the amazing-amazons project:
+
+1. **BotzoneAI**: Interface class that communicates with external bot003 executable
+2. **BotProcess**: Handles external process communication and timeout management
+3. **Configuration**: Bot path configured in `data/config/bot_config.json`
+4. **Compatibility**: Board size compatibility fixed (8x8 instead of 10x10)
+
+### Available AI Options
+1. **BasicAI**: Greedy algorithm with mobility-based heuristic (built-in)
+2. **BotzoneAI**: Advanced external bot003 algorithm (requires bot003 executable)
 
 ## Key Deadlines
 

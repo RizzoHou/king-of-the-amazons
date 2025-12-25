@@ -35,13 +35,13 @@ TEST(PositionTest, InequalityOperator) {
 
 TEST(PositionTest, IsValid) {
     Position valid1(0, 0);
-    Position valid2(9, 9);
-    Position valid3(5, 5);
+    Position valid2(7, 7);
+    Position valid3(4, 4);
     
     Position invalid1(-1, 0);
     Position invalid2(0, -1);
-    Position invalid3(10, 5);
-    Position invalid4(5, 10);
+    Position invalid3(8, 4);
+    Position invalid4(4, 8);
     
     EXPECT_TRUE(valid1.isValid());
     EXPECT_TRUE(valid2.isValid());

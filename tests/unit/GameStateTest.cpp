@@ -23,10 +23,10 @@ TEST(GameStateTest, InitializeStandardGame) {
     
     // Board should be in standard position
     const Board& board = state.getBoard();
-    // Check one white Amazon (bottom position)
-    EXPECT_EQ(board.getCell(6, 0), Board::Cell::WHITE_AMAZON);
-    // Check one black Amazon (top position)
-    EXPECT_EQ(board.getCell(0, 3), Board::Cell::BLACK_AMAZON);
+    // Check one white Amazon (actual position in 8x8 board)
+    EXPECT_EQ(board.getCell(0, 5), Board::Cell::WHITE_AMAZON);
+    // Check one black Amazon (actual position in 8x8 board)
+    EXPECT_EQ(board.getCell(0, 2), Board::Cell::BLACK_AMAZON);
 }
 
 TEST(GameStateTest, GetLegalMovesInitialPosition) {

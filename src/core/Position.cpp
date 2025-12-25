@@ -1,4 +1,5 @@
 #include "core/Position.hpp"
+#include "core/Board.hpp"
 #include <sstream>
 #include <stdexcept>
 
@@ -30,6 +31,10 @@ Position Position::fromString(const std::string& str) {
     }
     
     return Position(static_cast<int8_t>(row_val), static_cast<int8_t>(col_val));
+}
+
+bool Position::isValid() const {
+    return row >= 0 && row < Board::SIZE && col >= 0 && col < Board::SIZE;
 }
 
 } // namespace amazons

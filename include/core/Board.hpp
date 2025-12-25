@@ -19,7 +19,7 @@ public:
         BLACK_AMAZON
     };
 
-    static constexpr int SIZE = 10;
+    static constexpr int SIZE = 8;
 
     Board();
     

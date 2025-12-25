@@ -1,0 +1,16 @@
+{
+  "default_bot_path": "third_party/bots/bot003",
+  "available_bots": [
+    {
+      "name": "bot003",
+      "path": "third_party/bots/bot003",
+      "description": "MCTS-based Amazons AI (migrated from amazing-amazons)",
+      "version": "1.0"
+    }
+  ],
+  "ai_settings": {
+    "timeout_seconds": 5.0,
+    "keep_running_mode": true,
+    "max_thinking_time_ms": 3000
+  }
+}

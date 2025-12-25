@@ -28,17 +28,17 @@ void Board::initializeStandardPosition() {
         row.fill(Cell::EMPTY);
     }
     
-    // White Amazons (bottom positions - rows 6-9)
-    setCell(6, 0, Cell::WHITE_AMAZON);
-    setCell(9, 3, Cell::WHITE_AMAZON);
-    setCell(9, 6, Cell::WHITE_AMAZON);
-    setCell(6, 9, Cell::WHITE_AMAZON);
+    // Black Amazons (top positions)
+    setCell(0, 2, Cell::BLACK_AMAZON);
+    setCell(2, 0, Cell::BLACK_AMAZON);
+    setCell(5, 0, Cell::BLACK_AMAZON);
+    setCell(7, 2, Cell::BLACK_AMAZON);
     
-    // Black Amazons (top positions - rows 0-3)
-    setCell(0, 3, Cell::BLACK_AMAZON);
-    setCell(0, 6, Cell::BLACK_AMAZON);
-    setCell(3, 0, Cell::BLACK_AMAZON);
-    setCell(3, 9, Cell::BLACK_AMAZON);
+    // White Amazons (bottom positions)
+    setCell(0, 5, Cell::WHITE_AMAZON);
+    setCell(2, 7, Cell::WHITE_AMAZON);
+    setCell(5, 7, Cell::WHITE_AMAZON);
+    setCell(7, 5, Cell::WHITE_AMAZON);
 }
 
 bool Board::isValidPosition(int row, int col) const {

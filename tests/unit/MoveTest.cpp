@@ -43,8 +43,8 @@ TEST(MoveTest, InequalityOperator) {
 TEST(MoveTest, IsValid) {
     Move valid(Position(1, 2), Position(3, 4), Position(5, 6));
     Move invalid1(Position(-1, 2), Position(3, 4), Position(5, 6));
-    Move invalid2(Position(1, 2), Position(10, 4), Position(5, 6));
-    Move invalid3(Position(1, 2), Position(3, 4), Position(5, 10));
+    Move invalid2(Position(1, 2), Position(8, 4), Position(5, 6));
+    Move invalid3(Position(1, 2), Position(3, 4), Position(5, 8));
     
     EXPECT_TRUE(valid.isValid());
     EXPECT_FALSE(invalid1.isValid());
