@@ -322,6 +322,15 @@ Comprehensive planning documents in `docs/implementation/`:
 - **Code Documentation**: Comprehensive comments and clear APIs throughout implementation
 - **Progress Tracking**: Regular updates in `memorybank/progress.md` and `memorybank/activeContext.md`
 - **Documentation Workflow**: Automated update process (`.clinerules/workflows/manual_update.md`) ensures documentation stays synchronized
+- **Project Reports**: Comprehensive documentation for course evaluation in `docs/reports/`:
+  - `project_report_en.md`: English comprehensive report (20,451 bytes)
+  - `project_report_zh.md`: Chinese translation report (18,328 bytes)
+  - `project_report_simplified_zh.md`: Simplified Chinese condensed report (6,652 bytes)
+  - `README.md`: Reports directory index and usage guide (4,677 bytes)
+  - **Evaluation Points Covered**: All reports address the three required evaluation points:
+    1. How to run the program (installation, building, execution)
+    2. AI implementation details (BasicAI and BotzoneAI algorithms)
+    3. Special features (dual interface system, save/load, enhanced UX features)
 
 ### Success Criteria
 Detailed success metrics and grading requirements documented in `docs/implementation/06_success_criteria.md`. Phase 1 success criteria fully met.
