@@ -17,7 +17,7 @@ This directory contains comprehensive project reports for the King of the Amazon
 
 ### 2. Chinese Report (`project_report_zh.md`)
 - **Purpose**: Complete Chinese translation of the English report
-- **Language**: Traditional Chinese (繁體中文)
+- **Language**: Chinese (中文)
 - **Length**: ~18,000 characters
 - **Target Audience**: Chinese-speaking instructors and reviewers
 - **Key Sections**:
@@ -28,7 +28,7 @@ This directory contains comprehensive project reports for the King of the Amazon
 
 ### 3. Simplified Chinese Report (`project_report_simplified_zh.md`)
 - **Purpose**: Condensed version focusing on essential information for evaluation
-- **Language**: Simplified Chinese (简体中文)
+- **Language**: Chinese (中文)
 - **Length**: ~6,500 characters
 - **Target Audience**: Teaching assistants for quick review
 - **Key Sections**:
