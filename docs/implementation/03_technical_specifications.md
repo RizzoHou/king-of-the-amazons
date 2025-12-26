@@ -632,7 +632,7 @@ public:
 ### Dependencies
 - **Required**: C++17 standard library
 - **Optional**: nlohmann/json for JSON serialization
-- **Graphical**: SFML 2.5 (Graphics, Window, System modules)
+- **Graphical**: SFML 3.0 (Graphics, Window, System modules)
 - **Testing**: Google Test framework
 - **Build**: CMake ≥ 3.16
 

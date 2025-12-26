@@ -45,6 +45,27 @@ make test         # Run tests
 make clean        # Clean build artifacts
 ```
 
+### SFML Installation
+The graphical interface requires SFML 3.0. Install it based on your platform:
+
+**macOS** (using Homebrew):
+```bash
+brew install sfml
+```
+
+**Linux** (Ubuntu/Debian):
+```bash
+sudo apt-get install libsfml-dev
+```
+
+**Windows**:
+- Download from [SFML website](https://www.sfml-dev.org/download.php)
+- Or use vcpkg: `vcpkg install sfml`
+
+**Verification**: After installation, CMake should automatically find SFML. If you encounter build errors, ensure SFML is installed and accessible.
+
+**Note**: Text mode (`--text` flag) works without SFML if you only need console interface.
+
 ### Running the Game
 ```bash
 # Graphical mode (default) - modern interface with mouse interaction

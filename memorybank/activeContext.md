@@ -575,7 +575,7 @@ Phase 2 provides complete game system foundation for Phase 3 development. All ba
 
 ### Graphical Features Planning
 1. **Display Architecture**: Dual interface design (Display abstract base class with TextDisplay and GraphicalDisplay implementations)
-2. **SFML Integration**: Use SFML 2.5 for graphics, window, and system modules
+2. **SFML Integration**: Use SFML 3.0 for graphics, window, and system modules
 3. **Cross-Platform Compatibility**: Ensure graphical interface works on Linux, macOS, and Windows
 4. **Performance Targets**: Graphical rendering within 16ms/frame (60 FPS), mouse input response within 50ms
 

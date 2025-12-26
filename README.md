@@ -207,6 +207,27 @@ For detailed directory descriptions and development guidelines, refer to the imp
 - CMake ≥ 3.16
 - Git
 
+### SFML Installation
+The graphical interface requires SFML 3.0. Install it based on your platform:
+
+**macOS** (using Homebrew):
+```bash
+brew install sfml
+```
+
+**Linux** (Ubuntu/Debian):
+```bash
+sudo apt-get install libsfml-dev
+```
+
+**Windows**:
+- Download from [SFML website](https://www.sfml-dev.org/download.php)
+- Or use vcpkg: `vcpkg install sfml`
+
+**Verification**: After installation, CMake should automatically find SFML. If you encounter build errors, ensure SFML is installed and accessible.
+
+**Note**: Text mode (`--text` flag) works without SFML if you only need console interface.
+
 ### Build Instructions
 
 #### Using CMake (Recommended)
@@ -329,7 +350,7 @@ Detailed timeline and milestones are documented in `docs/implementation/02_imple
 - **Development Environment**: Visual Studio Code with C++ extensions
 - **Architecture**: MVC pattern successfully implemented
 - **Code Quality**: Clean C++ with comprehensive documentation and comments
-- **Graphics Library**: SFML 2.5 for graphical interface (window management, rendering, input handling)
+- **Graphics Library**: SFML 3.0 for graphical interface (window management, rendering, input handling)
 
 ## Documentation
 

@@ -44,6 +44,27 @@ cd build
 ./bin/unit_tests
 ```
 
+### 2.4 SFML安装
+图形界面需要SFML 3.0。根据平台安装：
+
+**macOS**（使用Homebrew）：
+```bash
+brew install sfml
+```
+
+**Linux**（Ubuntu/Debian）：
+```bash
+sudo apt-get install libsfml-dev
+```
+
+**Windows**：
+- 从[SFML官网](https://www.sfml-dev.org/download.php)下载
+- 或使用vcpkg：`vcpkg install sfml`
+
+**验证**：安装后CMake应自动找到SFML。如遇构建错误，请确保SFML已安装。
+
+**注意**：文本模式（`--text`标志）无需SFML。
+
 ## 3. AI实现
 
 ### 3.1 AI系统概述
@@ -110,7 +131,7 @@ Move BasicAI::getBestMove(const GameState& state) {
 
 ### 5.1 技术栈
 - **语言**: C++17
-- **图形库**: SFML 2.5
+- **图形库**: SFML 3.0
 - **构建系统**: CMake 3.16+
 - **测试框架**: Google Test（30个单元测试）
 - **版本控制**: Git + Conventional Commits

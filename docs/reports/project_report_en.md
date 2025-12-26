@@ -98,6 +98,27 @@ cd build
 - **Solution**: Check `data/saves/` directory permissions, ensure enough disk space
 - **Command**: `ls -la data/saves/ && chmod 755 data/saves/`
 
+### 2.6 SFML Installation
+The graphical interface requires SFML 3.0. Install it based on your platform:
+
+**macOS** (using Homebrew):
+```bash
+brew install sfml
+```
+
+**Linux** (Ubuntu/Debian):
+```bash
+sudo apt-get install libsfml-dev
+```
+
+**Windows**:
+- Download from [SFML website](https://www.sfml-dev.org/download.php)
+- Or use vcpkg: `vcpkg install sfml`
+
+**Verification**: After installation, CMake should automatically find SFML. If you encounter build errors, ensure SFML is installed and accessible.
+
+**Note**: Text mode (`--text` flag) works without SFML if you only need console interface.
+
 ## 3. AI Implementation
 
 ### 3.1 AI Architecture Overview
@@ -382,7 +403,7 @@ king-of-the-amazons/
 
 ### 5.2 Technology Stack
 - **Language**: C++17 with modern features (auto, constexpr, structured bindings)
-- **Graphics**: SFML 2.5 for graphical interface
+- **Graphics**: SFML 3.0 for graphical interface
 - **Build System**: CMake 3.16+ for cross-platform builds
 - **Testing**: Google Test framework with 30 unit tests
 - **Serialization**: JSON format for save files

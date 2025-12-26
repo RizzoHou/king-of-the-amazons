@@ -98,6 +98,27 @@ cd build
 - **解决方案**: 检查`data/saves/`目录权限，确保有足够的磁盘空间
 - **命令**: `ls -la data/saves/ && chmod 755 data/saves/`
 
+### 2.6 SFML安装
+图形界面需要SFML 3.0。根据您的平台安装：
+
+**macOS**（使用Homebrew）：
+```bash
+brew install sfml
+```
+
+**Linux**（Ubuntu/Debian）：
+```bash
+sudo apt-get install libsfml-dev
+```
+
+**Windows**：
+- 从[SFML官网](https://www.sfml-dev.org/download.php)下载
+- 或使用vcpkg：`vcpkg install sfml`
+
+**验证**：安装后，CMake应自动找到SFML。如果遇到构建错误，请确保SFML已安装且可访问。
+
+**注意**：文本模式（`--text`标志）无需SFML即可运行，如果您只需要控制台界面。
+
 ## 3. AI实现
 
 ### 3.1 AI架构概述
@@ -382,7 +403,7 @@ king-of-the-amazons/
 
 ### 5.2 技术栈
 - **语言**: C++17，带有现代特性（auto、constexpr、结构化绑定）
-- **图形**: SFML 2.5用于图形界面
+- **图形**: SFML 3.0用于图形界面
 - **构建系统**: CMake 3.16+用于跨平台构建
 - **测试**: Google Test框架，30个单元测试
 - **序列化**: JSON格式用于保存文件
