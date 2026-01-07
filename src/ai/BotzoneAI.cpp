@@ -10,7 +10,7 @@
 namespace amazons {
 
 BotzoneAI::BotzoneAI(const std::string& botPath) 
-    : botPath(botPath), keepRunningMode(false) {
+    : botPath(botPath), keepRunningMode(false), aiColor(Player::WHITE) {
     if (!botPath.empty()) {
         botProcess = std::make_unique<BotProcess>(botPath);
     }
@@ -26,9 +26,6 @@ Move BotzoneAI::getBestMove(const GameState& gameState) {
     }
     
     try {
-        // Convert game state to Botzone input
-        std::string input = convertGameStateToBotzoneInput(gameState);
-        
         // Get move history
         std::vector<std::string> history = getMoveHistory(gameState);
         
@@ -39,8 +36,21 @@ Move BotzoneAI::getBestMove(const GameState& gameState) {
                 throw std::runtime_error("Failed to start bot process");
             }
             
-            if (!botProcess->sendFirstTurn(history)) {
-                throw std::runtime_error("Failed to send first turn to bot");
+            // Send first turn based on AI color
+            if (aiColor == Player::BLACK) {
+                // AI is black (moves first) - send (-1,-1,-1,-1,-1,-1) as first request
+                if (!botProcess->sendFirstTurn(history)) {
+                    throw std::runtime_error("Failed to send first turn to bot");
+                }
+            } else {
+                // AI is white (moves second) - need to send opponent's first move
+                // The history should contain opponent's first move
+                if (history.empty()) {
+                    throw std::runtime_error("AI is white but no opponent move in history");
+                }
+                if (!botProcess->sendTurn(history[0])) {
+                    throw std::runtime_error("Failed to send opponent's move to bot");
+                }
             }
             
             keepRunningMode = true;
@@ -95,6 +105,18 @@ void BotzoneAI::setBotPath(const std::string& path) {
 
 std::string BotzoneAI::getBotPath() const {
     return botPath;
+}
+
+void BotzoneAI::setAIColor(Player color) {
+    aiColor = color;
+    // When AI color changes, we need to reset the bot process
+    // because the protocol differs based on who moves first
+    keepRunningMode = false;
+    moveHistory.clear();
+}
+
+Player BotzoneAI::getAIColor() const {
+    return aiColor;
 }
 
 bool BotzoneAI::isBotAvailable() const {

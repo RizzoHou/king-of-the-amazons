@@ -242,13 +242,39 @@ void MenuController::newGame() {
         std::cout << "New Human vs Human game started. Black goes first.\n";
         gameLoop();
     } else if (input == "2") {
-        // Human vs AI
-        gameState = std::make_unique<GameState>();
-        gameState->initializeStandardGame();
-        currentGameMode = GameMode::HUMAN_VS_AI;
-        std::cout << "New Human vs AI game started. Black (Human) goes first.\n";
-        std::cout << "AI will play as White.\n";
-        humanVsAIGameLoop();
+        // Human vs AI - need to choose side
+        std::cout << "\n=== Choose Your Side ===\n";
+        std::cout << "1. Play as Black (move first)\n";
+        std::cout << "2. Play as White (move second)\n";
+        std::cout << "3. Back to Game Mode Selection\n";
+        std::cout << "\nSelect your side (1-3): ";
+        
+        std::string sideInput;
+        std::getline(std::cin, sideInput);
+        
+        if (sideInput == "1") {
+            // Human as Black, AI as White
+            gameState = std::make_unique<GameState>();
+            gameState->initializeStandardGame();
+            currentGameMode = GameMode::HUMAN_VS_AI_HUMAN_BLACK;
+            std::cout << "New Human vs AI game started. You are Black and move first.\n";
+            std::cout << "AI will play as White.\n";
+            humanVsAIGameLoop();
+        } else if (sideInput == "2") {
+            // Human as White, AI as Black
+            gameState = std::make_unique<GameState>();
+            gameState->initializeStandardGame();
+            currentGameMode = GameMode::HUMAN_VS_AI_HUMAN_WHITE;
+            std::cout << "New Human vs AI game started. You are White and move second.\n";
+            std::cout << "AI will play as Black and move first.\n";
+            humanVsAIGameLoop();
+        } else if (sideInput == "3") {
+            // Back to game mode selection
+            newGame();
+        } else {
+            std::cout << "Invalid option. Returning to game mode selection.\n";
+            newGame();
+        }
     } else if (input == "3") {
         // AI vs AI
         gameState = std::make_unique<GameState>();
@@ -438,6 +464,14 @@ void MenuController::humanVsAIGameLoop() {
     
     BasicAI ai;
     
+    // Determine human and AI colors based on game mode
+    Player humanColor;
+    if (currentGameMode == GameMode::HUMAN_VS_AI_HUMAN_BLACK) {
+        humanColor = Player::BLACK;
+    } else { // HUMAN_VS_AI_HUMAN_WHITE
+        humanColor = Player::WHITE;
+    }
+    
     // Main game loop
     while (!gameState->isGameOver()) {
         showGameStatus();
@@ -445,14 +479,14 @@ void MenuController::humanVsAIGameLoop() {
         Player current = gameState->getCurrentPlayer();
         std::cout << Display::playerToString(current) << "'s turn.\n";
         
-        if (current == Player::BLACK) {
-            // Human turn (Black)
+        if (current == humanColor) {
+            // Human turn
             if (!makePlayerMove()) {
                 // User wants to exit to main menu
                 return;
             }
         } else {
-            // AI turn (White)
+            // AI turn
             std::cout << "AI is thinking...\n";
             std::this_thread::sleep_for(std::chrono::milliseconds(500)); // Small delay for realism
             
@@ -567,7 +601,8 @@ void MenuController::loadAndRunGame(const std::string& filename) {
         case GameMode::HUMAN_VS_HUMAN:
             gameLoop();
             break;
-        case GameMode::HUMAN_VS_AI:
+        case GameMode::HUMAN_VS_AI_HUMAN_WHITE:
+        case GameMode::HUMAN_VS_AI_HUMAN_BLACK:
             humanVsAIGameLoop();
             break;
         case GameMode::AI_VS_AI:

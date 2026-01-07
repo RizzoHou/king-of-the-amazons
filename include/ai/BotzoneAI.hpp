@@ -27,6 +27,12 @@ public:
     // Get the bot executable path
     std::string getBotPath() const;
     
+    // Set the AI color (needed for Botzone protocol)
+    void setAIColor(Player color);
+    
+    // Get the AI color
+    Player getAIColor() const;
+    
     // Check if bot is available
     bool isBotAvailable() const;
     
@@ -51,6 +57,9 @@ private:
     
     // Move history for Botzone protocol
     std::vector<std::string> moveHistory;
+    
+    // AI color (needed for Botzone protocol)
+    Player aiColor;
 };
 
 } // namespace amazons

@@ -108,17 +108,26 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **File Modified**: src/core/GameState.cpp
   - **Build Status**: Compiles successfully, all tests pass
 
-- **GUI Human vs AI Mode Fix - Black Moves First (Jan 7, 2026)**:
-  - **Problem**: User reported that in AI vs Human mode, they could see "black's turn" at the top but couldn't manipulate any Amazon on the board
-  - **Root Cause**: Black should move first (consistent rule), and in Human vs AI mode, human should be black and always move first
-  - **Core Game Logic Fix**: Updated `GameState.cpp` to initialize with `Player::BLACK` as starting player
-  - **GUI Logic Fix**: Updated `GraphicalController.cpp` to:
-    - Allow human (black) to click on black Amazons when it's black's turn
-    - Properly block human input during AI's turn (white's turn)
-    - Fixed position display in debug output (casting `int8_t` to `int` for proper printing)
-  - **Testing**: Debug output confirmed "Current player = BLACK" at game start, human can click on black Amazons, valid moves found
-  - **Documentation**: Game manual already correctly states black moves first and human plays as black in Human vs AI mode
-  - **Build Status**: Compiles successfully, all tests pass, GUI works correctly
+- **Problem p005.md: Human Player Side Selection Implementation (Jan 7, 2026)**:
+  - **Problem**: The human player was always set to be the black side. The game should allow the human player to choose which side they want to be
+  - **Solution**: Implemented side selection for AI vs Human mode with both graphical and text interfaces
+  - **Core Changes**: Updated GameMode enum to have two distinct modes: `HUMAN_VS_AI_HUMAN_WHITE` and `HUMAN_VS_AI_HUMAN_BLACK`
+  - **MenuController**: Added side selection menu in text interface
+  - **GraphicalController**: Added side selection screen with "Play as Black" and "Play as White" buttons
+  - **BotzoneAI**: Updated protocol handling for AI color (when AI is black vs white)
+  - **Serializer**: Updated to handle new GameMode values
+  - **Testing**: Created test scripts for protocol verification and side selection functionality
+  - **Build Status**: Compiles successfully, all tests pass
+
+- **GUI State Management Bug Fix (Jan 7, 2026)**:
+  - **Problem**: After returning to main menu from interrupted AI vs Human game, clicking AI vs Human button showed empty board with "choose your side" at top
+  - **Root Cause**: `currentGameMode` wasn't reset to `NOT_SELECTED` when returning to menu, causing `render()` to skip side selection screen
+  - **Solution**: Fixed three places in `GraphicalController.cpp`:
+    1. `handleKeyPress()` (ESC handler): Added `currentGameMode = GameModeGUI::NOT_SELECTED;`
+    2. `handleModeSelection()` (Human vs AI button): Added `currentGameMode = GameModeGUI::NOT_SELECTED;`
+    3. `handleSideSelection()` (Back button): Added `currentGameMode = GameModeGUI::NOT_SELECTED;`
+  - **Testing**: Main executable `amazons` built successfully, compilation errors fixed
+  - **Build Status**: Compiles successfully, GUI state transitions work correctly
 
 - **Project Reports**: Three comprehensive reports created for course evaluation (Dec 25-26, 2025):
   - English comprehensive report (20,451 bytes)

@@ -10,7 +10,8 @@ enum class Player {
 // Game modes
 enum class GameMode {
     HUMAN_VS_HUMAN,
-    HUMAN_VS_AI,    // Human as White, AI as Black
+    HUMAN_VS_AI_HUMAN_WHITE,    // Human as White, AI as Black
+    HUMAN_VS_AI_HUMAN_BLACK,    // Human as Black, AI as White (current default)
     AI_VS_AI
 };
 
@@ -30,7 +31,8 @@ inline const char* playerToString(Player player) {
 inline const char* gameModeToString(GameMode mode) {
     switch (mode) {
         case GameMode::HUMAN_VS_HUMAN: return "HUMAN_VS_HUMAN";
-        case GameMode::HUMAN_VS_AI: return "HUMAN_VS_AI";
+        case GameMode::HUMAN_VS_AI_HUMAN_WHITE: return "HUMAN_VS_AI_HUMAN_WHITE";
+        case GameMode::HUMAN_VS_AI_HUMAN_BLACK: return "HUMAN_VS_AI_HUMAN_BLACK";
         case GameMode::AI_VS_AI: return "AI_VS_AI";
         default: return "UNKNOWN";
     }

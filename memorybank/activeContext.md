@@ -3,53 +3,111 @@
 ## Current Work Focus
 **Phase 4: Enhanced Features Polish and Bug Fixes (Jan 7, 2026)**
 
-### GUI Human vs AI Mode Fix - Black Moves First (Jan 7, 2026)
-**Task**: Fix the GUI Human vs AI mode to ensure black always moves first and human (black) can manipulate Amazons on the board.
+### Problem p005.md: Human Player Side Selection Implementation (Jan 7, 2026)
+**Task**: Implement the ability for human players to choose which side they want to be in AI vs Human mode, as described in `docs/problems/p005.md`.
 
-**Problem Analysis**: User reported that in AI vs Human mode, they could see "black's turn" at the top but couldn't manipulate any Amazon on the board. The issue was that black should move first (consistent rule), and in Human vs AI mode, the human should be black and always move first.
+**Problem Analysis**: The human player was always set to be the black side. The game should allow the human player to choose which side they want to be. In Human vs Human mode, this function should not be implemented since both sides are operated by humans. In AI vs Human mode, the function should be added.
 
 **Implementation Details**:
 
-1. **Core Game Logic Fix**: Updated `GameState.cpp` to initialize with `Player::BLACK` as the starting player:
-   - Modified constructor to set `currentPlayer = Player::BLACK`
-   - Updated `initializeStandardGame()` to set `currentPlayer = Player::BLACK`
-   - Ensures black always moves first as per game rules
+1. **Core Game Mode Updates**:
+   - Updated `GameMode` enum in `include/core/Player.hpp`:
+     - Replaced `HUMAN_VS_AI` with two distinct modes:
+       - `HUMAN_VS_AI_HUMAN_WHITE`: Human plays as White, AI as Black
+       - `HUMAN_VS_AI_HUMAN_BLACK`: Human plays as Black, AI as White (previous default)
+   - Updated `gameModeToString()` helper function to handle new enum values
 
-2. **GUI Logic Fix**: Updated `GraphicalController.cpp` to:
-   - Allow human (black) to click on black Amazons when it's black's turn
-   - Properly block human input during AI's turn (white's turn)
-   - Fixed position display in debug output (casting `int8_t` to `int` for proper printing)
-   - Updated `handleMouseClick()` to check `gameState->getCurrentPlayer() == Player::WHITE` for AI turn
-   - Updated `selectAmazon()` to correctly check if clicked cell belongs to current player
+2. **Serializer Updates**:
+   - Modified `src/utils/Serializer.cpp` to handle new enum values
+   - Updated save/load logic to preserve correct game mode
 
-3. **Debugging and Testing**:
-   - Added debug logging to understand click handling and player assignment
-   - Verified that "Current player = BLACK" appears at game start
-   - Confirmed human can click on black Amazons and valid moves are found
-   - Tested that AI turn logic correctly blocks human input during white's turn
-   - Removed debug logging after confirming fix works
+3. **MenuController Updates**:
+   - Enhanced `src/ui/MenuController.cpp`:
+     - Added side selection menu in `newGame()` method
+     - Users can choose to play as Black (move first) or White (move second)
+     - Updated `humanVsAIGameLoop()` to handle both modes correctly
+     - Fixed compilation error by removing unused `aiColor` variable
 
-4. **Documentation Verification**: Checked game manual already correctly states:
-   - Black moves first (consistent rule)
-   - In Human vs AI mode, human plays as black and moves first
-   - AI plays as white
+4. **GraphicalController Updates**:
+   - Enhanced `src/ui/GraphicalController.cpp`:
+     - Added side selection screen with `showSideSelection()`, `handleSideSelection()`, and `drawSideSelection()` methods
+     - Updated `handleMouseClick()` and `render()` to handle side selection state
+     - Fixed compilation errors by removing unused `humanColor` variables
+     - Fixed duplicate namespace closing brace
+
+5. **BotzoneAI Protocol Updates**:
+   - Updated `include/ai/BotzoneAI.hpp` and `src/ai/BotzoneAI.cpp`:
+     - Added `setAIColor()` and `getAIColor()` methods
+     - Modified `getBestMove()` to handle Botzone protocol differences based on AI color
+     - When AI is black (moves first): sends `(-1,-1,-1,-1,-1,-1)` as first request
+     - When AI is white (moves second): sends opponent's first move
+
+6. **Test Scripts Created**:
+   - `scripts/test_ai_white_protocol.cpp`: Tests BotzoneAI protocol when AI is white
+   - `scripts/test_side_selection.cpp`: Tests side selection functionality
 
 **Key Improvements**:
-- ✅ Black always moves first (consistent rule implemented)
-- ✅ In Human vs AI mode, human is black and moves first
-- ✅ Human can click on black Amazons when it's black's turn
-- ✅ AI (white) moves automatically when it's white's turn
-- ✅ GUI now correctly implements the three-step mouse interaction for human (black)
+- ✅ Human player can choose which side to be in AI vs Human mode
+- ✅ Human vs Human mode remains unchanged (both sides are human-operated)
+- ✅ Botzone communication protocol correctly handles AI as either Black or White
+- ✅ Both graphical and text interfaces support side selection
 - ✅ All existing tests pass (30/30 unit tests)
 
 **Files Modified**:
-- `src/core/GameState.cpp` - Updated constructor and `initializeStandardGame()` to set black as starting player
-- `src/ui/GraphicalController.cpp` - Fixed click handling logic for Human vs AI mode
-- `tests/unit/GameStateTest.cpp` - Updated tests to expect `Player::BLACK` as starting player (previously updated)
-- `src/ui/MenuController.cpp` - Updated messages and logic for Human vs AI mode (previously updated)
-- `docs/manuals/game_manual.md` - Already correctly documented black moves first
+- `include/core/Player.hpp` - Updated GameMode enum and gameModeToString()
+- `src/utils/Serializer.cpp` - Updated serialization for new GameMode values
+- `src/ui/MenuController.cpp` - Added side selection menu
+- `src/ui/GraphicalController.cpp` - Added side selection screen
+- `include/ai/BotzoneAI.hpp` - Added AI color tracking methods
+- `src/ai/BotzoneAI.cpp` - Updated protocol handling for AI color
+- `scripts/test_ai_white_protocol.cpp` - Created test script
+- `scripts/test_side_selection.cpp` - Created test script
 
-**Build Status**: Compiles successfully, all tests pass, GUI works correctly
+**Build Status**: Compiles successfully, all tests pass
+
+### GUI State Management Bug Fix (Jan 7, 2026)
+**Task**: Fix the GUI state management bug where after returning to the main menu from an interrupted AI vs Human game, clicking the AI vs Human button showed an empty board with "choose your side" at the top instead of showing the side selection screen.
+
+**Problem Analysis**: The `currentGameMode` variable wasn't being reset to `NOT_SELECTED` when returning to the main menu, causing the `render()` function to skip the side selection screen. The condition `if (currentGameMode == GameModeGUI::NOT_SELECTED && !showModeSelection && !showLoadScreen)` failed because `currentGameMode` remained set to `HUMAN_VS_AI_HUMAN_BLACK` or `HUMAN_VS_AI_HUMAN_WHITE`.
+
+**Root Causes**:
+1. In `handleKeyPress()` (ESC handler): Sets `showModeSelection = true` but doesn't reset `currentGameMode` to `NOT_SELECTED`
+2. In `handleModeSelection()` (Human vs AI button): Doesn't reset `currentGameMode` to `NOT_SELECTED` before calling `showSideSelection()`
+3. In `handleSideSelection()` (Back button): Doesn't reset `currentGameMode` to `NOT_SELECTED` when returning to mode selection
+
+**Implementation Details**:
+
+1. **Fixed `handleKeyPress()` (ESC handler)**:
+   - Added `currentGameMode = GameModeGUI::NOT_SELECTED;` when returning to menu
+
+2. **Fixed `handleModeSelection()` (Human vs AI button)**:
+   - Added `currentGameMode = GameModeGUI::NOT_SELECTED;` before showing side selection screen
+
+3. **Fixed `handleSideSelection()` (Back button)**:
+   - Added `currentGameMode = GameModeGUI::NOT_SELECTED;` when returning to mode selection
+
+**Why This Fix Works**:
+The `render()` function has this condition:
+```cpp
+if (currentGameMode == GameModeGUI::NOT_SELECTED && !showModeSelection && !showLoadScreen) {
+    drawSideSelection();
+}
+```
+
+Previously, `currentGameMode` remained set to `HUMAN_VS_AI_HUMAN_BLACK` or `HUMAN_VS_AI_HUMAN_WHITE` after returning to menu, so the condition failed and it went to the `else` block which tried to draw the game board (but `gameState` was null, resulting in empty board).
+
+Now, `currentGameMode` is properly reset to `NOT_SELECTED`, so the side selection screen is correctly displayed.
+
+**Key Improvements**:
+- ✅ GUI state management bug fixed - side selection screen appears correctly after returning from interrupted games
+- ✅ "Back" button from side selection returns to main menu correctly
+- ✅ ESC key returns to main menu and preserves state for "Continue" feature
+- ✅ All changes compile successfully
+
+**Files Modified**:
+- `src/ui/GraphicalController.cpp` - Fixed state management in three functions
+
+**Build Status**: Compiles successfully, main executable `amazons` built successfully
 
 ### Project Reports Creation (Dec 25-26, 2025)
 **Task**: Create three comprehensive project reports as specified in the implementation plan to meet course evaluation requirements.

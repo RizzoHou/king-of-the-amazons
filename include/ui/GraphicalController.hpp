@@ -21,7 +21,8 @@ enum class SelectionState {
 enum class GameModeGUI {
     NOT_SELECTED,
     HUMAN_VS_HUMAN,
-    HUMAN_VS_AI,
+    HUMAN_VS_AI_HUMAN_WHITE,    // Human as White, AI as Black
+    HUMAN_VS_AI_HUMAN_BLACK,    // Human as Black, AI as White (current default)
     AI_VS_AI
 };
 
@@ -117,6 +118,9 @@ private:
     // Mode management
     void startGame(GameModeGUI mode);
     void continueGame();
+    void showSideSelection();
+    void handleSideSelection(int x, int y);
+    void drawSideSelection();
     
     // Save/Load methods
     void saveCurrentGame();

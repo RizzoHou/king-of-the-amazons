@@ -97,6 +97,12 @@ void GraphicalController::handleMouseClick(int x, int y) {
         return;
     }
     
+    // Check if we're in side selection mode
+    if (currentGameMode == GameModeGUI::NOT_SELECTED && !showModeSelection && !showLoadScreen) {
+        handleSideSelection(x, y);
+        return;
+    }
+    
     // Check if Save button was clicked
     if (x >= SAVE_BUTTON_X && x <= SAVE_BUTTON_X + SAVE_BUTTON_WIDTH &&
         y >= SAVE_BUTTON_Y && y <= SAVE_BUTTON_Y + SAVE_BUTTON_HEIGHT) {
@@ -109,8 +115,17 @@ void GraphicalController::handleMouseClick(int x, int y) {
     }
     
     // Check if AI's turn
-    if (currentGameMode == GameModeGUI::HUMAN_VS_AI && 
-        gameState->getCurrentPlayer() == Player::WHITE) {
+    Player aiColor;
+    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
+        aiColor = Player::WHITE; // AI is white when human is black
+    } else if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
+        aiColor = Player::BLACK; // AI is black when human is white
+    } else {
+        // Not Human vs AI mode
+        return;
+    }
+    
+    if (gameState->getCurrentPlayer() == aiColor) {
         return;
     }
     
@@ -158,10 +173,15 @@ void GraphicalController::handleModeSelection(int x, int y) {
         y >= humanVsHumanY && y <= humanVsHumanY + buttonHeight) {
         startGame(GameModeGUI::HUMAN_VS_HUMAN);
     }
-    // Human vs AI button
+    // Human vs AI button - will show side selection
     else if (x >= buttonX && x <= buttonX + buttonWidth &&
              y >= humanVsAIY && y <= humanVsAIY + buttonHeight) {
-        startGame(GameModeGUI::HUMAN_VS_AI);
+        // Show side selection screen
+        showModeSelection = false;
+        showLoadScreen = false;
+        currentGameMode = GameModeGUI::NOT_SELECTED; // Reset game mode for side selection
+        showSideSelection();
+        return;
     }
     // Load Game button
     else if (x >= buttonX && x <= buttonX + buttonWidth &&
@@ -199,6 +219,7 @@ void GraphicalController::handleKeyPress(sf::Keyboard::Key key) {
                 
                 // Return to mode selection
                 showModeSelection = true;
+                currentGameMode = GameModeGUI::NOT_SELECTED; // Reset game mode
                 gameState.reset();
                 resetSelection();
                 updateStatusMessage();
@@ -229,6 +250,7 @@ void GraphicalController::continueGame() {
 void GraphicalController::startGame(GameModeGUI mode) {
     currentGameMode = mode;
     showModeSelection = false;
+    showLoadScreen = false;
     
     // Clear saved game when starting a new game
     savedGameState.reset();
@@ -242,7 +264,10 @@ void GraphicalController::startGame(GameModeGUI mode) {
     resetSelection();
     updateStatusMessage();
     
-    // AI vs AI mode has been removed from the graphical interface
+    // If AI is black (human is white), AI moves first
+    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
+        processAIMove();
+    }
 }
 
 void GraphicalController::selectAmazon(const Position& pos) {
@@ -345,8 +370,17 @@ void GraphicalController::makeMove(const Move& move) {
     updateStatusMessage();
     
     // If playing against AI and it's AI's turn, process AI move
-    if (currentGameMode == GameModeGUI::HUMAN_VS_AI && 
-        gameState->getCurrentPlayer() == Player::WHITE &&
+    Player aiColor;
+    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
+        aiColor = Player::WHITE; // AI is white when human is black
+    } else if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
+        aiColor = Player::BLACK; // AI is black when human is white
+    } else {
+        // Not Human vs AI mode
+        return;
+    }
+    
+    if (gameState->getCurrentPlayer() == aiColor &&
         !gameState->isGameOver()) {
         processAIMove();
     }
@@ -430,6 +464,8 @@ void GraphicalController::render() {
         drawLoadScreen();
     } else if (showModeSelection) {
         drawModeSelection();
+    } else if (currentGameMode == GameModeGUI::NOT_SELECTED && !showModeSelection && !showLoadScreen) {
+        drawSideSelection();
     } else {
         drawBoard();
         drawPieces();
@@ -677,8 +713,11 @@ void GraphicalController::drawUI() {
             case GameModeGUI::HUMAN_VS_HUMAN:
                 modeStr = "Mode: Human vs Human";
                 break;
-            case GameModeGUI::HUMAN_VS_AI:
-                modeStr = "Mode: Human vs AI";
+            case GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE:
+                modeStr = "Mode: Human (White) vs AI (Black)";
+                break;
+            case GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK:
+                modeStr = "Mode: Human (Black) vs AI (White)";
                 break;
             default:
                 modeStr = "";
@@ -687,7 +726,7 @@ void GraphicalController::drawUI() {
         if (!modeStr.empty()) {
             sf::Text modeText(font, modeStr, 16);
             modeText.setFillColor(sf::Color(100, 100, 100));
-            modeText.setPosition({WINDOW_WIDTH - 250.f, 15.f});
+            modeText.setPosition({WINDOW_WIDTH - 300.f, 15.f});
             window->draw(modeText);
         }
     }
@@ -764,8 +803,11 @@ void GraphicalController::saveCurrentGame() {
         case GameModeGUI::HUMAN_VS_HUMAN:
             gameMode = GameMode::HUMAN_VS_HUMAN;
             break;
-        case GameModeGUI::HUMAN_VS_AI:
-            gameMode = GameMode::HUMAN_VS_AI;
+        case GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE:
+            gameMode = GameMode::HUMAN_VS_AI_HUMAN_WHITE;
+            break;
+        case GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK:
+            gameMode = GameMode::HUMAN_VS_AI_HUMAN_BLACK;
             break;
         default:
             gameMode = GameMode::HUMAN_VS_HUMAN;
@@ -862,8 +904,11 @@ void GraphicalController::handleLoadScreenClick(int x, int y) {
                     case GameMode::HUMAN_VS_HUMAN:
                         currentGameMode = GameModeGUI::HUMAN_VS_HUMAN;
                         break;
-                    case GameMode::HUMAN_VS_AI:
-                        currentGameMode = GameModeGUI::HUMAN_VS_AI;
+                    case GameMode::HUMAN_VS_AI_HUMAN_WHITE:
+                        currentGameMode = GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE;
+                        break;
+                    case GameMode::HUMAN_VS_AI_HUMAN_BLACK:
+                        currentGameMode = GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK;
                         break;
                     default:
                         currentGameMode = GameModeGUI::HUMAN_VS_HUMAN;
@@ -1073,6 +1118,112 @@ void GraphicalController::drawLoadScreen() {
     backText.setPosition({buttonX + (buttonWidth - backBounds.size.x) / 2, 
                         static_cast<float>(backButtonY + (buttonHeight - backBounds.size.y) / 2 - 5)});
     window->draw(backText);
+}
+
+void GraphicalController::showSideSelection() {
+    // Set status message for side selection
+    statusMessage = "Choose your side";
+}
+
+void GraphicalController::handleSideSelection(int x, int y) {
+    // Button dimensions and positions
+    const int buttonWidth = 300;
+    const int buttonHeight = 60;
+    const int buttonX = (WINDOW_WIDTH - buttonWidth) / 2;
+    
+    // Button Y positions
+    int playAsBlackY = 250;
+    int playAsWhiteY = 350;
+    int backButtonY = 450;
+    
+    // Check "Play as Black" button
+    if (x >= buttonX && x <= buttonX + buttonWidth &&
+        y >= playAsBlackY && y <= playAsBlackY + buttonHeight) {
+        startGame(GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK);
+        return;
+    }
+    
+    // Check "Play as White" button
+    if (x >= buttonX && x <= buttonX + buttonWidth &&
+        y >= playAsWhiteY && y <= playAsWhiteY + buttonHeight) {
+        startGame(GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE);
+        return;
+    }
+    
+    // Check "Back" button
+    if (x >= buttonX && x <= buttonX + buttonWidth &&
+        y >= backButtonY && y <= backButtonY + buttonHeight) {
+        showModeSelection = true;
+        currentGameMode = GameModeGUI::NOT_SELECTED; // Reset game mode
+        return;
+    }
+}
+
+void GraphicalController::drawSideSelection() {
+    // Background
+    sf::RectangleShape bg(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+    bg.setFillColor(sf::Color(44, 62, 80));
+    window->draw(bg);
+    
+    // Title
+    sf::Text title(font, "Choose Your Side", 48);
+    title.setFillColor(sf::Color(236, 240, 241));
+    sf::FloatRect titleBounds = title.getLocalBounds();
+    title.setPosition({(WINDOW_WIDTH - titleBounds.size.x) / 2, 80});
+    window->draw(title);
+    
+    // Subtitle
+    sf::Text subtitle(font, "Human vs AI Mode", 24);
+    subtitle.setFillColor(sf::Color(189, 195, 199));
+    sf::FloatRect subtitleBounds = subtitle.getLocalBounds();
+    subtitle.setPosition({(WINDOW_WIDTH - subtitleBounds.size.x) / 2, 150});
+    window->draw(subtitle);
+    
+    // Get mouse position for hover effects
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
+    
+    // Helper lambda for drawing buttons
+    auto drawButton = [&](const std::string& text, float y, sf::Color baseColor) {
+        const float width = 300;
+        const float height = 60;
+        const float x = (WINDOW_WIDTH - width) / 2;
+        
+        sf::RectangleShape button(sf::Vector2f(width, height));
+        button.setPosition({x, y});
+        
+        // Hover effect
+        if (mousePos.x >= x && mousePos.x <= x + width &&
+            mousePos.y >= y && mousePos.y <= y + height) {
+            button.setFillColor(sf::Color(baseColor.r + 20, baseColor.g + 20, baseColor.b + 20));
+            button.setOutlineThickness(2);
+            button.setOutlineColor(sf::Color::White);
+        } else {
+            button.setFillColor(baseColor);
+            button.setOutlineThickness(0);
+        }
+        
+        window->draw(button);
+        
+        // Button text
+        sf::Text btnText(font, text, 24);
+        btnText.setFillColor(sf::Color::White);
+        sf::FloatRect textBounds = btnText.getLocalBounds();
+        btnText.setPosition({x + (width - textBounds.size.x) / 2, 
+                           y + (height - textBounds.size.y) / 2 - 5});
+        window->draw(btnText);
+    };
+    
+    // Draw buttons
+    drawButton("Play as Black (Move First)", 250, sf::Color(40, 40, 40)); // Dark for black
+    drawButton("Play as White (Move Second)", 350, sf::Color(245, 245, 245)); // Light for white
+    drawButton("Back to Mode Selection", 450, sf::Color(155, 89, 182)); // Purple for back
+    
+    // Instructions
+    sf::Text instructions(font, "Black moves first in Amazons", 18);
+    instructions.setFillColor(sf::Color(189, 195, 199));
+    sf::FloatRect instBounds = instructions.getLocalBounds();
+    instructions.setPosition({(WINDOW_WIDTH - instBounds.size.x) / 2, 550});
+    window->draw(instructions);
 }
 
 } // namespace amazons

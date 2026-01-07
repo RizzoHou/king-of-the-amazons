@@ -203,7 +203,8 @@ std::string Serializer::serializeGameState(const GameState& gameState, GameMode 
     ss << "  \"" << FIELD_GAME_MODE << "\": \"";
     switch (gameMode) {
         case GameMode::HUMAN_VS_HUMAN: ss << "human_vs_human"; break;
-        case GameMode::HUMAN_VS_AI: ss << "human_vs_ai"; break;
+        case GameMode::HUMAN_VS_AI_HUMAN_WHITE: ss << "human_vs_ai_human_white"; break;
+        case GameMode::HUMAN_VS_AI_HUMAN_BLACK: ss << "human_vs_ai_human_black"; break;
         case GameMode::AI_VS_AI: ss << "ai_vs_ai"; break;
     }
     ss << "\"\n";
@@ -290,8 +291,13 @@ std::pair<std::unique_ptr<GameState>, GameMode> Serializer::deserializeGameState
                     std::string modeStr = json.substr(modeStart + 1, modeEnd - modeStart - 1);
                     if (modeStr == "human_vs_human") {
                         gameMode = GameMode::HUMAN_VS_HUMAN;
+                    } else if (modeStr == "human_vs_ai_human_white") {
+                        gameMode = GameMode::HUMAN_VS_AI_HUMAN_WHITE;
+                    } else if (modeStr == "human_vs_ai_human_black") {
+                        gameMode = GameMode::HUMAN_VS_AI_HUMAN_BLACK;
                     } else if (modeStr == "human_vs_ai") {
-                        gameMode = GameMode::HUMAN_VS_AI;
+                        // Backward compatibility: old HUMAN_VS_AI maps to HUMAN_VS_AI_HUMAN_BLACK
+                        gameMode = GameMode::HUMAN_VS_AI_HUMAN_BLACK;
                     } else if (modeStr == "ai_vs_ai") {
                         gameMode = GameMode::AI_VS_AI;
                     }
