@@ -165,6 +165,34 @@
     - **Testing**: All 30 unit tests pass, manual testing confirms correct behavior in both interfaces
     - **Build Status**: Compiles successfully, all tests pass
 
+18. **Problem p008.md: Side Selection Button Color Harmonization (Jan 7, 2026)**:
+    - **Problem**: The side selection buttons in AI vs Human mode used pure black (`40,40,40`) and pure white (`245,245,245`) colors that didn't harmonize with the overall GUI color scheme. The user found these colors "ugly" and requested they be updated to harmonize with the overall color arrangement.
+    - **Additional Feedback Addressed**:
+      1. The font color of "Play as White" should be changed to black or other color to make it more clear with a light background color.
+      2. Remove the "move first" and "move second" on the button since it seems insignificant.
+    - **Solution**: Updated side selection button colors to harmonize with the existing GUI color palette and addressed additional feedback:
+      - **Color Analysis**: Analyzed existing GUI colors including main menu background (`44,62,80`), board colors (light blue-gray `232,235,239` and slate blue `125,135,150`), and button colors
+      - **Color Harmonization**: 
+        - "Play as Black": Changed from pure black (`40,40,40`) to dark slate blue (`90,100,120`) - harmonizes with board dark squares
+        - "Play as White": Changed from pure white (`245,245,245`) to light blue-gray (`210,220,230`) - harmonizes with board light squares
+        - "Back" button: Kept existing purple (`155,89,182`) which already matches the "Load Game" button
+      - **Additional Improvements**:
+        - **Font Color**: Changed "Play as White" button text color from white to dark gray (`50,50,50`) for better contrast with light background
+        - **Button Text**: Removed "(Move First)" and "(Move Second)" text from buttons - now simply "Play as Black" and "Play as White"
+        - **Code Updates**: Modified `drawButton()` lambda to accept optional text color parameter and updated button text
+      - **Implementation**: Modified `src/ui/GraphicalController.cpp` in the `drawSideSelection()` function to update button colors, text colors, and button text
+      - **Comments Added**: Added explanatory comments about color choices and their relationship to the overall GUI
+    - **Key Improvements**: 
+      - ✅ Side selection buttons now harmonize with the overall GUI color scheme
+      - ✅ "Play as Black" button uses dark slate blue that matches board dark squares
+      - ✅ "Play as White" button uses light blue-gray that matches board light squares
+      - ✅ "Play as White" button text uses dark gray (`50,50,50`) for better contrast with light background
+      - ✅ Button text simplified: "Play as Black" and "Play as White" (removed "(Move First)" and "(Move Second)")
+      - ✅ Colors maintain conceptual connection to "black" and "white" while fitting the aesthetic
+      - ✅ All existing functionality preserved
+    - **Testing**: Compilation successful, all 30 unit tests pass
+    - **Build Status**: Compiles successfully, all tests pass
+
 ### What's In Progress
 1. **Task Completion Workflow**: 
    - ✅ Step 1: Memory Bank Review - COMPLETED

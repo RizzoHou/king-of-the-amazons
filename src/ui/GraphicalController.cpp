@@ -532,8 +532,8 @@ void GraphicalController::drawModeSelection() {
     // Get mouse position for hover effects
     sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
     
-    // Helper lambda for drawing buttons
-    auto drawButton = [&](const std::string& text, float y, sf::Color baseColor) {
+    // Helper lambda for drawing buttons with appropriate text color
+    auto drawButton = [&](const std::string& text, float y, sf::Color baseColor, sf::Color textColor = sf::Color::White) {
         const float width = 300;
         const float height = 60;
         const float x = (WINDOW_WIDTH - width) / 2;
@@ -556,7 +556,7 @@ void GraphicalController::drawModeSelection() {
         
         // Button text
         sf::Text btnText(font, text, 24);
-        btnText.setFillColor(sf::Color::White);
+        btnText.setFillColor(textColor);
         sf::FloatRect textBounds = btnText.getLocalBounds();
         btnText.setPosition({x + (width - textBounds.size.x) / 2, 
                            y + (height - textBounds.size.y) / 2 - 5});
@@ -1215,8 +1215,8 @@ void GraphicalController::drawSideSelection() {
     // Get mouse position for hover effects
     sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
     
-    // Helper lambda for drawing buttons
-    auto drawButton = [&](const std::string& text, float y, sf::Color baseColor) {
+    // Helper lambda for drawing buttons with appropriate text color
+    auto drawButton = [&](const std::string& text, float y, sf::Color baseColor, sf::Color textColor = sf::Color::White) {
         const float width = 300;
         const float height = 60;
         const float x = (WINDOW_WIDTH - width) / 2;
@@ -1239,17 +1239,17 @@ void GraphicalController::drawSideSelection() {
         
         // Button text
         sf::Text btnText(font, text, 24);
-        btnText.setFillColor(sf::Color::White);
+        btnText.setFillColor(textColor);
         sf::FloatRect textBounds = btnText.getLocalBounds();
         btnText.setPosition({x + (width - textBounds.size.x) / 2, 
                            y + (height - textBounds.size.y) / 2 - 5});
         window->draw(btnText);
     };
     
-    // Draw buttons
-    drawButton("Play as Black (Move First)", 250, sf::Color(40, 40, 40)); // Dark for black
-    drawButton("Play as White (Move Second)", 350, sf::Color(245, 245, 245)); // Light for white
-    drawButton("Back to Mode Selection", 450, sf::Color(155, 89, 182)); // Purple for back
+    // Draw buttons with colors harmonized to overall GUI
+    drawButton("Play as Black", 250, sf::Color(90, 100, 120)); // Dark slate blue - harmonizes with board dark squares
+    drawButton("Play as White", 350, sf::Color(210, 220, 230), sf::Color(50, 50, 50)); // Light blue-gray with dark text for contrast
+    drawButton("Back to Mode Selection", 450, sf::Color(155, 89, 182)); // Purple for back - matches Load Game button
     
     // Instructions
     sf::Text instructions(font, "Black moves first in Amazons", 18);
