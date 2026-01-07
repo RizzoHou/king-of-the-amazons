@@ -10,9 +10,7 @@ add_library(game_components
   core/Position.cpp
   core/Board.cpp
   core/GameState.cpp
-  core/Player.cpp
   core/Move.cpp
-  core/GameController.cpp
   ui/TextDisplay.cpp
   ui/InputHandler.cpp
   ui/MenuController.cpp
