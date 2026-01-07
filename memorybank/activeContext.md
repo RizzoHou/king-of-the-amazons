@@ -1,7 +1,55 @@
 # Active Context: King of the Amazons
 
 ## Current Work Focus
-**Phase 4: Enhanced Features Polish and Bug Fixes (Dec 25-26, 2025)**
+**Phase 4: Enhanced Features Polish and Bug Fixes (Jan 7, 2026)**
+
+### GUI Human vs AI Mode Fix - Black Moves First (Jan 7, 2026)
+**Task**: Fix the GUI Human vs AI mode to ensure black always moves first and human (black) can manipulate Amazons on the board.
+
+**Problem Analysis**: User reported that in AI vs Human mode, they could see "black's turn" at the top but couldn't manipulate any Amazon on the board. The issue was that black should move first (consistent rule), and in Human vs AI mode, the human should be black and always move first.
+
+**Implementation Details**:
+
+1. **Core Game Logic Fix**: Updated `GameState.cpp` to initialize with `Player::BLACK` as the starting player:
+   - Modified constructor to set `currentPlayer = Player::BLACK`
+   - Updated `initializeStandardGame()` to set `currentPlayer = Player::BLACK`
+   - Ensures black always moves first as per game rules
+
+2. **GUI Logic Fix**: Updated `GraphicalController.cpp` to:
+   - Allow human (black) to click on black Amazons when it's black's turn
+   - Properly block human input during AI's turn (white's turn)
+   - Fixed position display in debug output (casting `int8_t` to `int` for proper printing)
+   - Updated `handleMouseClick()` to check `gameState->getCurrentPlayer() == Player::WHITE` for AI turn
+   - Updated `selectAmazon()` to correctly check if clicked cell belongs to current player
+
+3. **Debugging and Testing**:
+   - Added debug logging to understand click handling and player assignment
+   - Verified that "Current player = BLACK" appears at game start
+   - Confirmed human can click on black Amazons and valid moves are found
+   - Tested that AI turn logic correctly blocks human input during white's turn
+   - Removed debug logging after confirming fix works
+
+4. **Documentation Verification**: Checked game manual already correctly states:
+   - Black moves first (consistent rule)
+   - In Human vs AI mode, human plays as black and moves first
+   - AI plays as white
+
+**Key Improvements**:
+- ✅ Black always moves first (consistent rule implemented)
+- ✅ In Human vs AI mode, human is black and moves first
+- ✅ Human can click on black Amazons when it's black's turn
+- ✅ AI (white) moves automatically when it's white's turn
+- ✅ GUI now correctly implements the three-step mouse interaction for human (black)
+- ✅ All existing tests pass (30/30 unit tests)
+
+**Files Modified**:
+- `src/core/GameState.cpp` - Updated constructor and `initializeStandardGame()` to set black as starting player
+- `src/ui/GraphicalController.cpp` - Fixed click handling logic for Human vs AI mode
+- `tests/unit/GameStateTest.cpp` - Updated tests to expect `Player::BLACK` as starting player (previously updated)
+- `src/ui/MenuController.cpp` - Updated messages and logic for Human vs AI mode (previously updated)
+- `docs/manuals/game_manual.md` - Already correctly documented black moves first
+
+**Build Status**: Compiles successfully, all tests pass, GUI works correctly
 
 ### Project Reports Creation (Dec 25-26, 2025)
 **Task**: Create three comprehensive project reports as specified in the implementation plan to meet course evaluation requirements.

@@ -8,7 +8,7 @@ using namespace amazons;
 TEST(GameStateTest, DefaultConstructor) {
     GameState state;
     
-    EXPECT_EQ(state.getCurrentPlayer(), Player::WHITE);
+    EXPECT_EQ(state.getCurrentPlayer(), Player::BLACK);
     EXPECT_EQ(state.getTurnNumber(), 1);
     EXPECT_FALSE(state.isGameOver());
 }
@@ -17,7 +17,7 @@ TEST(GameStateTest, InitializeStandardGame) {
     GameState state;
     state.initializeStandardGame();
     
-    EXPECT_EQ(state.getCurrentPlayer(), Player::WHITE);
+    EXPECT_EQ(state.getCurrentPlayer(), Player::BLACK);
     EXPECT_EQ(state.getTurnNumber(), 1);
     EXPECT_FALSE(state.isGameOver());
     
@@ -75,8 +75,8 @@ TEST(GameStateTest, MakeMove) {
     // Player should have switched
     EXPECT_EQ(state.getCurrentPlayer(), oppositePlayer(initialPlayer));
     
-    // Turn number should still be 1 (black's turn now)
-    EXPECT_EQ(state.getTurnNumber(), 1);
+    // Turn number should increment to 2 after black's move (when switching to white)
+    EXPECT_EQ(state.getTurnNumber(), 2);
     
     // Board should be different
     EXPECT_NE(state.getBoard(), initialBoard);

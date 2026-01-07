@@ -1,0 +1,1 @@
+it's correct to let the black side be the first to make a movement. but in the current game, the while side is set to be the first to move.

@@ -110,7 +110,7 @@ void GraphicalController::handleMouseClick(int x, int y) {
     
     // Check if AI's turn
     if (currentGameMode == GameModeGUI::HUMAN_VS_AI && 
-        gameState->getCurrentPlayer() == Player::BLACK) {
+        gameState->getCurrentPlayer() == Player::WHITE) {
         return;
     }
     
@@ -346,7 +346,7 @@ void GraphicalController::makeMove(const Move& move) {
     
     // If playing against AI and it's AI's turn, process AI move
     if (currentGameMode == GameModeGUI::HUMAN_VS_AI && 
-        gameState->getCurrentPlayer() == Player::BLACK &&
+        gameState->getCurrentPlayer() == Player::WHITE &&
         !gameState->isGameOver()) {
         processAIMove();
     }

@@ -7,7 +7,7 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
 **Current Phase**: Phase 3 Complete - Graphical GUI Implemented  
 **Overall Completion**: 85% (Phase 1, Phase 2, and Phase 3 fully implemented and tested, Phase 4 in progress)
 
-**Last Updated**: December 26, 2025
+**Last Updated**: January 7, 2026
 
 ### What Works
 - **Phase 1: Core Foundation COMPLETE** (100%)
@@ -107,6 +107,18 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Testing**: All 30 unit tests pass, user confirms fix works in both text and GUI modes
   - **File Modified**: src/core/GameState.cpp
   - **Build Status**: Compiles successfully, all tests pass
+
+- **GUI Human vs AI Mode Fix - Black Moves First (Jan 7, 2026)**:
+  - **Problem**: User reported that in AI vs Human mode, they could see "black's turn" at the top but couldn't manipulate any Amazon on the board
+  - **Root Cause**: Black should move first (consistent rule), and in Human vs AI mode, human should be black and always move first
+  - **Core Game Logic Fix**: Updated `GameState.cpp` to initialize with `Player::BLACK` as starting player
+  - **GUI Logic Fix**: Updated `GraphicalController.cpp` to:
+    - Allow human (black) to click on black Amazons when it's black's turn
+    - Properly block human input during AI's turn (white's turn)
+    - Fixed position display in debug output (casting `int8_t` to `int` for proper printing)
+  - **Testing**: Debug output confirmed "Current player = BLACK" at game start, human can click on black Amazons, valid moves found
+  - **Documentation**: Game manual already correctly states black moves first and human plays as black in Human vs AI mode
+  - **Build Status**: Compiles successfully, all tests pass, GUI works correctly
 
 - **Project Reports**: Three comprehensive reports created for course evaluation (Dec 25-26, 2025):
   - English comprehensive report (20,451 bytes)

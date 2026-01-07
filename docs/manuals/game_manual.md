@@ -278,7 +278,7 @@ The game board is displayed with coordinates and symbols:
 ```
 === King of the Amazons ===
 Turn: 1
-Current player: White
+Current player: Black
 
    0  1  2  3  4  5  6  7  8  9 
 0  .  .  .  B  .  .  B  .  .  .  0
@@ -309,7 +309,7 @@ Current player: White
 When it's your turn, you'll be prompted:
 
 ```
-White's turn.
+Black's turn.
 Enter your move as 6 numbers: from_row from_col to_row to_col arrow_row arrow_col
 Or enter 'help' to see legal moves, 'undo' to undo last move, 'save' to save game, or 'exit' to return to main menu:
 ```
@@ -337,7 +337,7 @@ During gameplay, you can use these commands:
 
 ### Human vs Human
 **Description**: Classic two-player gameplay
-**Turn Order**: White moves first
+**Turn Order**: Black moves first
 **Features**:
 - Full move validation
 - Undo functionality
@@ -346,20 +346,20 @@ During gameplay, you can use these commands:
 
 **Example Gameplay**:
 ```
-White's turn.
-Enter your move: 9 6 8 5 7 4
-Move made: 9 6 8 5 7 4
-
 Black's turn.
 Enter your move: 0 3 1 4 2 5
 Move made: 0 3 1 4 2 5
+
+White's turn.
+Enter your move: 9 6 8 5 7 4
+Move made: 9 6 8 5 7 4
 ```
 
 ### Human vs AI
 **Description**: Play against computer opponent
 **Player Roles**:
-- **Human**: Plays as White (moves first)
-- **AI**: Plays as Black (greedy algorithm)
+- **Human**: Plays as Black (moves first)
+- **AI**: Plays as White (greedy algorithm)
 
 **AI Characteristics**:
 - **Algorithm**: Greedy with mobility heuristic
@@ -369,13 +369,13 @@ Move made: 0 3 1 4 2 5
 
 **Example Gameplay**:
 ```
-White's turn (Human).
-Enter your move: 9 6 8 5 7 4
-Move made: 9 6 8 5 7 4
+Black's turn (Human).
+Enter your move: 0 3 1 4 2 5
+Move made: 0 3 1 4 2 5
 
-Black's turn (AI).
+White's turn (AI).
 AI is thinking...
-AI made move: 0 3 1 4 2 5
+AI made move: 9 6 8 5 7 4
 ```
 
 ### AI vs AI
@@ -388,13 +388,13 @@ AI made move: 0 3 1 4 2 5
 
 **Example Output**:
 ```
-White AI's turn.
-AI is thinking...
-AI made move: 9 6 8 5 7 4
-
 Black AI's turn.
 AI is thinking...
 AI made move: 0 3 1 4 2 5
+
+White AI's turn.
+AI is thinking...
+AI made move: 9 6 8 5 7 4
 ```
 
 ## Save/Load System

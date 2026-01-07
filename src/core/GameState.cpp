@@ -89,7 +89,7 @@ namespace {
     }
 }
 
-GameState::GameState() : currentPlayer(Player::WHITE), turnNumber(1) {
+GameState::GameState() : currentPlayer(Player::BLACK), turnNumber(1) {
     board.initializeStandardPosition();
 }
 
@@ -101,7 +101,7 @@ GameState::GameState(const Board& board, Player currentPlayer, int turnNumber)
 
 void GameState::initializeStandardGame() {
     board.initializeStandardPosition();
-    currentPlayer = Player::WHITE;
+    currentPlayer = Player::BLACK;
     turnNumber = 1;
     moveHistory.clear();
 }

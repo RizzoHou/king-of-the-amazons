@@ -47,7 +47,7 @@ void MenuController::simpleGameLoop() {
     gameState = std::make_unique<GameState>();
     gameState->initializeStandardGame();
     
-    std::cout << "New game started. White goes first.\n";
+    std::cout << "New game started. Black goes first.\n";
     
     // Main game loop
     while (!gameState->isGameOver()) {
@@ -239,22 +239,22 @@ void MenuController::newGame() {
         gameState = std::make_unique<GameState>();
         gameState->initializeStandardGame();
         currentGameMode = GameMode::HUMAN_VS_HUMAN;
-        std::cout << "New Human vs Human game started. White goes first.\n";
+        std::cout << "New Human vs Human game started. Black goes first.\n";
         gameLoop();
     } else if (input == "2") {
         // Human vs AI
         gameState = std::make_unique<GameState>();
         gameState->initializeStandardGame();
         currentGameMode = GameMode::HUMAN_VS_AI;
-        std::cout << "New Human vs AI game started. White (Human) goes first.\n";
-        std::cout << "AI will play as Black.\n";
+        std::cout << "New Human vs AI game started. Black (Human) goes first.\n";
+        std::cout << "AI will play as White.\n";
         humanVsAIGameLoop();
     } else if (input == "3") {
         // AI vs AI
         gameState = std::make_unique<GameState>();
         gameState->initializeStandardGame();
         currentGameMode = GameMode::AI_VS_AI;
-        std::cout << "New AI vs AI game started. White AI goes first.\n";
+        std::cout << "New AI vs AI game started. Black AI goes first.\n";
         aiVsAiGameLoop();
     } else if (input == "4") {
         // Back to main menu
@@ -445,14 +445,14 @@ void MenuController::humanVsAIGameLoop() {
         Player current = gameState->getCurrentPlayer();
         std::cout << Display::playerToString(current) << "'s turn.\n";
         
-        if (current == Player::WHITE) {
-            // Human turn (White)
+        if (current == Player::BLACK) {
+            // Human turn (Black)
             if (!makePlayerMove()) {
                 // User wants to exit to main menu
                 return;
             }
         } else {
-            // AI turn (Black)
+            // AI turn (White)
             std::cout << "AI is thinking...\n";
             std::this_thread::sleep_for(std::chrono::milliseconds(500)); // Small delay for realism
             
