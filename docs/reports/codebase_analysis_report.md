@@ -415,6 +415,193 @@ This prevents naming conflicts and clearly identifies project-specific code.
 - Comprehensive coverage of core functionality
 - Regular test execution during development
 
+## File-to-Function Mapping
+
+This section provides a detailed mapping between source files in `src/` and `include/` directories and their corresponding functions and responsibilities.
+
+### Core Game Logic (`src/core/`, `include/core/`)
+
+#### `Board.hpp` / `Board.cpp`
+**Primary Functions**:
+- `initializeStandardPosition()`: Sets up starting board configuration
+- `getCell(row, col)`: Returns cell content at specified position
+- `setCell(row, col, cell)`: Updates cell content
+- `getLegalMoves(position)`: Returns all legal move destinations from a position
+- `isValidPosition(row, col)`: Checks if coordinates are within board bounds
+- `operator==`: Compares two boards for equality
+
+#### `GameState.hpp` / `GameState.cpp`
+**Primary Functions**:
+- `initializeStandardGame()`: Resets game to starting position
+- `getLegalMoves()`: Returns all legal moves for current player
+- `isValidMove(move)`: Validates if a move is legal
+- `makeMove(move)`: Executes a move and updates game state
+- `undoLastMove()`: Reverts the most recent move
+- `isGameOver()`: Checks if game has ended
+- `getWinner()`: Returns winning player (if game is over)
+- `getCurrentPlayer()`: Returns player whose turn it is
+- `getTurnNumber()`: Returns current turn number
+
+#### `Move.hpp` / `Move.cpp`
+**Primary Functions**:
+- `Move(from, to, arrow)`: Constructor for complete move
+- `isValid()`: Checks if move coordinates are within bounds
+- `operator==`: Compares two moves for equality
+- `toString()`: Converts move to string representation
+- `fromString(str)`: Parses move from string
+
+#### `Position.hpp` / `Position.cpp`
+**Primary Functions**:
+- `Position(row, col)`: Constructor for board position
+- `isValid()`: Checks if position is within board bounds
+- `operator==`, `operator!=`: Position comparison
+- `toString()`: Converts position to algebraic notation (e.g., "a1")
+- `fromString(str)`: Parses position from string
+
+#### `Player.hpp`
+**Primary Functions**:
+- `oppositePlayer(player)`: Returns opposite player (White↔Black)
+- `playerToString(player)`: Converts player to string representation
+- `stringToPlayer(str)`: Parses player from string
+- Game mode enumeration and conversion functions
+
+### AI System (`src/ai/`, `include/ai/`)
+
+#### `BasicAI.hpp` / `BasicAI.cpp`
+**Primary Functions**:
+- `getBestMove(gameState)`: Returns best move using greedy algorithm
+- `getRandomMove(gameState)`: Returns random legal move
+- `evaluateMove(gameState, move)`: Scores move using heuristic
+- `evaluateBoardForPlayer(gameState, player)`: Evaluates board position
+- `countAvailableMoves(gameState, player)`: Counts legal moves for player
+
+#### `BotzoneAI.hpp` / `BotzoneAI.cpp`
+**Primary Functions**:
+- `getBestMove(gameState)`: Gets move from external bot003 executable
+- `initializeBotProcess()`: Starts external bot process
+- `sendStateToBot(gameState)`: Sends game state to bot via stdin
+- `receiveMoveFromBot()`: Receives move from bot via stdout
+- `cleanup()`: Terminates bot process
+
+#### `BotProcess.hpp` / `BotProcess.cpp`
+**Primary Functions**:
+- `BotProcess(botPath)`: Constructor with bot executable path
+- `start()`: Launches bot process
+- `writeInput(data)`: Sends data to bot stdin
+- `readOutput()`: Reads data from bot stdout
+- `stop()`: Terminates bot process
+- `isRunning()`: Checks if bot process is active
+
+### User Interface (`src/ui/`, `include/ui/`)
+
+#### `GraphicalController.hpp` / `GraphicalController.cpp`
+**Primary Functions**:
+- `run()`: Main game loop for graphical interface
+- `initialize()`: Sets up SFML window and resources
+- `handleEvents()`: Processes user input events
+- `render()`: Draws game state to screen
+- `handleMouseClick(x, y)`: Processes mouse clicks
+- `handleKeyPress(key)`: Processes keyboard input
+- `selectAmazon(position)`: Selects Amazon for movement
+- `selectMoveDestination(position)`: Selects move destination
+- `selectArrowDestination(position)`: Selects arrow position
+- `makeMove(move)`: Executes move and updates display
+- `processAIMove()`: Handles AI turn in background thread
+- `saveCurrentGame()`: Saves game to file
+- `openLoadScreen()`: Shows load game interface
+
+#### `MenuController.hpp` / `MenuController.cpp`
+**Primary Functions**:
+- `run()`: Main loop for text interface
+- `mainMenu()`: Displays main menu options
+- `newGame()`: Starts new game with selected mode
+- `loadGame()`: Loads saved game from file
+- `saveGame()`: Saves current game to file
+- `gameLoop()`: Main game play loop
+- `playerTurn()`: Handles human player's turn
+- `makePlayerMove()`: Processes player move input
+- `makeAIMove()`: Executes AI move in AI vs Human mode
+- `showGameStatus()`: Displays current game state
+
+#### `TextDisplay.hpp` / `TextDisplay.cpp`
+**Primary Functions**:
+- `displayBoard(board)`: Prints board to console
+- `displayGameState(gameState)`: Shows complete game state
+- `displayMessage(message)`: Outputs status message
+- `displayMenu(options)`: Shows menu with choices
+- `clearScreen()`: Clears console display
+
+#### `InputHandler.hpp` / `InputHandler.cpp`
+**Primary Functions**:
+- `getMenuChoice(options)`: Gets valid menu selection
+- `getMoveInput()`: Reads move coordinates from user
+- `getYesNo(prompt)`: Gets yes/no confirmation
+- `getString(prompt)`: Reads string input
+- `getInteger(prompt, min, max)`: Gets integer within range
+
+#### `Display.hpp`
+**Interface Functions**:
+- `displayBoard(board)`: Abstract method for board display
+- `displayGameState(gameState)`: Abstract method for game state display
+- `displayMessage(message)`: Abstract method for messages
+
+### Utility Functions (`src/utils/`, `include/utils/`)
+
+#### `Serializer.hpp` / `Serializer.cpp`
+**Primary Functions**:
+- `saveGame(gameState, gameMode, filename)`: Saves game to JSON file
+- `loadGame(filename)`: Loads game state from file
+- `loadGameWithMode(filename)`: Loads game state and mode from file
+- `getSavedGames()`: Returns list of saved game filenames
+- `saveExists(filename)`: Checks if save file exists
+- `deleteSave(filename)`: Deletes save file
+- `serializeGameState(gameState, gameMode)`: Converts to JSON string
+- `deserializeGameState(json)`: Parses JSON to game state
+
+### Main Entry Point
+
+#### `main.cpp`
+**Primary Functions**:
+- `main(argc, argv)`: Program entry point
+- `parseArguments(argc, argv)`: Parses command line arguments
+- `showHelp()`: Displays usage information
+- `runGraphicalMode()`: Starts graphical interface
+- `runTextMode()`: Starts text interface
+
+### Test Files (`tests/unit/`)
+
+#### `BoardTest.cpp`
+**Test Functions**:
+- `TestBoardInitialization()`: Tests board setup
+- `TestGetSetCell()`: Tests cell access methods
+- `TestLegalMoves()`: Tests move generation
+- `TestBoardEquality()`: Tests board comparison
+
+#### `GameStateTest.cpp`
+**Test Functions**:
+- `TestGameStateInitialization()`: Tests game setup
+- `TestMoveValidation()`: Tests move legality
+- `TestMoveExecution()`: Tests move execution
+- `TestUndoFunctionality()`: Tests undo system
+- `TestGameOverDetection()`: Tests win condition detection
+
+#### `MoveTest.cpp`
+**Test Functions**:
+- `TestMoveConstruction()`: Tests move creation
+- `TestMoveValidation()`: Tests move bounds checking
+- `TestMoveSerialization()`: Tests string conversion
+
+#### `PositionTest.cpp`
+**Test Functions**:
+- `TestPositionValidation()`: Tests coordinate bounds
+- `TestPositionSerialization()`: Tests string conversion
+- `TestPositionComparison()`: Tests equality operators
+
+#### `TextDisplayTest.cpp`
+**Test Functions**:
+- `TestBoardDisplay()`: Tests board rendering
+- `TestGameStateDisplay()`: Tests game state rendering
+
 ## Technical Challenges & Solutions
 
 ### 1. Arrow Validation Bug
