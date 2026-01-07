@@ -152,6 +152,19 @@
     - **Testing**: Main executable `amazons` built successfully, compilation errors fixed
     - **Build Status**: Compiles successfully, GUI state transitions work correctly
 
+17. **Problem p006.md: Undo Behavior Fix in AI vs Human Mode (Jan 7, 2026)**:
+    - **Problem**: In AI vs Human mode, pressing 'U' once only undid AI's move, requiring second press to undo human's move
+    - **Solution**: Modified undo logic to detect AI vs Human mode and human's turn, then undo both moves with single 'U' press
+    - **GraphicalController**: Updated `handleKeyPress()` to check game mode and current player
+    - **MenuController**: Updated `makePlayerMove()` with identical logic for text mode
+    - **Technical Details**: 
+      - Detects `HUMAN_VS_AI_HUMAN_WHITE` or `HUMAN_VS_AI_HUMAN_BLACK` mode
+      - Checks if current player is human (based on game mode)
+      - When conditions met, calls `undoLastMove()` twice (AI move then human move)
+      - Edge cases handled: first AI move, single move history, game over state
+    - **Testing**: All 30 unit tests pass, manual testing confirms correct behavior in both interfaces
+    - **Build Status**: Compiles successfully, all tests pass
+
 ### What's In Progress
 1. **Task Completion Workflow**: 
    - ✅ Step 1: Memory Bank Review - COMPLETED

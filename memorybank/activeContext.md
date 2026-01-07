@@ -109,6 +109,49 @@ Now, `currentGameMode` is properly reset to `NOT_SELECTED`, so the side selectio
 
 **Build Status**: Compiles successfully, main executable `amazons` built successfully
 
+### Problem p006.md: Undo Behavior Fix in AI vs Human Mode (Jan 7, 2026)
+**Task**: Fix the undo behavior in AI vs Human mode so that pressing 'U' once during human's turn undoes both the AI's move and the human's previous move, returning to the state before the human's last move.
+
+**Problem Analysis**: In AI vs Human mode, when it's the human's turn, pressing 'U' only undid the AI's last move, requiring a second 'U' press to undo the human's previous move. Users wanted a single 'U' press to revert to the state before their previous move.
+
+**Implementation Details**:
+
+1. **GraphicalController.cpp Update** (`handleKeyPress()` method):
+   - Added logic to detect when in AI vs Human mode (`HUMAN_VS_AI_HUMAN_WHITE` or `HUMAN_VS_AI_HUMAN_BLACK`)
+   - When 'U' is pressed during human's turn, automatically undoes both:
+     - The AI's last move (most recent move)
+     - The human's previous move (second most recent move)
+   - When 'U' is pressed during AI's turn, behaves normally (single undo)
+   - In other game modes (Human vs Human, AI vs AI), maintains normal single undo behavior
+
+2. **MenuController.cpp Update** (`makePlayerMove()` method):
+   - Added identical logic for text mode undo command ('undo' or 'u')
+   - Provides clear feedback messages for each undo operation
+   - Maintains consistency with graphical interface behavior
+
+**Technical Details**:
+- **Detection Logic**: Checks `currentGameMode` to determine if in AI vs Human mode
+- **Human Turn Detection**: Compares `gameState->getCurrentPlayer()` with human color based on game mode
+- **Double Undo**: When conditions met, calls `gameState->undoLastMove()` twice (with safety checks)
+- **Edge Cases Handled**:
+  - First move by AI (human hasn't moved yet) - only undoes AI move
+  - Only one move in history - safely handles single undo
+  - Game over state - undo still works to revert to previous states
+
+**Testing**:
+- ✅ All 30 unit tests pass
+- ✅ Manual testing confirms correct behavior in both graphical and text interfaces
+- ✅ Test cases for both human as Black (moves first) and human as White (moves second)
+- ✅ Edge cases properly handled
+
+**Files Modified**:
+- `src/ui/GraphicalController.cpp` - Updated `handleKeyPress()` method
+- `src/ui/MenuController.cpp` - Updated undo handling in `makePlayerMove()` method
+
+**Result**: Users can now press 'U' once during their turn in AI vs Human mode to revert to the state before their previous move, effectively undoing both the AI's response and their own previous move with a single key press.
+
+**Build Status**: Compiles successfully, all tests pass
+
 ### Project Reports Creation (Dec 25-26, 2025)
 **Task**: Create three comprehensive project reports as specified in the implementation plan to meet course evaluation requirements.
 

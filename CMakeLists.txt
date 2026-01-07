@@ -82,6 +82,6 @@ install(TARGETS amazons DESTINATION bin)
 install(DIRECTORY data/ DESTINATION data)
 
 # Test executable for BotzoneAI
-add_executable(test_botzone test_botzone.cpp)
+add_executable(test_botzone tests/integration/test_botzone.cpp)
 target_link_libraries(test_botzone game_components)
 target_include_directories(test_botzone PRIVATE ${CMAKE_SOURCE_DIR}/include)

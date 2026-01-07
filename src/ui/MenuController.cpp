@@ -135,8 +135,44 @@ bool MenuController::makePlayerMove() {
             
             if (input == "undo" || input == "u") {
                 if (gameState->canUndo()) {
-                    gameState->undoLastMove();
-                    display->showMessage("Last move undone.");
+                    // Check if we're in AI vs Human mode and it's human's turn
+                    bool isHumanVsAI = (currentGameMode == GameMode::HUMAN_VS_AI_HUMAN_WHITE || 
+                                       currentGameMode == GameMode::HUMAN_VS_AI_HUMAN_BLACK);
+                    
+                    if (isHumanVsAI) {
+                        // Determine human color based on game mode
+                        Player humanColor;
+                        if (currentGameMode == GameMode::HUMAN_VS_AI_HUMAN_BLACK) {
+                            humanColor = Player::BLACK;
+                        } else {
+                            humanColor = Player::WHITE;
+                        }
+                        
+                        // Check if it's currently human's turn
+                        if (gameState->getCurrentPlayer() == humanColor) {
+                            // In AI vs Human mode during human's turn, 
+                            // we want to undo both AI move and previous human move
+                            if (gameState->canUndo()) {
+                                gameState->undoLastMove(); // Undo AI move
+                                display->showMessage("AI move undone.");
+                                
+                                // Check if we can undo again (human's move)
+                                if (gameState->canUndo()) {
+                                    gameState->undoLastMove(); // Undo human move
+                                    display->showMessage("Human move undone.");
+                                }
+                            }
+                        } else {
+                            // It's AI's turn, just undo once (normal behavior)
+                            gameState->undoLastMove();
+                            display->showMessage("Last move undone.");
+                        }
+                    } else {
+                        // Not AI vs Human mode, normal undo
+                        gameState->undoLastMove();
+                        display->showMessage("Last move undone.");
+                    }
+                    
                     showGameStatus();
                 } else {
                     display->showMessage("No moves to undo.");

@@ -204,7 +204,40 @@ void GraphicalController::handleKeyPress(sf::Keyboard::Key key) {
         case sf::Keyboard::Key::U:
             // Undo move
             if (gameState && gameState->canUndo()) {
-                gameState->undoLastMove();
+                // Check if we're in AI vs Human mode and it's human's turn
+                bool isHumanVsAI = (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE || 
+                                   currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK);
+                
+                if (isHumanVsAI) {
+                    // Determine human color based on game mode
+                    Player humanColor;
+                    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
+                        humanColor = Player::BLACK;
+                    } else {
+                        humanColor = Player::WHITE;
+                    }
+                    
+                    // Check if it's currently human's turn
+                    if (gameState->getCurrentPlayer() == humanColor) {
+                        // In AI vs Human mode during human's turn, 
+                        // we want to undo both AI move and previous human move
+                        if (gameState->canUndo()) {
+                            gameState->undoLastMove(); // Undo AI move
+                            
+                            // Check if we can undo again (human's move)
+                            if (gameState->canUndo()) {
+                                gameState->undoLastMove(); // Undo human move
+                            }
+                        }
+                    } else {
+                        // It's AI's turn, just undo once (normal behavior)
+                        gameState->undoLastMove();
+                    }
+                } else {
+                    // Not AI vs Human mode, normal undo
+                    gameState->undoLastMove();
+                }
+                
                 resetSelection();
                 updateStatusMessage();
             }
