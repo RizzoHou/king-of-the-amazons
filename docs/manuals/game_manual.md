@@ -6,9 +6,9 @@ Welcome to **King of the Amazons**, a C++ implementation of the classic abstract
 
 ### Current Status
 - **Phase**: Phase 3 Complete (Graphical GUI Implemented)
-- **Version**: 1.1.0
-- **Last Updated**: December 21, 2025
-- **Overall Completion**: 75% (Phase 1, 2, and 3 complete, Phase 4 in progress)
+- **Version**: 1.2.0
+- **Last Updated**: January 7, 2026
+- **Overall Completion**: 85% (Phase 1, 2, and 3 complete, Phase 4 in progress)
 
 ## Getting Started
 
@@ -356,10 +356,18 @@ Move made: 9 6 8 5 7 4
 ```
 
 ### Human vs AI
-**Description**: Play against computer opponent
+**Description**: Play against computer opponent with side selection
 **Player Roles**:
-- **Human**: Plays as Black (moves first)
-- **AI**: Plays as White (greedy algorithm)
+- **Human**: Can choose to play as Black (moves first) or White (moves second)
+- **AI**: Plays as the opposite color
+
+**Side Selection**:
+- In graphical mode: Choose "Play as Black" or "Play as White" on side selection screen
+- In text mode: Select option 1 (Play as Black) or 2 (Play as White) from side selection menu
+- **Color Harmonization**: Side selection buttons use harmonized colors that match the GUI color scheme:
+  - "Play as Black": Dark slate blue (matches board dark squares)
+  - "Play as White": Light blue-gray (matches board light squares)
+  - "Play as White" button text: Dark gray for better contrast
 
 **AI Characteristics**:
 - **Algorithm**: Greedy with mobility heuristic
@@ -367,8 +375,15 @@ Move made: 9 6 8 5 7 4
 - **Speed**: Makes decisions with small delay for realism
 - **Difficulty**: Basic level (Phase 2 implementation)
 
+**Undo Behavior**: In AI vs Human mode, pressing 'U' once during human's turn undoes both the AI's move and the human's previous move, returning to the state before the human's last move.
+
 **Example Gameplay**:
 ```
+=== Side Selection ===
+1. Play as Black (Move First)
+2. Play as White (Move Second)
+Select option (1-2): 1
+
 Black's turn (Human).
 Enter your move: 0 3 1 4 2 5
 Move made: 0 3 1 4 2 5
@@ -616,6 +631,12 @@ The project maintains comprehensive documentation in `memorybank/`:
 - ✅ Keyboard shortcuts: R (restart), U (undo), ESC (return to menu)
 - ✅ GUI Improvements: ESC key fix, "Continue Previous Game" feature, non-blocking AI moves, sequential move display
 - ✅ Build success: All changes compile without errors, program runs without crashing
+
+### January 2026 Updates (Jan 7, 2026)
+- **Human Player Side Selection**: Users can now choose to play as Black or White in AI vs Human mode
+- **GUI State Management Bug Fix**: Fixed side selection screen display after returning from interrupted games
+- **Undo Behavior Fix**: Single 'U' press in AI vs Human mode now undoes both AI and human moves
+- **Side Selection Button Color Harmonization**: Updated button colors to match GUI color scheme with improved contrast
 
 ### Phase 4 (Jan 7-10, 2026) - Polish and Finalization - 🟡 IN PROGRESS
 - Enhanced features polish (statistics tracking, replay system)

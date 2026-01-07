@@ -106,16 +106,17 @@ For course evaluation, reviewers should:
 
 | File | Size | Last Updated | Purpose |
 |------|------|--------------|---------|
-| `project_report_en.md` | 20,451 bytes | 2025-12-26 | Comprehensive English documentation |
-| `project_report_zh.md` | 18,325 bytes | 2025-12-26 | Complete Chinese translation |
-| `project_report_simplified_zh.md` | 6,652 bytes | 2025-12-26 | Condensed Chinese version for TA review |
+| `project_report_en.md` | ~21,000 bytes | 2026-01-07 | Comprehensive English documentation |
+| `project_report_zh.md` | ~19,000 bytes | 2026-01-07 | Complete Chinese translation |
+| `project_report_simplified_zh.md` | ~7,000 bytes | 2026-01-07 | Condensed Chinese version for TA review |
 
 ## Project Status
 
 - **Current Phase**: Phase 3 Complete (Graphical GUI Implemented)
-- **Overall Completion**: 75%
-- **Ready for Review**: First Review Session (December 30, 2025)
+- **Overall Completion**: 85%
+- **Ready for Review**: Second Review Session (January 9, 2026)
+- **Recent Updates**: January 2026 updates including side selection, undo behavior fix, and GUI improvements
 
 ---
-**Last Updated**: December 26, 2025  
+**Last Updated**: January 7, 2026  
 **Contact**: GitHub Issues for project-related questions

@@ -3,6 +3,69 @@
 ## Current Work Focus
 **Phase 4: Enhanced Features Polish and Bug Fixes (Jan 7, 2026)**
 
+### Problem p009.md: Human vs Human Mode Fix (Jan 7, 2026)
+**Task**: Fix the Human vs Human mode issue where users cannot move any Amazons when entering that mode, as described in `docs/problems/p009.md`.
+
+**Problem Analysis**: The `handleMouseClick` function in `GraphicalController.cpp` had a logic error that caused it to return early for non-AI modes (including Human vs Human mode). When `currentGameMode` was `HUMAN_VS_HUMAN`, the code entered an `else` block and returned early, preventing any mouse clicks from being processed on the board.
+
+**Root Cause**: In `handleMouseClick()` (lines 119-130), the code checked for AI modes and returned early for non-AI modes:
+```cpp
+// Check if AI's turn
+Player aiColor;
+if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
+    aiColor = Player::WHITE; // AI is white when human is black
+} else if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
+    aiColor = Player::BLACK; // AI is black when human is white
+} else {
+    // Not Human vs AI mode
+    return;  // <-- This is the bug!
+}
+```
+
+**Implementation Details**:
+
+1. **Logic Restructuring**: Modified the `handleMouseClick` function to:
+   - Only check for AI's turn if we're in an AI mode (`HUMAN_VS_AI_HUMAN_WHITE` or `HUMAN_VS_AI_HUMAN_BLACK`)
+   - For Human vs Human mode, skip the AI turn check entirely
+   - Process mouse clicks normally for Human vs Human mode
+
+2. **Code Changes**: Updated lines 119-136 in `src/ui/GraphicalController.cpp`:
+   - **Before**: Checked for AI mode, returned early for non-AI modes
+   - **After**: Only checks for AI's turn when in AI modes, continues processing for Human vs Human mode
+
+3. **Fixed Code**:
+```cpp
+// Check if AI's turn (only in AI modes)
+if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK || 
+    currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
+    
+    Player aiColor;
+    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
+        aiColor = Player::WHITE; // AI is white when human is black
+    } else { // HUMAN_VS_AI_HUMAN_WHITE
+        aiColor = Player::BLACK; // AI is black when human is white
+    }
+    
+    if (gameState->getCurrentPlayer() == aiColor) {
+        return; // It's AI's turn, don't process human click
+    }
+}
+// For HUMAN_VS_HUMAN mode, continue processing the click
+```
+
+**Key Improvements**:
+- ✅ Human vs Human mode now works correctly - users can select Amazons, choose move destinations, and select arrow positions
+- ✅ AI vs Human modes still work correctly (both "Play as Black" and "Play as White" options)
+- ✅ Undo functionality works in all modes as before
+- ✅ All existing functionality preserved
+- ✅ Compilation successful, all 30 unit tests pass
+- ✅ User confirmed "all things seems to work well" after testing
+
+**Files Modified**:
+- `src/ui/GraphicalController.cpp` - Fixed mouse click handling logic in `handleMouseClick()` function
+
+**Build Status**: Compiles successfully, all tests pass
+
 ### Problem p008.md: Side Selection Button Color Harmonization (Jan 7, 2026)
 **Task**: Improve the color aesthetics of the side selection buttons in AI vs Human mode to harmonize with the overall GUI color scheme, as described in `docs/problems/p008.md`.
 
@@ -698,11 +761,12 @@ Now, `currentGameMode` is properly reset to `NOT_SELECTED`, so the side selectio
 - Project documentation must include graphical implementation details - 🟡 IN PROGRESS
 
 ### Short-term Actions (Immediate)
-1. **Complete Task Completion Workflow**: Update memory bank, README.md, and git commit
-2. **Update Progress.md**: Document Phase 3 completion and Phase 4 planning
-3. **Update Implementation Plan Documents**: Update Phase 3 status to completed
-4. **Begin Phase 4 Planning**: Focus on enhanced features polish and testing
-5. **Update Technical Specifications**: Add enhanced features integration details
+1. **Complete Task Completion Workflow**: Update memory bank, README.md, and git commit - ✅ COMPLETED
+2. **Update Progress.md**: Document Phase 3 completion and Phase 4 planning - ✅ COMPLETED
+3. **Update Implementation Plan Documents**: Update Phase 3 status to completed - ✅ COMPLETED
+4. **Begin Phase 4 Planning**: Focus on enhanced features polish and testing - 🟡 IN PROGRESS
+5. **Update Technical Specifications**: Add enhanced features integration details - 🟡 IN PROGRESS
+6. **Documentation Updates**: Update game manual and project reports with January 2026 changes - ✅ COMPLETED
 
 ## Documentation Work Completed
 **Game Manual and Update Workflow Created**

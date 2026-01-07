@@ -142,6 +142,24 @@ A C++ implementation of the "Game of the Amazons" (also known as "Amazons" or "Q
   - **Testing**: All 30 unit tests pass, manual testing confirms correct behavior in both interfaces
   - **Build Status**: Compiles successfully, all tests pass
 
+- **Problem p009.md: Human vs Human Mode Fix (Jan 7, 2026)**:
+  - **Problem**: The Human vs Human mode was infeasible - users could not move any Amazons when entering that mode, as described in `docs/problems/p009.md`
+  - **Root Cause**: The `handleMouseClick` function in `GraphicalController.cpp` had a logic error that caused it to return early for non-AI modes (including Human vs Human mode)
+  - **Solution**: Restructured the logic in `handleMouseClick()` to only check for AI's turn when in AI modes, allowing mouse clicks to be processed normally for Human vs Human mode
+  - **Implementation Details**:
+    - Modified lines 119-136 in `src/ui/GraphicalController.cpp` to check `if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK || currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE)` before checking AI's turn
+    - For Human vs Human mode, the code now skips the AI turn check entirely and processes mouse clicks normally
+    - AI vs Human modes still work correctly (both "Play as Black" and "Play as White" options)
+    - Undo functionality works in all modes as before
+  - **Key Improvements**:
+    - ✅ Human vs Human mode now works correctly - users can select Amazons, choose move destinations, and select arrow positions
+    - ✅ AI vs Human modes still work correctly
+    - ✅ All existing functionality preserved
+    - ✅ Compilation successful, all 30 unit tests pass
+    - ✅ User confirmed "all things seems to work well" after testing
+  - **Files Modified**: `src/ui/GraphicalController.cpp` - Fixed mouse click handling logic in `handleMouseClick()` function
+  - **Build Status**: Compiles successfully, all tests pass
+
 - **Problem p008.md: Side Selection Button Color Harmonization (Jan 7, 2026)**:
   - **Problem**: The side selection buttons in AI vs Human mode used pure black (`40,40,40`) and pure white (`245,245,245`) colors that didn't harmonize with the overall GUI color scheme. The user found these colors "ugly" and requested they be updated to harmonize with the overall color arrangement.
   - **Additional Feedback Addressed**:

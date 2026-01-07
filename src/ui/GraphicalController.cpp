@@ -114,20 +114,22 @@ void GraphicalController::handleMouseClick(int x, int y) {
         return;
     }
     
-    // Check if AI's turn
-    Player aiColor;
-    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
-        aiColor = Player::WHITE; // AI is white when human is black
-    } else if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
-        aiColor = Player::BLACK; // AI is black when human is white
-    } else {
-        // Not Human vs AI mode
-        return;
+    // Check if AI's turn (only in AI modes)
+    if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK || 
+        currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE) {
+        
+        Player aiColor;
+        if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK) {
+            aiColor = Player::WHITE; // AI is white when human is black
+        } else { // HUMAN_VS_AI_HUMAN_WHITE
+            aiColor = Player::BLACK; // AI is black when human is white
+        }
+        
+        if (gameState->getCurrentPlayer() == aiColor) {
+            return; // It's AI's turn, don't process human click
+        }
     }
-    
-    if (gameState->getCurrentPlayer() == aiColor) {
-        return;
-    }
+    // For HUMAN_VS_HUMAN mode, continue processing the click
     
     // AI vs AI mode has been removed from the graphical interface
     

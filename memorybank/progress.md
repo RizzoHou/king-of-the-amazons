@@ -2,7 +2,7 @@
 
 ## Current Status
 **Phase: Phase 3 Complete - Graphical GUI Implemented**  
-**Overall Completion: 75%** (Phase 1, Phase 2, and Phase 3 fully implemented and tested, ready for Phase 4)
+**Overall Completion: 85%** (Phase 1, Phase 2, and Phase 3 fully implemented and tested, Phase 4 in progress)
 
 ### What Works
 1. **Phase 1: Core Foundation COMPLETE** (100%):
@@ -165,7 +165,25 @@
     - **Testing**: All 30 unit tests pass, manual testing confirms correct behavior in both interfaces
     - **Build Status**: Compiles successfully, all tests pass
 
-18. **Problem p008.md: Side Selection Button Color Harmonization (Jan 7, 2026)**:
+18. **Problem p009.md: Human vs Human Mode Fix (Jan 7, 2026)**:
+    - **Problem**: The Human vs Human mode was infeasible - users could not move any Amazons when entering that mode, as described in `docs/problems/p009.md`
+    - **Root Cause**: The `handleMouseClick` function in `GraphicalController.cpp` had a logic error that caused it to return early for non-AI modes (including Human vs Human mode)
+    - **Solution**: Restructured the logic in `handleMouseClick()` to only check for AI's turn when in AI modes, allowing mouse clicks to be processed normally for Human vs Human mode
+    - **Implementation Details**:
+      - Modified lines 119-136 in `src/ui/GraphicalController.cpp` to check `if (currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_BLACK || currentGameMode == GameModeGUI::HUMAN_VS_AI_HUMAN_WHITE)` before checking AI's turn
+      - For Human vs Human mode, the code now skips the AI turn check entirely and processes mouse clicks normally
+      - AI vs Human modes still work correctly (both "Play as Black" and "Play as White" options)
+      - Undo functionality works in all modes as before
+    - **Key Improvements**:
+      - ✅ Human vs Human mode now works correctly - users can select Amazons, choose move destinations, and select arrow positions
+      - ✅ AI vs Human modes still work correctly
+      - ✅ All existing functionality preserved
+      - ✅ Compilation successful, all 30 unit tests pass
+      - ✅ User confirmed "all things seems to work well" after testing
+    - **Files Modified**: `src/ui/GraphicalController.cpp` - Fixed mouse click handling logic in `handleMouseClick()` function
+    - **Build Status**: Compiles successfully, all tests pass
+
+19. **Problem p008.md: Side Selection Button Color Harmonization (Jan 7, 2026)**:
     - **Problem**: The side selection buttons in AI vs Human mode used pure black (`40,40,40`) and pure white (`245,245,245`) colors that didn't harmonize with the overall GUI color scheme. The user found these colors "ugly" and requested they be updated to harmonize with the overall color arrangement.
     - **Additional Feedback Addressed**:
       1. The font color of "Play as White" should be changed to black or other color to make it more clear with a light background color.
@@ -197,13 +215,13 @@
 1. **Task Completion Workflow**: 
    - ✅ Step 1: Memory Bank Review - COMPLETED
    - ✅ Step 2: Memory Bank Updates - COMPLETED (activeContext.md and progress.md updated)
-   - 🟡 Step 3: README.md Update - IN PROGRESS
+   - ✅ Step 3: README.md Update - COMPLETED (January 7, 2026 updates)
    - ⚪ Step 4: Git Status Clear - PENDING
 2. **Phase 4 Planning**: Detailed planning for enhanced features polish and finalization
-3. **Documentation Updates**: README.md and game manual updates for graphical interface
+3. **Documentation Updates**: Game manual and project reports updated with January 2026 changes
 
 ### What's Left to Build
-**Complete Game Implementation (Estimated: 50% remaining)**
+**Complete Game Implementation (Estimated: 15% remaining)**
 
 #### Phase 1: Core Foundation (Week 1: Dec 17-23) - ✅ COMPLETE
 1. **Project Setup** (100% complete)

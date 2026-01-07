@@ -7,9 +7,9 @@
 
 ### 1.2 Current Status
 - **Phase**: Phase 3 Complete - Graphical GUI Implemented
-- **Overall Completion**: 75% (Phase 1, Phase 2, and Phase 3 fully implemented and tested, Phase 4 in progress)
-- **Version**: 1.1.0
-- **Last Updated**: December 25, 2025
+- **Overall Completion**: 85% (Phase 1, Phase 2, and Phase 3 fully implemented and tested, Phase 4 in progress)
+- **Version**: 1.2.0
+- **Last Updated**: January 7, 2026
 
 ### 1.3 Project Goals
 - Implement a complete, playable Game of Amazons with all core rules
@@ -442,6 +442,12 @@ king-of-the-amazons/
 - Keyboard shortcuts: R (restart), U (undo), ESC (return to menu)
 - GUI improvements: ESC key fix, "Continue Previous Game" feature, non-blocking AI moves
 
+#### ✅ January 2026 Updates (Jan 7, 2026) - COMPLETE
+- **Human Player Side Selection**: Users can choose to play as Black or White in AI vs Human mode
+- **GUI State Management Bug Fix**: Fixed side selection screen display after returning from interrupted games
+- **Undo Behavior Fix**: Single 'U' press in AI vs Human mode now undoes both AI and human moves
+- **Side Selection Button Color Harmonization**: Updated button colors to match GUI color scheme with improved contrast
+
 #### 🟡 Phase 4: Polish and Finalization (Week 4: Jan 7-10, 2026) - IN PROGRESS
 - Enhanced features polish (statistics tracking, replay system)
 - Testing and quality assurance (graphical interface tests, integration tests)
@@ -511,5 +517,5 @@ Thanks to the course instructors and teaching assistants for guidance and suppor
 **Technical Reports**: Included in `docs/reports/` directory  
 **Contact**: Project-related questions can be submitted via GitHub Issues
 
-**Last Updated**: December 25, 2025  
-**Project Status**: Phase 3 Complete, Ready for First Review Session
+**Last Updated**: January 7, 2026  
+**Project Status**: Phase 3 Complete with January 2026 Updates, Ready for Second Review Session
